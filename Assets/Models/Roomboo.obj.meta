@@ -1,0 +1,151 @@
+fileFormatVersion: 2
+guid: 347b9e8e4b26a3d4ca64c978952a78df
+timeCreated: 1538821313
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Door
+    100002: Door_Frame
+    100004: Grass
+    100006: Grass_MeshPart0
+    100008: Grass_MeshPart1
+    100010: Grass_MeshPart2
+    100012: Grass_MeshPart3
+    100014: House
+    100016: Object001
+    100018: Object001_MeshPart0
+    100020: Object001_MeshPart1
+    100022: Object001_MeshPart2
+    100024: Object001_MeshPart3
+    100026: Object001_MeshPart4
+    100028: Plane001
+    100030: Roof_inner
+    100032: //RootNode
+    400000: Door
+    400002: Door_Frame
+    400004: Grass
+    400006: Grass_MeshPart0
+    400008: Grass_MeshPart1
+    400010: Grass_MeshPart2
+    400012: Grass_MeshPart3
+    400014: House
+    400016: Object001
+    400018: Object001_MeshPart0
+    400020: Object001_MeshPart1
+    400022: Object001_MeshPart2
+    400024: Object001_MeshPart3
+    400026: Object001_MeshPart4
+    400028: Plane001
+    400030: Roof_inner
+    400032: //RootNode
+    2300000: Door
+    2300002: Door_Frame
+    2300004: Grass_MeshPart0
+    2300006: Grass_MeshPart1
+    2300008: Grass_MeshPart2
+    2300010: Grass_MeshPart3
+    2300012: House
+    2300014: Object001_MeshPart0
+    2300016: Object001_MeshPart1
+    2300018: Object001_MeshPart2
+    2300020: Object001_MeshPart3
+    2300022: Object001_MeshPart4
+    2300024: Plane001
+    2300026: Roof_inner
+    3300000: Door
+    3300002: Door_Frame
+    3300004: Grass_MeshPart0
+    3300006: Grass_MeshPart1
+    3300008: Grass_MeshPart2
+    3300010: Grass_MeshPart3
+    3300012: House
+    3300014: Object001_MeshPart0
+    3300016: Object001_MeshPart1
+    3300018: Object001_MeshPart2
+    3300020: Object001_MeshPart3
+    3300022: Object001_MeshPart4
+    3300024: Plane001
+    3300026: Roof_inner
+    4300000: Door
+    4300002: Door_Frame
+    4300004: Grass_MeshPart0
+    4300006: Grass_MeshPart1
+    4300008: Grass_MeshPart2
+    4300010: Grass_MeshPart3
+    4300012: House
+    4300014: Object001_MeshPart0
+    4300016: Object001_MeshPart1
+    4300018: Object001_MeshPart2
+    4300020: Object001_MeshPart3
+    4300022: Object001_MeshPart4
+    4300024: Plane001
+    4300026: Roof_inner
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.5
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

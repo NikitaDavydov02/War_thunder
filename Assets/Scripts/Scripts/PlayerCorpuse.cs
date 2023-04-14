@@ -78,7 +78,7 @@ public class PlayerCorpuse : Corpuse {
 
     private void ThisTankDestroied()
     {
-        MainManager.buttleResult.SetPuti(puti);
+        MainManager.buttleResult.Way = puti;
         alive = false;
     }
 }

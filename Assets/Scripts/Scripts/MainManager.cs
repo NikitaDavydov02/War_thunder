@@ -7,7 +7,7 @@ public class MainManager : MonoBehaviour {
     public static MusicManager musicManager;
     public static ButtleResult buttleResult;
     public static ButtleManager buttleManager;
-    public static TankLibrary tankLibrary;
+    public static TechnicsLibrary technicsLibrary;
     public static RoadManager roadManager;
     //public static ButtleManager buttleManager;
     // Use this for initialization
@@ -15,7 +15,7 @@ public class MainManager : MonoBehaviour {
         userInterfaseManager = GetComponent<UIManager>();
         musicManager = GetComponent<MusicManager>();
         buttleResult = GetComponent<ButtleResult>();
-        tankLibrary = GetComponent<TankLibrary>();
+        technicsLibrary = GetComponent<TechnicsLibrary>();
         buttleManager = GetComponent<ButtleManager>();
         roadManager = GetComponent<RoadManager>();
         //buttleManager = GetComponent<ButtleManager>();

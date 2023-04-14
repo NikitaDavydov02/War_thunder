@@ -38,7 +38,7 @@ public class ButtleManager : MonoBehaviour {
         allblue = new List<GameObject>();
         for(int i = 0; i < redCount-1; i++)
         {
-            GameObject tank = Instantiate(MainManager.tankLibrary.GetRandomTank()) as GameObject;
+            GameObject tank = Instantiate(MainManager.technicsLibrary.GetRandomHumanTank()) as GameObject;
             Debug.Log("Random tank: "+tank);
             if (redSpawns.Count <= i)
                 continue;
@@ -47,14 +47,8 @@ public class ButtleManager : MonoBehaviour {
             tank.name = "player" + i;
             allred.Add(tank);
         }
-        string humanTankName = ButtleStartSettings.humantankname;
-        Debug.Log("Human tank name: "+ButtleStartSettings.humantankname);
-        //GameObject humanTankPrefab = MainManager.tankLibrary.GetHumanTankByName("Tiger I");
-        //GameObject humanTankPrefab = MainManager.tankLibrary.GetHumanTankByName("Т-34");
-        GameObject humanTankPrefab = MainManager.tankLibrary.GetHumanTankByName(humanTankName);
-        Debug.Log("Tank lybrary: " + MainManager.tankLibrary);
-        Debug.Log("Tank lybary random tank: " + MainManager.tankLibrary.GetHumanTankByName(humanTankName));
-        humanTank = Instantiate(humanTankPrefab)as GameObject;
+        //string humanTankName = ButtleStartSettings.humantankname;
+        //humanTank = Instantiate(humanTankPrefab)as GameObject;
         Debug.Log("humanTank: " + humanTank);
         humanTank.transform.position = new Vector3(1110, 15, 3900);
         humanTank.transform.Rotate(0, 180, 0);
@@ -67,7 +61,7 @@ public class ButtleManager : MonoBehaviour {
         for (int i = 0; i < blueCount; i++)
         {
             GameObject tank;
-            tank = Instantiate(MainManager.tankLibrary.GetRandomTank()) as GameObject;
+            tank = Instantiate(MainManager.technicsLibrary.GetRandomHumanTank()) as GameObject;
             if (blueSpawns.Count <= i)
                 continue;
             tank.transform.position = blueSpawns[i];
@@ -183,13 +177,13 @@ public class ButtleManager : MonoBehaviour {
         {
             MainManager.userInterfaseManager.EndOfButtle("Победа!");
             MainManager.musicManager.Win();
-            MainManager.buttleResult.SetWin(true);
+            MainManager.buttleResult.Win = true;
             gameFinished = true;
         }
         if (red.Count == 0 || redScore == 0 || blueScore == 100)
         {
             MainManager.userInterfaseManager.EndOfButtle("Поражение!");
-            MainManager.buttleResult.SetWin(false);
+            MainManager.buttleResult.Win = false;
             MainManager.musicManager.Fail();
             gameFinished = true;
         }

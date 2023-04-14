@@ -10,7 +10,7 @@ public class TechnicsLibrary : MonoBehaviour {
     private List<Technic> humanTanks;
     private List<Technic> humanPlanes;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         humanPlanes = new List<Technic>();
         humanTanks = new List<Technic>();
 

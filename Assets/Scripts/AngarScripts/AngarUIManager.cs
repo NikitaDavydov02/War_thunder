@@ -36,9 +36,10 @@ public class AngarUIManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        buttleResultPanel.gameObject.SetActive(false);
         //audioManager = this.gameObject.GetComponent<AngarAudioManager>();
         //angarTankManager = this.gameObject.GetComponent<AngarTankManager>();
-       // SaveManager.LoadGameState();
+        // SaveManager.LoadGameState();
         //if (MainManager.buttleResult == null)
         //{
         //    buttleResultPanel.gameObject.SetActive(false);

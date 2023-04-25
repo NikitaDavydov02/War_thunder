@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SceneCamera : MonoBehaviour {
-    [SerializeField]
+    //REFACTORED_1
     private Transform target;
-    [SerializeField]
     private Transform gun;
     //[SerializeField]
     //private Material tex;
     public float rotSpeeed = 1.5f;
+    public Vector3 _zoomOffset;
+
+
     private float _rotY;
     private Vector3 _offset;
-    private Vector3 _memoryOffset;
-    public Vector3 _zoomOffset;
+    //private Vector3 _memoryOffset;
     private bool inZoom = false;
     public float vertSpeed = 3f;
     public float maxYOffset = 5f;
@@ -22,17 +23,18 @@ public class SceneCamera : MonoBehaviour {
     public float minDistance = 5f;
     public float zoomSpeed = 5f;
     private float distance;
-    [SerializeField]
-    public ModuleController controller;
+    private ModuleController controller;
     public float rotXYSpeed = 10f;
     private float lastDeathRotXY = 0;
     [SerializeField]
     ButtleManager buttleManager;
-    private bool  bulletCam =false;
-    private Transform lastBullet;
+    private Camera cam;
+    //private bool  bulletCam =false;
+    //private Transform lastBullet;
     // Use this for initialization
-    void Start () {
-        this.GetComponent<Camera>().farClipPlane = 4000;
+    void Awake () {
+        cam = this.GetComponent<Camera>();
+        cam.farClipPlane = 4000;
         _rotY = transform.eulerAngles.y;
         _offset = new Vector3(0, -5, 10);
         distance = _offset.magnitude;
@@ -40,6 +42,8 @@ public class SceneCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+        if (target == null)
+            return;
         if (!inZoom)
         {
             float deltaVert = Input.GetAxis("Mouse Y");
@@ -57,34 +61,25 @@ public class SceneCamera : MonoBehaviour {
             float k = distance / _offset.magnitude;
             _offset *= k;
             Quaternion rotation;
-            if (!bulletCam)
+
+            if (controller!=null && controller.alive)
             {
-                if (controller.alive)
-                    rotation = Quaternion.Euler(0, target.eulerAngles.y, 0);
-                else
-                {
-                    lastDeathRotXY += Input.GetAxis("Mouse X") * rotXYSpeed * Time.deltaTime;
-                    rotation = Quaternion.Euler(0, target.eulerAngles.y + lastDeathRotXY, 0);
-                }
-                transform.position = target.position - (rotation * _offset);
-                transform.LookAt(target);
+                rotation = Quaternion.Euler(0, target.eulerAngles.y, 0);
+                //Debug.Log("Attached"+ target.eulerAngles.y);
             }
             else
             {
-                rotation = Quaternion.Euler(0, lastBullet.eulerAngles.y, 0);
-                transform.position = lastBullet.position - (rotation * _offset);
-                transform.LookAt(lastBullet);
+                lastDeathRotXY += Input.GetAxis("Mouse X") * rotXYSpeed * Time.deltaTime;
+                rotation = Quaternion.Euler(0, target.eulerAngles.y + lastDeathRotXY, 0);
             }
+            transform.position = target.position - (rotation * _offset);
+            transform.LookAt(target);
         }
         else
         {
             if (!controller.alive)
             {
-                if (inZoom)
-                {
-                    Zoom();
-                    Messenger.Broadcast(GameEvent.PRICEL);
-                }
+                ZoomOut();
                 return;
             }
             transform.position = gun.position;
@@ -94,59 +89,39 @@ public class SceneCamera : MonoBehaviour {
         }
 	}
 
-    private bool targetGot = false;
     void Update()
     {
-        if (!targetGot)
-        {
-            target = MainManager.buttleManager.humanTank.transform;
-            if (target != null)
-            {
-                controller = target.transform.gameObject.GetComponent<ModuleController>();
-                target = controller.tower.transform;
-                gun = controller.gun.transform;
-                targetGot = true;
-            }
-        }
+        if (target == null)
+            return;
         if (Input.GetKeyDown(KeyCode.V))
         {
-            Zoom();
-            Messenger.Broadcast(GameEvent.PRICEL);
-        }
-        else
-        {
-            bulletCam = false;
+            SwitchZoom();
         }
     }
+    public void SetTargetForCamera(Transform target, Transform gun, ModuleController controller=null)
+    {
+        this.target = target;
+        this.gun = gun;
+        this.controller = controller;
+    }
+    private void SwitchZoom()
+    {
 
-    private void Zoom()
-    {
-        Camera cam = this.gameObject.GetComponent<Camera>();
-        if (cam != null)
-        {
-            if (inZoom)
-                cam.fieldOfView = 60;
-            else
-                cam.fieldOfView = 3;
-        }
-        inZoom = !inZoom;
-    }
-    public void NewTargetForCamara(int index)
-    {
-        Debug.Log("New Target");
-        if (controller.alive)
-            return;
-        Debug.Log("Index of new Target:" + index);
-        Debug.Log(buttleManager.allred.Count);
-        Debug.Log(buttleManager.allblue.Count);
-        if (index<buttleManager.allred.Count)
-        {
-            target = buttleManager.allred[index].transform;
-        }
+        if (inZoom)
+            ZoomOut();
         else
-        {
-            if(index - buttleManager.allred.Count< buttleManager.allblue.Count)
-            target = buttleManager.allblue[index - buttleManager.allblue.Count].transform;
-        }
+            ZoomIn();
+    }
+    public void ZoomOut()
+    {
+        cam.fieldOfView = 60;
+        inZoom = false;
+        MainManager.userInterfaseManager.Pricel(false);
+    }
+    public void ZoomIn()
+    {
+        cam.fieldOfView = 3;
+        inZoom = true;
+        MainManager.userInterfaseManager.Pricel(true);
     }
 }

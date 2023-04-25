@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TechnicsLibrary : MonoBehaviour {
+    //REFACTORED_1
     //[SerializeField]
     //private List<GameObject> stSovetsSecondRang;
     [SerializeField]

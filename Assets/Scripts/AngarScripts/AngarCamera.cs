@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AngarCamera : MonoBehaviour {
-    private float rotY;
-    private float rotX;
-    private float distance;
+    //REFACTORED
     public float maxDistance = 20;
     public float zoomSpeed;
     public float minDistance = 1;
     public float maxRotX = 60;
     public float minRotX = 0;
-    private Vector3 offset;
-    //[SerializeField]
-    //Vector3 targetPoint;
     public float yRotSpeed;
     public float xRotSpeed;
     public Transform target { get; set; }
+
+    private float rotY;
+    private float rotX;
+    private float distance;
+    private Vector3 offset;
     // Use this for initialization
     void Start () {
         rotY = transform.eulerAngles.y;

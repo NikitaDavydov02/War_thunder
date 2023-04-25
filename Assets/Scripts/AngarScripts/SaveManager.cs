@@ -30,9 +30,7 @@ public class SaveManager : MonoBehaviour {
 
     public void SaveGame()
     {
-        Debug.Log("Saving:");
         filename = Path.Combine(Application.persistentDataPath, "game.dat");
-        Debug.Log(filename);
         Dictionary<string, object> gamestate = new Dictionary<string, object>();
         gamestate.Add("silver", silver);
         gamestate.Add("gold", gold);

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtleResult : MonoBehaviour {
+    //REFACTORED
     public int frags { get; private set; } = 0;
     public int silver { get; private set; }
     public int expirience { get; private set; }
     public int shoots { get; private set; }
-    public float Way { get; set; }
     public bool Win { get; set; }
     // Use this for initialization
     void Start () {

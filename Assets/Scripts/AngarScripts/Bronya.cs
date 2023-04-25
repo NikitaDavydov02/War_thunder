@@ -3,17 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bronya : MonoBehaviour {
-    public float bronya;
-    public bool prioritet = false;
-    public bool list = false;
+    //REFACTORED
     [SerializeField]
-    Material usualTexture;
-    [SerializeField]
-    Material bronyaTexture;
+    public float bronyaThickness;
+    //public bool list { get; private set; }= false;
+    private Material usualTexture;
+    //[SerializeField]
+    private Material bronyaTexture;
     // Use this for initialization
     void Start () {
-		
-	}
+        usualTexture = gameObject.GetComponent<MeshRenderer>().material;
+        if (bronyaThickness < 50)
+            bronyaTexture = Resources.Load("Materials/ThickArmor") as Material;
+        else if(bronyaThickness < 100)
+            bronyaTexture = Resources.Load("Materials/MiddleArmor") as Material;
+        else
+        {
+            bronyaTexture = Resources.Load("Materials/HeavyArmor") as Material;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,35 +37,4 @@ public class Bronya : MonoBehaviour {
         }
     }
 
-    void OnTriggerIn(Collider other)
-    {
-        if (bronya == 0)
-        {
-            Debug.Log("Oi v meny popali!");
-        }
-        Detonator detonator = other.gameObject.GetComponent<Detonator>();
-        if (detonator != null)
-        {
-            if (detonator.probitie < bronya)
-            {
-                Destroy(detonator.transform.parent.gameObject);
-                Debug.Log("Ne voshel "+gameObject.name);
-            }
-            else
-            {
-                detonator.probitie -= bronya;
-                Debug.Log("Voshel " + gameObject.name);
-            }
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (list)
-            return;
-        Detonator detonator = other.gameObject.GetComponent<Detonator>();
-        if (detonator != null)
-        {
-            Destroy(detonator.transform.parent.gameObject);
-        }
-    }
 }

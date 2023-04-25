@@ -3,50 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CorpuseAudioManager : MonoBehaviour {
+    //REFACTORED_1
     public AudioSource engineAudioSource;
     [SerializeField]
     public AudioClip stopClip;
     [SerializeField]
     public AudioClip gazClip;
-    private bool gaz = false;
-    private bool trekZapushen = false;
+    public float k = 1;
     // Use this for initialization
     void Start () {
-		
+        engineAudioSource.clip = stopClip;
+        engineAudioSource.Play();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (!gaz)
-        {
-            if ((!trekZapushen && !engineAudioSource.isPlaying) || engineAudioSource.clip == gazClip)
-            {
-                engineAudioSource.clip = stopClip;
-                engineAudioSource.Play();
-                trekZapushen = true;
-            }
-            else
-            {
-                trekZapushen = false;
-            }
-        }
-        else
-        {
-            if ((!trekZapushen && !engineAudioSource.isPlaying) || engineAudioSource.clip == stopClip)
-            {
-                engineAudioSource.clip = gazClip;
-                engineAudioSource.Play();
-                trekZapushen = true;
-            }
-            else
-            {
-                trekZapushen = false;
-            }
-        }
     }
 
-    public void ChangeGaz(bool newGaz)
+    public void ChangePitch(float pitch)
     {
-        gaz = newGaz;
+        engineAudioSource.pitch = 1 - pitch/2;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AngarAudioManager : MonoBehaviour {
+    //REFACTORED
     [SerializeField]
     private AudioSource audioSource;
     [SerializeField]
@@ -13,10 +14,10 @@ public class AngarAudioManager : MonoBehaviour {
     private AudioClip defeatClip;
     // Use this for initialization
     void Start () {
-        if (music!=null && music.Count>0)
-        {
-            PlayMusic(Resources.Load("Music/" + music[0]) as AudioClip);
-        }
+        //if (music!=null && music.Count>0)
+        //{
+        //    PlayMusic(Resources.Load("Music/" + music[0]) as AudioClip);
+        //}
 	}
 	
 	// Update is called once per frame
@@ -36,8 +37,6 @@ public class AngarAudioManager : MonoBehaviour {
     }
     private void PlayMusic(AudioClip clip)
     {
-        //if (audioSource.isPlaying)
-        //    return;
         audioSource.clip = clip;
         audioSource.Play();
     }

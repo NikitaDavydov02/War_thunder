@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
+    //UI Elements
+    [SerializeField]
+    private Canvas canvas;
     [SerializeField]
     private List<GameObject> pricel;
     [SerializeField]
@@ -15,7 +18,7 @@ public class UIManager : MonoBehaviour {
     private Button angar;
     [SerializeField]
     private Text humanDestroy;
-    private static  bool pricelIsActive = false;
+    
     [SerializeField]
     private Text moduleDameged;
     [SerializeField]
@@ -23,13 +26,13 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Text moduleDestroied;
     [SerializeField]
-    private List<Text> redComandText;
+    private Dictionary<GameObject, Text> redComandText;
     [SerializeField]
-    private List<Text> blueComandText;
+    private Dictionary<GameObject, Text> blueComandText;
     [SerializeField]
-    private List<Button> redComandButton;
+    private Dictionary<GameObject,Button> redComandButtons;
     [SerializeField]
-    private List<Button> blueComandButton;
+    private Dictionary<GameObject,Button> blueComandButtons;
     [SerializeField]
     AudioSource UIAudioSource;
     [SerializeField]
@@ -39,21 +42,31 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     Slider blueScoreComand;
     [SerializeField]
-    private List<Text> redComandFragsText;
+    private Dictionary<GameObject, Text> redComandFragText;
     [SerializeField]
-    private List<Text> blueComandFragsText;
-    public List<int> redFrags;
-    public List<int> blueFrags;
-    public int currentCurbIndex = 0;
+    private Dictionary<GameObject, Text> blueComandFragText;
     [SerializeField]
     public Button tankButton;
     [SerializeField]
     private Text distanceText;
     [SerializeField]
     private Text RepairTimeText;
-    public float distance;
+
+    //Prefabs
+    [SerializeField]
+    private Button redComandButtonPrefab;
+    [SerializeField]
+    private Button blueComandButtonPrefab;
+    //public List<int> redFrags;
+    //public List<int> blueFrags;
+    public int currentCurbIndex = 0;
+    
+    //public float distance;
     // Use this for initialization
     void Start () {
+        redComandText = new Dictionary<GameObject, Text>();
+        blueComandText = new Dictionary<GameObject, Text>();
+
         foreach (GameObject o in pricel)
             o.gameObject.SetActive(false);
         centralText.gameObject.SetActive(false);
@@ -61,40 +74,19 @@ public class UIManager : MonoBehaviour {
         angar.gameObject.SetActive(false);
         humanDestroy.gameObject.SetActive(false);
         RepairTimeText.gameObject.SetActive(false);
-        for (int i = 0; i < redComandText.Count; i++)
-        {
-            redFrags.Add(0);
-            redComandFragsText[i].text = "0";
-        }
-        for (int i = 0; i < blueComandText.Count; i++)
-        {
-            blueFrags.Add(0);
-            blueComandFragsText[i].text = "0";
-        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (pricelIsActive)
-            distanceText.text = distance.ToString();
-        else
-            distanceText.text = "";
-	}
-
-    void Awake()
-    {
-        Messenger.AddListener(GameEvent.PRICEL, Pricel);
-        Messenger.AddListener(GameEvent.HUMANTANKDESTROIED, HumanDestroied);
+        redScoreComand.value = (MainManager.buttleManager.redScore / 100) * redScoreComand.maxValue;
+        blueScoreComand.value = (MainManager.buttleManager.blueScore / 100) * blueScoreComand.maxValue;
     }
-
-    void OnDestroy()
-    {
-        Messenger.RemoveListener(GameEvent.PRICEL, Pricel);
-        Messenger.RemoveListener(GameEvent.HUMANTANKDESTROIED, HumanDestroied);
-    }
-    private void HumanDestroied()
+    public void ThisPlayerIsDestroied()
     {
         StartCoroutine(SomeoneDestroied("Танк уничтожен!"));
+        MainManager.Camera.ZoomOut();
+        
+
     }
     private IEnumerator SomeoneDestroied(string messenge)
     {
@@ -103,19 +95,10 @@ public class UIManager : MonoBehaviour {
         yield return new WaitForSeconds(10f);
         centralText.gameObject.SetActive(false);
     }
-    private void Pricel()
+    public void Pricel(bool activate)
     {
-        if (pricelIsActive)
-        {
-            foreach (GameObject o in pricel)
-                o.gameObject.SetActive(false);
-        }
-        else
-        {
-            foreach (GameObject o in pricel)
-                o.gameObject.SetActive(true);
-        }
-        pricelIsActive = !pricelIsActive;
+        foreach (GameObject o in pricel)
+            o.gameObject.SetActive(activate);
     }
     public void EndOfButtle(string result)
     {
@@ -123,157 +106,125 @@ public class UIManager : MonoBehaviour {
         resultText.gameObject.SetActive(true);
         angar.gameObject.SetActive(true);
     }
-    public void Angar()
-    {
-        Application.LoadLevel("Angar");
-    }
+    //public void Angar()
+    //{
+    //    Application.LoadLevel("Angar");
+    //}
+    //Modules or thecnics that human destriyed
     public IEnumerator HumanDestroy()
     {
         humanDestroy.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
         humanDestroy.gameObject.SetActive(false);
     }
-    public IEnumerator ModuleDamaged(string name)
+    public void ModuleDamaged(string name)
+    {
+        StartCoroutine(ModuleDamagedCoroutine(name));
+    }
+    private IEnumerator ModuleDamagedCoroutine(string name)
     {
         moduleDameged.text += ("\n" + name);
         yield return new WaitForSeconds(3f);
         moduleDameged.text = "";
     }
-    public IEnumerator ModuleCrit(string name)
+    public void ModuleCrit(string name)
+    {
+        StartCoroutine(ModuleCritCoroutine(name));
+    }
+    private IEnumerator ModuleCritCoroutine(string name)
     {
         moduleCrit.text += ("\n" + name);
         yield return new WaitForSeconds(3f);
         moduleCrit.text = "";
     }
-    public IEnumerator ModuleDestroied(string name)
+    public void ModuleDestroied(string name)
+    {
+        StartCoroutine(ModuleDestroiedCoroutine(name));
+    }
+    private IEnumerator ModuleDestroiedCoroutine(string name)
     {
         moduleDestroied.text += ("\n" + name);
         yield return new WaitForSeconds(3f);
         moduleDestroied.text = "";
     }
 
-    //public void InicializeComands(List<string>red, List<string> blue)
-    //{
-    //    for(int i = 0; i < redComandText.Count; i++)
-    //    {
-    //        if (i < red.Count)
-    //            redComandText[i].text = red[i];
-    //        else
-    //        {
-    //            redComandButton[i].image.color= new Color(128, 128, 128, 255);
-    //        }
-    //    }
-    //    for (int i = 0; i < blueComandText.Count; i++)
-    //    {
-    //        if (i < blue.Count)
-    //            blueComandText[i].text = blue[i];
-    //        else
-    //        {
-    //            blueComandButton[i].GetComponent<Image>().color= new Color(128, 128, 128, 255);
-    //            //blueComandImage[i].color = new Color(128, 128, 128, 255);
-    //        }
-    //    }
-    //}
-    public void InicializeRedComand(List<string> red)
+
+    public void InicializeRedComand(List<GameObject> red)
     {
         if (red == null)
             return;
-        //Button b = Canvas.Instantiate(tankButton) as Button;
-        //b.GetComponent<RectTransform>().position = new Vector3(10, 10, 10);
-        for (int i = 0; i < redComandText.Count; i++)
+        redComandText = new Dictionary<GameObject, Text>();
+        redComandButtons = new Dictionary<GameObject, Button>();
+        redComandFragText = new Dictionary<GameObject, Text>();
+        for (int i = 0; i < red.Count; i++)
         {
-            if (i < red.Count)
-                redComandText[i].text = red[i];
-            else
-            {
-                redComandButton[i].image.color = new Color(128, 128, 128, 255);
-            }
+            Button button = Instantiate(CanvasScaler.Instantiate(redComandButtonPrefab)) as Button;
+            button.GetComponent<RectTransform>().SetParent(canvas.transform);
+            //button.transform.position = new Vector3(100, 100 * i, 0);
+            button.GetComponent<RectTransform>().anchoredPosition = new Vector2(80, -15-25 * i);
+            redComandButtons.Add(red[i], button);
+
+            Text playerName = button.transform.GetChild(0).GetComponent<Text>();
+            playerName.text = red[i].name;
+            redComandText.Add(red[i], playerName);
+
+            Text playerFrags = button.transform.GetChild(1).GetComponent<Text>();
+            playerFrags.text = "0";
+            redComandFragText.Add(red[i], playerFrags);
+            //redComandButtons[i].image.color = new Color(128, 128, 128, 255);
+            //button.GetComponent<RectTransform>().localScale = playerHPSlider.GetComponent<RectTransform>().localScale;
         }
     }
-    public void InicializeBlueComand(List<string> blue)
+    public void InicializeBlueComand(List<GameObject> blue)
     {
         if (blue == null)
             return;
-        for (int i = 0; i < blueComandText.Count; i++)
+        blueComandText = new Dictionary<GameObject, Text>();
+        blueComandButtons = new Dictionary<GameObject, Button>();
+        blueComandFragText = new Dictionary<GameObject, Text>();
+        for (int i = 0; i < blue.Count; i++)
         {
-            if (i < blue.Count)
-                blueComandText[i].text = blue[i];
-            else
-            {
-                blueComandButton[i].GetComponent<Image>().color = new Color(128, 128, 128, 255);
-                //blueComandImage[i].color = new Color(128, 128, 128, 255);
-            }
+            Button button = Instantiate(CanvasScaler.Instantiate(blueComandButtonPrefab)) as Button;
+            button.GetComponent<RectTransform>().SetParent(canvas.transform);
+            //button.transform.position = new Vector3(100, 100 * i, 0);
+            button.GetComponent<RectTransform>().anchoredPosition = new Vector2(-80, -15 - 25 * i);
+            blueComandButtons.Add(blue[i], button);
+
+            Text playerName = button.transform.GetChild(0).GetComponent<Text>();
+            playerName.text = blue[i].name;
+            blueComandText.Add(blue[i], playerName);
+
+            Text playerFrags = button.transform.GetChild(1).GetComponent<Text>();
+            playerFrags.text = "0";
+            blueComandFragText.Add(blue[i], playerFrags);
+            //redComandButtons[i].image.color = new Color(128, 128, 128, 255);
+            //button.GetComponent<RectTransform>().localScale = playerHPSlider.GetComponent<RectTransform>().localScale;
         }
     }
-
-    public void RemoveTank(string name)
+    public void RemoveTank(GameObject player)
     {
-        for (int i = 0; i < redComandText.Count; i++)
+        Debug.Log("Blue buttons: "+blueComandButtons.Count);
+        if (redComandButtons.ContainsKey(player))
+            redComandButtons[player].GetComponent<Image>().color = new Color(0, 0, 1, 1);
+        if (blueComandButtons.ContainsKey(player))
         {
-            if (redComandText[i].text == name)
-            {
-                //redComandText[i].color = new Color(300, 300, 300, 255);
-                redComandButton[i].image.color = new Color(255,0,0);
-                redComandText[i].text = "";
-            }
+            blueComandButtons[player].GetComponent<Image>().color = new Color(0, 0, 1, 0.5f);
+            Debug.Log("Color changed");
         }
-        for(int i = 0; i < blueComandText.Count; i++)
-        {
-            if (blueComandText[i].text == name)
-            {
-                //blueComandText[i].color = new Color(300, 300, 300, 255);
-                blueComandButton[i].image.color = new Color(62,0,255);
-                blueComandText[i].text = "";
-            }
-        }
+       //Text
     }
 
-    public void CurbButton(int index)
+    public void SwitchCurb()
     {
-        currentCurbIndex = index;
         UIAudioSource.PlayOneShot(curbButtonClip);
     }
-    public void UpdateComandScore(float redScore, float blueScore)
+    public void UpdateFrag(GameObject player, int fragCount)
     {
-        redScoreComand.value = (redScore / 100) * redScoreComand.maxValue;
-        blueScoreComand.value = (blueScore / 100) * blueScoreComand.maxValue;
-    }
-    public void AddFragTo(string fragMaker)
-    {
-        Debug.Log("FragMaker: " + fragMaker);
-        for(int i = 0; i < redComandText.Count; i++)
-        {
-            if (redComandText[i].text == fragMaker)
-            {
-                redFrags[i]++;
-                redComandFragsText[i].text = redFrags[i].ToString();
-            }
-        }
-        for (int i = 0; i < blueComandText.Count; i++)
-        {
-            if (blueComandText[i].text == fragMaker)
-            {
-                blueFrags[i]++;
-                blueComandFragsText[i].text = blueFrags[i].ToString();
-            }
-        }
-    }
-    public void AddBlue(string blueTank)
-    {
-        for (int i = 0; i < redComandText.Count; i++)
-        {
-            if (redComandText[i].text == blueTank)
-                redComandText[i].color = new Color(0, 100, 100);
-        }
-        for (int i = 0; i < blueComandText.Count; i++)
-        {
-            if (blueComandText[i].text == blueTank)
-                blueComandText[i].color = new Color(0, 100, 100);
-        }
-    }
-    public void UpdateDistance(float distance)
-    {
-        this.distance = distance;
+        if (redComandFragText.ContainsKey(player))
+            redComandFragText[player].text = fragCount.ToString();
+        if (blueComandFragText.ContainsKey(player))
+            blueComandFragText[player].text = fragCount.ToString();
+        
     }
     public void UpdateRepairTime(float time)
     {

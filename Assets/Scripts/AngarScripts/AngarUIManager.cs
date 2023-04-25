@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class AngarUIManager : MonoBehaviour {
+    //REFACTORED
 
-    //private int serebro;
-    //private int golda;
-    //private int exp;
-    //public static int frags;
     [SerializeField]
     private Text silverLabel;
     [SerializeField]
@@ -31,48 +28,17 @@ public class AngarUIManager : MonoBehaviour {
     [SerializeField]
     private List<Button> tanksButtons;
 
-    //private AngarAudioManager audioManager;
-    //private AngarTankManager angarTankManager;
-
     // Use this for initialization
     void Start () {
         buttleResultPanel.gameObject.SetActive(false);
-        //audioManager = this.gameObject.GetComponent<AngarAudioManager>();
-        //angarTankManager = this.gameObject.GetComponent<AngarTankManager>();
-        // SaveManager.LoadGameState();
-        //if (MainManager.buttleResult == null)
-        //{
-        //    buttleResultPanel.gameObject.SetActive(false);
-        //    //silverLabel.text = SaveManager.serebro;
-        //    //exp = SaveManager.exp;
-        //}
-        //else
-        //{
-        //    audioManager.PlayWin(MainManager.buttleResult.win);
-        //    buttleResultPanel.gameObject.SetActive(true);
-        //    serebroResultLabel.text = MainManager.buttleResult.serebro.ToString();
-        //    expResultLabel.text = MainManager.buttleResult.expirience.ToString();
-        //    frags = MainManager.buttleResult.GetFrags();
-        //    ShootsLabel.text = MainManager.buttleResult.shoots.ToString();
-        //    PutLabel.text = MainManager.buttleResult.puti.ToString();
-
-        //    serebro = SaveManager.serebro + MainManager.buttleResult.serebro;
-        //    exp = SaveManager.exp + MainManager.buttleResult.expirience;
-        //}
-        //golda = SaveManager.golda;
-        //SaveManager.UpdateResources(serebro, exp);
-        //serebroLabel.text = serebro.ToString();
-        //goldaLabel.text = golda.ToString();
-        //expLabel.text = exp.ToString();
-        //fragsLabel.text = frags.ToString();
     }
-	public void DisplayButtleResults(int silver, int experience, int frags, float way)
+	public void DisplayButtleResults(int silver, int experience, int frags)
     {
         buttleResultPanel.gameObject.SetActive(true);
         silverResultLabel.text = silver.ToString();
         experienseResultLabel.text = experience.ToString();
         fragsLabel.text = frags.ToString();
-        WayLabel.text = way.ToString();
+        WayLabel.text = "";
 
     }
     public void DisplayUsersSavings(int gold, int silver, int experience)
@@ -83,20 +49,11 @@ public class AngarUIManager : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        //silverLabel.text=AngarMainManager.saveManager.
-        //fragsLabel.text=frags.ToString();
 	}
 
     public void Buttle()
     {
         AngarMainManager.Buttle();
-        //SaveManager.SaveGame();
-        //Application.LoadLevel("Конго");
-    }
-    void OnDestroy()
-    {
-        
-        //SaveManager.SaveGame();
     }
     public void CloseButtleResultPanel()
     {

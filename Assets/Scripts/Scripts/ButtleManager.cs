@@ -5,100 +5,77 @@ using UnityEngine;
 public class ButtleManager : MonoBehaviour {
 
 
-    public List<GameObject> blue{ get; private set; }
-    public List<GameObject> red { get; private set; }
+    //public List<GameObject> currentBlue{ get; private set; }
+    //public List<GameObject> currentRed { get; private set; }
     
     public List<GameObject> allblue { get; private set; }
     
     public List<GameObject> allred { get; private set; }
-
-    private int howManyHumanDestroied = 0;
-    public bool gameFinished = false;
-    public float blueScore = 50;
-    public float redScore = 50;
-    public int blueScoreDelta = 0;
-    public int redScoreDelta = 0;
-    public float scoreSpeed = 0.01f;
-    private bool redComandInicialized = false;
-    private bool blueComandInicialized = false;
-    private bool namePoslani = false;
-    public List<string> redNames { get; private set; }
-    public List<string> blueNames { get; private set; }
-    private bool chekerWasAnabled = false;
+    public float blueScore { get; private set; } = 50;
+    public float redScore { get; private set; } = 50;
+    public int blueScoreDelta { get; private set; } = 0;
+    public int redScoreDelta { get; private set; } = 0;
+    private float scoreSpeed = 0.01f;
     [SerializeField]
     public List<Vector3> redSpawns;
     [SerializeField]
     public List<Vector3> blueSpawns;
-    public GameObject humanTank;
-    public int redCount = 4;
-    public int blueCount = 4;
+
+    //Frags
+    private Dictionary<GameObject, int> redFrags;
+    private Dictionary<GameObject, int> blueFrags;
+    public GameObject clientTank { get; private set; } = null;
+
+    private Dictionary<GameObject, ButtleResult> results;
+    
+    
+    //public GameObject humanTank;
+    public int redCurrentCount =2;
+    public int blueCurrentCount = 2;
     // Use this for initialization
-    void Start () {
+    void Awake () {
         allred = new List<GameObject>();
         allblue = new List<GameObject>();
-        for(int i = 0; i < redCount-1; i++)
+
+        redFrags = new Dictionary<GameObject, int>();
+        blueFrags = new Dictionary<GameObject, int>();
+
+        results = new Dictionary<GameObject, ButtleResult>();
+
+        for(int i = 0; i < redCurrentCount; i++)
         {
             GameObject tank = Instantiate(MainManager.technicsLibrary.GetRandomHumanTank()) as GameObject;
-            Debug.Log("Random tank: "+tank);
             if (redSpawns.Count <= i)
                 continue;
             tank.transform.position = redSpawns[i];
             tank.transform.Rotate(0, 180, 0);
-            tank.name = "player" + i;
+            tank.name = "playerRed" + i;
             allred.Add(tank);
+            redFrags.Add(tank, 0);
+            results.Add(tank, new ButtleResult());
         }
-        //string humanTankName = ButtleStartSettings.humantankname;
-        //humanTank = Instantiate(humanTankPrefab)as GameObject;
-        Debug.Log("humanTank: " + humanTank);
-        humanTank.transform.position = new Vector3(1110, 15, 3900);
-        humanTank.transform.Rotate(0, 180, 0);
-        humanTank.name = "Т-34";
-        allred.Add(humanTank);
-        Debug.Log("All red: " + allred.Count);
-
-
-        //allred.Add(humanTank);
-        for (int i = 0; i < blueCount; i++)
+        for (int i = 0; i < blueCurrentCount; i++)
         {
             GameObject tank;
             tank = Instantiate(MainManager.technicsLibrary.GetRandomHumanTank()) as GameObject;
             if (blueSpawns.Count <= i)
                 continue;
             tank.transform.position = blueSpawns[i];
-            tank.name = "playerr" + i;
+            tank.name = "playerBlue" + i;
             allblue.Add(tank);
-        }
-        Debug.Log("All blue: " + allblue.Count);
-
-        List<string> redNames = new List<string>();
-        List<string> blueNames = new List<string>();
-        red = new List<GameObject>();
-        blue = new List<GameObject>();
-        foreach (GameObject tank in allred)
-        {
-            redNames.Add(tank.name);
-            red.Add(tank);
-        }
-        foreach (GameObject tank in allblue)
-        {
-            blueNames.Add(tank.name);
-            blue.Add(tank);
+            blueFrags.Add(tank, 0);
+            results.Add(tank, new ButtleResult());
         }
         
-        MainManager.userInterfaseManager.InicializeRedComand(redNames);
-        MainManager.userInterfaseManager.InicializeBlueComand(blueNames);
+        
+        MainManager.userInterfaseManager.InicializeRedComand(allred);
+        MainManager.userInterfaseManager.InicializeBlueComand(allblue);
     }
 
     // Update is called once per frame
     void Update () {
-        if (gameFinished)
+        if (MainManager.GameStatus!=GameStatus.Playing)
             return;
-        while (!namePoslani)
-        {
-            MainManager.userInterfaseManager.InicializeBlueComand(blueNames);
-            MainManager.userInterfaseManager.InicializeRedComand(redNames);
-            namePoslani = true;
-        }
         redScore += redScoreDelta * Time.deltaTime * scoreSpeed;
         blueScore += blueScoreDelta * Time.deltaTime * scoreSpeed;
         if (redScore > 100)
@@ -109,126 +86,95 @@ public class ButtleManager : MonoBehaviour {
             blueScore = 100;
         if (blueScore < 0)
             blueScore = 0;
-        MainManager.userInterfaseManager.UpdateComandScore(redScore, blueScore);
 
-        List<GameObject> mustbeRemovedB = new List<GameObject>();
-        List<GameObject> mustbeRemovedR = new List<GameObject>();
-
-        foreach (GameObject b in blue)
+        if (redScore==100 || blueCurrentCount==0)
         {
-            ModuleController mc = b.GetComponent<ModuleController>();
-            if (mc.alive == false)
-            {
-                bool tyblue = false;
-                foreach (GameObject bc in blue)
-                {
-                    if (bc.name == mc.fatalityName)
-                        tyblue = true;
-                }
-                Debug.Log("Killer: " + mc.fatalityName);
-                MainManager.userInterfaseManager.RemoveTank(b.name);
-                if (!tyblue)
-                {
-                    MainManager.userInterfaseManager.AddFragTo(mc.fatalityName);
-                    if (mc.fatalityName == MainManager.buttleManager.humanTank.name)
-                    {
-                        MainManager.buttleResult.AddFrag();
-                        Debug.Log("Frag v kopilku");
-                    }
-                }
-                else
-                    MainManager.userInterfaseManager.AddBlue(mc.fatalityName);
-                //blue.Remove(b);
-                mustbeRemovedB.Add(b);
-                redScoreDelta += 1;
-            }
+            MainManager.FinishTheGame(true);
+            foreach (GameObject go in allred)
+                results[go].Win = true;
+            foreach (GameObject go in allblue)
+                results[go].Win = false;
         }
-        foreach (GameObject r in red)
+        if (blueScore == 100 || redCurrentCount==0)
         {
-            ModuleController mc = r.GetComponent<ModuleController>();
-            if (mc.alive == false)
-            {
-                bool tyblue = false;
-                foreach (GameObject rc in red)
-                {
-                    if (rc.name == mc.fatalityName)
-                        tyblue = true;
-                }
-                MainManager.userInterfaseManager.RemoveTank(r.name);
-                if (!tyblue)
-                    MainManager.userInterfaseManager.AddFragTo(mc.fatalityName);
-                else
-                    MainManager.userInterfaseManager.AddBlue(mc.fatalityName);
-                //red.Remove(r);
-                mustbeRemovedR.Add(r);
-                blueScoreDelta += 1;
-            }
-        }
-        foreach(GameObject r in mustbeRemovedR)
-        {
-            red.Remove(r);
-        }
-        foreach (GameObject b in mustbeRemovedB)
-        {
-            blue.Remove(b);
-        }
-
-        if (blue.Count == 0 || redScore==100 || blueScore==0)
-        {
-            MainManager.userInterfaseManager.EndOfButtle("Победа!");
-            MainManager.musicManager.Win();
-            MainManager.buttleResult.Win = true;
-            gameFinished = true;
-        }
-        if (red.Count == 0 || redScore == 0 || blueScore == 100)
-        {
-            MainManager.userInterfaseManager.EndOfButtle("Поражение!");
-            MainManager.buttleResult.Win = false;
-            MainManager.musicManager.Fail();
-            gameFinished = true;
-        }
-        if (gameFinished)
-        {
-            foreach(GameObject go in blue)
-            {
-                ModuleController mc = go.GetComponent<ModuleController>();
-                if (mc != null)
-                    mc.GameFinished();
-            }
-            foreach (GameObject go in red)
-            {
-                ModuleController mc = go.GetComponent<ModuleController>();
-                if (mc != null)
-                    mc.GameFinished();
-            }
+            MainManager.FinishTheGame(false);
+            foreach (GameObject go in allred)
+                results[go].Win = false;
+            foreach (GameObject go in allblue)
+                results[go].Win = true;
         }
     }
+    public void AddShotToPlayerResults(GameObject player)
+    {
+        if (results.ContainsKey(player))
+            results[player].AddShoot();
+    }
 
-    public void Point(bool red)
+    public void PointIsCaptured(bool red)
     {
         if (red)
         {
             redScoreDelta += 2;
+            //blueScoreDelta -= 2;
+        }
+        else
+        {
+            //redScoreDelta -= 2;
+            blueScoreDelta += 2;
+        }
+    }
+    public void PointIsDecaptured(bool byred)
+    {
+        if (byred)
+        {
             blueScoreDelta -= 2;
         }
         else
         {
             redScoreDelta -= 2;
-            blueScoreDelta += 2;
         }
     }
-    public List<GameObject> ReturnCopyOfAllRed()
+    public void PlayerDied(GameObject player, string killerName)
     {
-        List<GameObject> output = new List<GameObject>();
-        foreach (GameObject tank in allred)
-            output.Add(tank);
-        return output;
+        Debug.Log("ButtleManager: Died"+ player.name);
+        foreach(GameObject go in allred)
+        {
+            if (go == player)
+            {
+                redCurrentCount--;
+                blueScoreDelta += 1;
+                MainManager.userInterfaseManager.RemoveTank(player);
+            }
+            if (go.name == killerName)
+            {
+                redFrags[go]++;
+                results[go].AddFrag();
+                MainManager.userInterfaseManager.UpdateFrag(go, redFrags[go]);
+            }
+                
+        }
+        foreach (GameObject go in allblue)
+        {
+            if (go == player)
+            {
+                blueCurrentCount--;
+                redScoreDelta += 1;
+                MainManager.userInterfaseManager.RemoveTank(player);
+            }
+            if (go.name == killerName)
+            {
+                blueFrags[go]++;
+                results[go].AddFrag();
+                MainManager.userInterfaseManager.UpdateFrag(go, blueFrags[go]);
+            }
+        }
+        if (player == clientTank)
+            MainManager.userInterfaseManager.ThisPlayerIsDestroied();
+        if (killerName == clientTank.name)
+            StartCoroutine(MainManager.userInterfaseManager.HumanDestroy());
     }
-    public List<GameObject> ReturnCopyOfAllBlue()
-    {
-        List<GameObject> output = new List<GameObject>();
-        foreach (GameObject tank in allblue)
-            output.Add(tank);
-        return output;
-    }
+}
+public enum ButtleType
+{
+    AgainstBots
 }

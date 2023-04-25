@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour {
+    //REFACTORED_1
     [SerializeField]
     private AudioSource audioSource;
     [SerializeField]

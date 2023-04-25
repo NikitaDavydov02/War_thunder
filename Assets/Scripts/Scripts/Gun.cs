@@ -3,80 +3,83 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Gun : MonoBehaviour {
+    //REFACTORED_1
     [SerializeField]
-    GunAudioManager audioManager;
+    private GunAudioManager audioManager;
     [SerializeField]
-    private GameObject dimPrefab;
+    private GameObject smokePrefab;
     private float _rot;
+
+    //Maximum vertical rotations of Gun
     public float maxRot;
     public float minRot;
     [SerializeField]
-    public List<GameObject> curbPrefabs;
-    private GameObject curb;
-    public int curbTypeIndex=0;
-    public float timeOfPer=5f;
-    public float TimeSinseFire=10f;
-    private GameObject dim;
+    private List<GameObject> curbPrefabs;
+    private int curbTypeIndex = 0;
+    public float timeOfRecharging=5f;
+    private float TimeSinseFire=10f;
+    private GameObject smoke;
     [SerializeField]
     private ModuleController controller;
-    public string tankName;
-    public Vector3 lastPopadaniePoint = new Vector3(0, 0, 0);
-    [SerializeField]
-    public Vector3 correctorVector;
-    public float currentDistance = 0;
+    public float verticalRotationSpeed = 1f;
+    public float smokeDistanceFromCenter = 3.5f;
     // Use this for initialization
     void Start () {
         _rot = 0;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public virtual void Update () {
+        TimeSinseFire += Time.deltaTime;
     }
 
-    public void Rot(float delta)
+    public void Rot(float input)
     {
-        if (!controller.alive)
+        if (!controller.alive || MainManager.GameStatus!=GameStatus.Playing)
             return;
-        _rot += delta;
+        _rot += input * verticalRotationSpeed * Time.deltaTime;
         _rot = Mathf.Clamp(_rot, minRot, maxRot);
-        //Vector3 rot = transform.localEulerAngles;
-        //Vector3 rot = transform.parent.parent.transform.eulerAngles;
         Vector3 rot = transform.localEulerAngles;
         rot.x = _rot;
         transform.localEulerAngles = rot;
     }
     public void Fire()
     {
-        if (!controller.alive|| !controller.canFire)
+        if (!controller.alive|| !controller.canFire|| MainManager.GameStatus != GameStatus.Playing)
             return;
-        tankName = controller.gameObject.name;
-        if (TimeSinseFire >= timeOfPer)
+        
+        if (TimeSinseFire >= timeOfRecharging)
         {
             TimeSinseFire = 0;
-            curb = Instantiate(curbPrefabs[curbTypeIndex]) as GameObject;
+            GameObject curb = Instantiate(curbPrefabs[curbTypeIndex]) as GameObject;
             curb.transform.position = transform.TransformPoint(Vector3.forward * 5f);
-            //curb.transform.rotation = transform.rotation;
-            curb.transform.eulerAngles = transform.eulerAngles + correctorVector;
-            curb.name = tankName;
-            curb.transform.GetChild(0).name = tankName;
-            curb.transform.GetChild(1).name = tankName;
-            curb.GetComponent<Curb>().gun = this;
-
-            controller.lastCurb = curb;
+            curb.transform.eulerAngles = transform.eulerAngles;
+            curb.name = controller.gameObject.name;
+            MainManager.buttleManager.AddShotToPlayerResults(controller.gameObject);
 
             if (audioManager != null)
                 audioManager.Shoot();
-            StartCoroutine(Dim());
+            StartCoroutine(Smoke());
         }
     }
-    private IEnumerator Dim()
+    protected void SwitchCurb(int index)
     {
-        dim = Instantiate(dimPrefab);
-        dim.transform.position = transform.position;
+        if (MainManager.GameStatus != GameStatus.Playing)
+            return;
+        if (curbPrefabs.Count > index && index>=0)
+        {
+            curbTypeIndex = index;
+            TimeSinseFire = 0;
+        }
+    }
+    private IEnumerator Smoke()
+    {
+        smoke = Instantiate(smokePrefab);
+        smoke.transform.position = transform.position;
         Vector3 gunRoot = transform.eulerAngles;
-        dim.transform.eulerAngles = gunRoot;
-        dim.transform.Translate(new Vector3(0, 0, 3.5f), Space.Self);
+        smoke.transform.eulerAngles = gunRoot;
+        smoke.transform.Translate(new Vector3(0, 0, smokeDistanceFromCenter), Space.Self);
         yield return new WaitForSeconds(2f);
-        Destroy(dim);
+        Destroy(smoke);
     }
 }

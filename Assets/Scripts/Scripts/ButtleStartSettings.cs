@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtleStartSettings : MonoBehaviour {
-    public static string playerTechnicName = "Т-34";
+	//REFACTORED_1
+	
+    public string playerTechnicName = "Т-34";
+	public ButtleType buttleType = ButtleType.AgainstBots;
 	// Use this for initialization
 	void Start () {
         DontDestroyOnLoad(this.gameObject);

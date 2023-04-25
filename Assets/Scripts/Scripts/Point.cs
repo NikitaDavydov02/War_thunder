@@ -3,57 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Point : MonoBehaviour {
+    //REFACTORED_1
     //public bool pointIsRed = true;
     public List<GameObject> blue;
     public List<GameObject> red;
-    public float scoreOfRed = 100;
+    public float scoreInFavourOfRed = 0;
     public float speed = 1f;
-    [SerializeField]
-    private ButtleManager buttleManager;
-    public float radius;
+
     [SerializeField]
     private AudioSource pointAudioSource;
     [SerializeField]
     private AudioClip zahvatClip;
     private bool audioIsPlaying=false;
+
+
     [SerializeField]
     Material normalMaterial;
     [SerializeField]
     Material blueMaterial;
     [SerializeField]
     Material redMaterial;
-    private bool pointZahvachena = false;
+    private PointState state = PointState.Free;
     // Use this for initialization
     void Start () {
         GetComponent<Renderer>().material = normalMaterial;
 
     }
 	
+    private void ChangePointState(PointState state)
+    {
+        if (GetComponent<Renderer>().material == redMaterial)
+            return;
+        if (state == PointState.CapturedByRed)
+        {
+            GetComponent<Renderer>().material = redMaterial;
+            MainManager.buttleManager.PointIsCaptured(true);
+        }
+        if (state == PointState.CapturedByBlue)
+        {
+            GetComponent<Renderer>().material = blueMaterial;
+            MainManager.buttleManager.PointIsCaptured(false);
+        }
+        pointAudioSource.Stop();
+        this.state = state;
+    }
 	// Update is called once per frame
 	void Update () {
-        if (buttleManager.gameFinished)
+        if (MainManager.GameStatus!=GameStatus.Playing)
             return;
-        blue.Clear();
-        red.Clear();
-        foreach(GameObject b in buttleManager.blue)
-        {
-            Vector2 xy = new Vector2(b.transform.position.x - transform.position.x, b.transform.position.z - transform.position.z);
-            if (xy.magnitude <= radius)
-            {
-                blue.Add(b);
-            }
-        }
-        foreach (GameObject r in buttleManager.red)
-        {
-            Vector2 xy = new Vector2(r.transform.position.x - transform.position.x, r.transform.position.z - transform.position.z);
-            if (xy.magnitude <= radius)
-            {
-                red.Add(r);
-                Debug.Log("R: " + r + xy.magnitude);
-            }
-        }
         float delta = red.Count - blue.Count;
-        scoreOfRed += Time.deltaTime * speed * delta;
+        scoreInFavourOfRed += Time.deltaTime * speed * delta;
+        if (scoreInFavourOfRed > 100)
+        {
+            scoreInFavourOfRed = 100;
+            if (state != PointState.CapturedByRed)
+                ChangePointState(PointState.CapturedByRed);
+        }
+        if (scoreInFavourOfRed < -100)
+        {
+            scoreInFavourOfRed = -100;
+            if (state != PointState.CapturedByBlue)
+                ChangePointState(PointState.CapturedByBlue);
+        }
+
         if (delta != 0)
         {
             if (!audioIsPlaying)
@@ -68,29 +80,18 @@ public class Point : MonoBehaviour {
             pointAudioSource.Stop();
             audioIsPlaying = false;
         }
-        if (scoreOfRed > 100)
-        {
-            if (GetComponent<Renderer>().material==redMaterial)
-                return;
-            GetComponent<Renderer>().material = redMaterial;
-            buttleManager.Point(true);
-            pointAudioSource.Stop();
-            pointZahvachena = true;
-        }
-        if (scoreOfRed < -100)
-        {
-            if (GetComponent<Renderer>().material == blueMaterial)
-                return;
-            GetComponent<Renderer>().material = blueMaterial;
-            buttleManager.Point(false);
-            pointAudioSource.Stop();
-            pointZahvachena = true;
-        }
-    }
 
-    void OnTriigerEnter(Collider other)
-    {
-        Debug.Log("aaa");
     }
     
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Point entered" + other.gameObject.name);
+    }
+
 }
+public enum PointState {
+ Free,
+ CapturedByRed,
+ CapturedByBlue,
+}
+

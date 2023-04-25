@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Tower : MonoBehaviour {
+    //REFACTORED_1
+
     [SerializeField]
     ToweAudioManager audioManager;
     public float rotSpeed = 2f;
     [SerializeField]
-    private ModuleController controller;
+    protected ModuleController controller;
     // Use this for initialization
     void Start () {
 		
@@ -17,17 +19,17 @@ public class Tower : MonoBehaviour {
 	void Update () {
         
 	}
-    public void Rotate(float rotY)
+    public void Rotate(float input)
     {
-        if (!controller.alive)
+        if (!controller.alive|| MainManager.GameStatus != GameStatus.Playing)
             return;
         if (audioManager != null)
         {
-            if (rotY == 0)
-                audioManager.ChangeRot(false);
+            if (input == 0)
+                audioManager.PlayRotationSound(false);
             else
-                audioManager.ChangeRot(true);
+                audioManager.PlayRotationSound(true);
         }
-        transform.Rotate(0, rotY, 0, Space.Self);
+        transform.Rotate(0, input*rotSpeed*Time.deltaTime, 0, Space.Self);
     }
 }

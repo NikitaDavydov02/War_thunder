@@ -5,36 +5,44 @@ using UnityEngine.SceneManagement;
 
 public class AngarMainManager : MonoBehaviour
 {
+    //REFACTORED
     private static AngarAudioManager angarAudioManager;
     private static AngarUIManager angarUIManager;
     private static ButtleResult buttleResult;
-    public static SaveManager saveManager { get; private set; }
+    private static SaveManager saveManager;
     private static TechnicsManager technicsManager;
     private static AngarCamera angarCamera;
+
+    private static ButtleStartSettings buttleStartSettings;
+
     //public static ButtleManager buttleManager;
     // Use this for initialization
-    void Start()
+    void Awake()
     {
+        buttleStartSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
         GameObject camera = GameObject.FindWithTag("MainCamera");
+        
         if (camera != null)
             angarCamera = camera.GetComponent<AngarCamera>();
+        
         angarAudioManager = GetComponent<AngarAudioManager>();
         angarUIManager = GetComponent<AngarUIManager>();
         buttleResult = GetComponent<ButtleResult>();
         technicsManager = GetComponent<TechnicsManager>();
         saveManager = GetComponent<SaveManager>();
+        //buttleStartSettings = GetComponent<ButtleStartSettings>();
         saveManager.LoadGameState();
         angarUIManager.DisplayUsersSavings(saveManager.gold, saveManager.silver, saveManager.experiense);
     }
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
         if (buttleResult != null)
         {
             //Coming back from buttle
             angarAudioManager.PlayMusicAfterButtle(buttleResult.Win);
-            angarUIManager.DisplayButtleResults(buttleResult.silver, buttleResult.expirience, buttleResult.frags, buttleResult.Way);
+            angarUIManager.DisplayButtleResults(buttleResult.silver, buttleResult.expirience, buttleResult.frags);
             saveManager.UpdateResources(buttleResult.silver, buttleResult.expirience);
         }
     }
@@ -45,12 +53,17 @@ public class AngarMainManager : MonoBehaviour
     }
     public static void ChangeTechnic(string nameOfTechnic)
     {
+        Debug.Log("Change technic");
         GameObject technic = technicsManager.InstantiateTechnic(nameOfTechnic);
         if (technic == null)
             return;
-        ButtleStartSettings.playerTechnicName = nameOfTechnic;
+        buttleStartSettings.playerTechnicName = nameOfTechnic;
         if (angarCamera != null)
+        {
             angarCamera.target = technic.transform;
+            
+        }
+           
 
 
     }

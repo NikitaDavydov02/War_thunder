@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ToweAudioManager : MonoBehaviour {
+    //REFACTORED_1
     [SerializeField]
-    public AudioSource towerAudioSource;
+    private AudioSource towerAudioSource;
     [SerializeField]
-    public AudioClip rotateClip;
-    private bool rotating = false;
+    private AudioClip rotateClip;
+    //private bool rotating = false;
     // Use this for initialization
     void Start () {
 		
@@ -18,20 +19,17 @@ public class ToweAudioManager : MonoBehaviour {
 		
 	}
 
-    public void ChangeRot(bool rot)
+    public void PlayRotationSound(bool rotationStarted)
     {
-        if (rotating != rot)
+        if (!rotationStarted)
         {
-            rotating = rot;
-            if (rotating == true)
-            {
-                towerAudioSource.clip = rotateClip;
-                towerAudioSource.Play();
-            }
-            else
-            {
-                towerAudioSource.Stop();
-            }
+            towerAudioSource.Stop();
+            towerAudioSource.clip = null;
+        }
+        if(rotationStarted&&towerAudioSource.clip==null)
+        {
+            towerAudioSource.clip = rotateClip;
+            towerAudioSource.Play();
         }
     }
 }

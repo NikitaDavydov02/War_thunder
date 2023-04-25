@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Tank
   - Terrain
+  - Curb
+  - Gun
+  - Tower
+  - StartSettings
   layers:
   - Default
   - TransparentFX

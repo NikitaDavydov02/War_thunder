@@ -6,15 +6,12 @@ using System;
 public class ModuleController : MonoBehaviour {
     //REFACTORED_1
     [SerializeField]
-    private List<Module> modules;
+    protected List<Module> modules;
     
     
     private List<Module> crew;
 
-    [SerializeField]
-    private GameObject firePrefab;
     public float TimeUntilRepairingFinished { get; private set; } = 0;
-    public bool humanController = false;
     public bool alive { get; private set; } = true;
     public bool canMove { get; private set; } = true;
     public bool canFire { get; private set; } = true;
@@ -22,16 +19,13 @@ public class ModuleController : MonoBehaviour {
     public string Killer = "";
 
 
-    [SerializeField]
-    private GameObject tower;
-    [SerializeField]
-    private GameObject gun;
-    void Start () {
+    
+    protected void Start () {
         alive = true;
         crew = new List<Module>();
         foreach (Module module in modules)
         {
-            module.ModuleExplode += Explode;
+            //module.ModuleExplode += Explode;
             if (module.IsHuman())
                 crew.Add(module);
         }
@@ -39,7 +33,7 @@ public class ModuleController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    protected void Update () {
         if (!alive || MainManager.GameStatus!=GameStatus.Playing)
             return;
         bool extinguish = false;
@@ -66,7 +60,6 @@ public class ModuleController : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //Start repairing
             List<Module> mustBeRepaired = new List<Module>();
             List<float> timeOfRepairing = new List<float>();
             foreach(Module module in modules)
@@ -109,20 +102,8 @@ public class ModuleController : MonoBehaviour {
                 canMove = false;
         }
 	}
-    private void Explode(object sender,EventArgs args)
-    {
-        Debug.Log("Tank exploded");
-        tower.gameObject.AddComponent<Rigidbody>();
-        Rigidbody r = tower.gameObject.GetComponent<Rigidbody>();
-        r.mass = 20000;
-        r.AddExplosionForce(3000000, tower.transform.position+new Vector3(0,-1,0),10);
-        GameObject fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
-        foreach (Module m in modules)
-            if (m.nameOfModule == ModuleType.МеханизмПоворотаБашни)
-                fire.transform.position = m.gameObject.transform.position;
-        Die();
-    }
-    private void Die()
+    
+    protected void Die()
     {
         if (!alive)
             return;
@@ -151,8 +132,6 @@ public class ModuleController : MonoBehaviour {
                 canReloadGun= true;
 
             sumTime -= time[i];
-            //Debug.Log("Repairing: " + sumTime);
-            //MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
             repairModules[i].Repair();
         }
         canMove = true;

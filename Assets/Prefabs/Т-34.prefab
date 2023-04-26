@@ -210,7 +210,6 @@ MonoBehaviour:
   nameOfModule: 6
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!1 &6335310489136677655
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +679,6 @@ MonoBehaviour:
   nameOfModule: 4
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!65 &6269679146349467477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -743,7 +741,6 @@ MonoBehaviour:
   nameOfModule: 7
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!65 &6269248994490680585
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -906,7 +903,6 @@ MonoBehaviour:
   nameOfModule: 5
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!65 &6269279848028504471
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1131,7 +1127,6 @@ MonoBehaviour:
   nameOfModule: 10
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!1 &6335525227278231595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,11 +1191,6 @@ MonoBehaviour:
   nameOfModule: 8
   flameable: 0
   explosive: 0
-  materials:
-  - {fileID: 2100000, guid: 63676f1d3909bba4a871906a7fe820a7, type: 2}
-  - {fileID: 2100000, guid: 4c982dcddf9d4a3439f982824f17b0ea, type: 2}
-  - {fileID: 2100000, guid: f9b9654c62f391a438eb469727d8574a, type: 2}
-  - {fileID: 2100000, guid: 70b5ee28151bf3c4288f2237c76f69dc, type: 2}
 --- !u!1 &6335528847778499263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,7 +1414,6 @@ MonoBehaviour:
   nameOfModule: 3
   flameable: 1
   explosive: 1
-  materials: []
 --- !u!1 &6335555187988094193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,11 +1527,6 @@ MonoBehaviour:
   nameOfModule: 0
   flameable: 1
   explosive: 1
-  materials:
-  - {fileID: 2100000, guid: 63676f1d3909bba4a871906a7fe820a7, type: 2}
-  - {fileID: 2100000, guid: 4c982dcddf9d4a3439f982824f17b0ea, type: 2}
-  - {fileID: 2100000, guid: 93be17e188fee1f41b6e0d86c396bc16, type: 2}
-  - {fileID: 2100000, guid: 70b5ee28151bf3c4288f2237c76f69dc, type: 2}
 --- !u!1 &6335557226534811719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1650,7 @@ MonoBehaviour:
   rigidbody: {fileID: 6281108062059491709}
   maxForce: 250000
   rotForce: 25
-  controller: {fileID: 3299168827149615613}
+  controller: {fileID: 2339105420963850541}
   inputSensentivity: 1300000
   rotationalSensetivity: 2500000
 --- !u!114 &6232337393065899825
@@ -1922,7 +1906,6 @@ MonoBehaviour:
   nameOfModule: 11
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!1 &6335663375523520011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,7 +1956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 7967269589470513766}
   rotSpeed: 20
-  controller: {fileID: 3299168827149615613}
+  controller: {fileID: 2339105420963850541}
 --- !u!114 &7967269589470513766
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2101,7 +2084,6 @@ MonoBehaviour:
   nameOfModule: 12
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!1 &6335711727793126761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2215,7 +2197,6 @@ MonoBehaviour:
   nameOfModule: 3
   flameable: 1
   explosive: 1
-  materials: []
 --- !u!1 &6335719927780051447
 GameObject:
   m_ObjectHideFlags: 0
@@ -3341,7 +3322,6 @@ MonoBehaviour:
   nameOfModule: 1
   flameable: 1
   explosive: 0
-  materials: []
 --- !u!1 &6335947978860686765
 GameObject:
   m_ObjectHideFlags: 0
@@ -4161,11 +4141,6 @@ MonoBehaviour:
   nameOfModule: 0
   flameable: 1
   explosive: 1
-  materials:
-  - {fileID: 2100000, guid: 63676f1d3909bba4a871906a7fe820a7, type: 2}
-  - {fileID: 2100000, guid: 4c982dcddf9d4a3439f982824f17b0ea, type: 2}
-  - {fileID: 2100000, guid: 63676f1d3909bba4a871906a7fe820a7, type: 2}
-  - {fileID: 2100000, guid: 70b5ee28151bf3c4288f2237c76f69dc, type: 2}
 --- !u!1 &6336089574917204249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4424,7 +4399,6 @@ MonoBehaviour:
   nameOfModule: 12
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!1 &6336146566387682253
 GameObject:
   m_ObjectHideFlags: 0
@@ -4532,8 +4506,8 @@ GameObject:
   - component: {fileID: 6338900640596449243}
   - component: {fileID: 6281108062059491709}
   - component: {fileID: 6273451091721504521}
-  - component: {fileID: 3299168827149615613}
   - component: {fileID: 3296742721656707179}
+  - component: {fileID: 2339105420963850541}
   m_Layer: 8
   m_Name: "\u0422-34"
   m_TagString: Tank
@@ -4594,34 +4568,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1.5, z: 6}
   m_Center: {x: 0, y: 0.75, z: -0.6}
---- !u!114 &3299168827149615613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6336174713348507131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd6811ef7054854fbf7d5546cca6460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modules:
-  - {fileID: 6232674207996671877}
-  - {fileID: 6232603730649297691}
-  - {fileID: 6232415100980549523}
-  - {fileID: 6232418969586918793}
-  - {fileID: 6519338645741130070}
-  - {fileID: 6232330176249191039}
-  - {fileID: 6232629833787110463}
-  - {fileID: 6232389090127900417}
-  - {fileID: 6232625878887661033}
-  - {fileID: 6232403532383642167}
-  firePrefab: {fileID: 1592529218400626, guid: ebe51da56d826d7458597f085b5c7e14, type: 3}
-  humanController: 1
-  Killer: 
-  tower: {fileID: 6335663375523520011}
-  gun: {fileID: 6336235226366550985}
 --- !u!114 &3296742721656707179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4636,6 +4582,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 0
   Name: "\u0422-34"
+--- !u!114 &2339105420963850541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6336174713348507131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bfb7e1d19cc7f44ba20142294d0c96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modules:
+  - {fileID: 6232629833787110463}
+  - {fileID: 6232330176249191039}
+  - {fileID: 6232732008141580523}
+  - {fileID: 6232294763762592511}
+  - {fileID: 6228589515006411567}
+  - {fileID: 6232953239639746819}
+  - {fileID: 6232366802208094303}
+  - {fileID: 6232415100980549523}
+  - {fileID: 6232418969586918793}
+  - {fileID: 6519338645741130070}
+  - {fileID: 5959607600465434086}
+  - {fileID: 6232403532383642167}
+  - {fileID: 6232389090127900417}
+  - {fileID: 6232625878887661033}
+  - {fileID: 6232476199818456135}
+  - {fileID: 6232674207996671877}
+  - {fileID: 6232603730649297691}
+  Killer: 
+  tower: {fileID: 6335663375523520011}
+  gun: {fileID: 6336235226366550985}
 --- !u!1 &6336190777995024925
 GameObject:
   m_ObjectHideFlags: 0
@@ -4687,7 +4666,6 @@ MonoBehaviour:
   nameOfModule: 9
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!65 &6269573556173668381
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4911,7 +4889,6 @@ MonoBehaviour:
   nameOfModule: 12
   flameable: 0
   explosive: 0
-  materials: []
 --- !u!1 &6336235226366550985
 GameObject:
   m_ObjectHideFlags: 0
@@ -4968,7 +4945,7 @@ MonoBehaviour:
   curbPrefabs:
   - {fileID: 1021522103940426, guid: 978ac55765bf5c64fa37983d554f904e, type: 3}
   timeOfRecharging: 5
-  controller: {fileID: 3299168827149615613}
+  controller: {fileID: 2339105420963850541}
   verticalRotationSpeed: 1
   smokeDistanceFromCenter: 3.5
   sensetivityvert: 4
@@ -5369,8 +5346,3 @@ MonoBehaviour:
   nameOfModule: 0
   flameable: 1
   explosive: 1
-  materials:
-  - {fileID: 2100000, guid: 63676f1d3909bba4a871906a7fe820a7, type: 2}
-  - {fileID: 2100000, guid: 4c982dcddf9d4a3439f982824f17b0ea, type: 2}
-  - {fileID: 2100000, guid: f9b9654c62f391a438eb469727d8574a, type: 2}
-  - {fileID: 2100000, guid: 70b5ee28151bf3c4288f2237c76f69dc, type: 2}

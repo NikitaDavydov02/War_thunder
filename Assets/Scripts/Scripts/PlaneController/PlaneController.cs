@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlaneController : ForceCalculationManager
 {
     public float generalLevel = 0;
-    public float generalLevelChangingSpeed = 1f;
+    //public float generalLevelChangingSpeed = 1f;
     List<float> engineLevels = new List<float>();
     public float maxEleronAngle = 2;
-    public bool ControlActive = true;
 
     [SerializeField]
     List<EngineForce> engines;
@@ -27,14 +26,14 @@ public class PlaneController : ForceCalculationManager
     [SerializeField]
     Transform rightElleron;
     public float eleronAngle = 0;
-    public float eleronSensitivity;
+    //public float eleronSensitivity;
 
 
     public float RotationPowerMultiplyer;
-    public float gasSensitivity;
-    public float heigtSensitivity;
+    //public float gasSensitivity;
+    //public float heigtSensitivity;
     public float heightAngle = 0;
-    public float horizontalSensitivity;
+    //public float horizontalSensitivity;
     public float horizontAngle = 0;
     public Vector3 centerOfMassLocal;
     public Vector3 inertiaTensor;
@@ -43,7 +42,7 @@ public class PlaneController : ForceCalculationManager
     public Vector3 VelocityInLocalCoordinates = Vector3.zero;
     public Vector3 AngularVelocityInLocalCoordinates = Vector3.zero;
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
         Init();
         rb.centerOfMass = centerOfMassLocal;
@@ -66,69 +65,68 @@ public class PlaneController : ForceCalculationManager
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         CountState();
-        if (Input.GetKey(KeyCode.W) && ControlActive)
-            generalLevel += generalLevelChangingSpeed * Time.deltaTime;
-        if (Input.GetKey(KeyCode.S) && ControlActive)
-            generalLevel -= generalLevelChangingSpeed * Time.deltaTime;
+        
         if (generalLevel > 1)
             generalLevel = 1;
         if (generalLevel < 0)
             generalLevel = 0;
         for (int i = 0; i < engineLevels.Count; i++)
             engineLevels[i] = generalLevel;
-        float vwrticalInput = -Input.GetAxis("Mouse Y") * Time.deltaTime * heigtSensitivity;
-        if (!ControlActive)
-            vwrticalInput = 0;
+
+        //if (!ControlActive)
+        //    vwrticalInput = 0;
         //Debug.Log("Input:" + vwrticalInput);
         //Debug.Log("Euler:" + heightController.localEulerAngles.x);
-        heightController.Rotate(vwrticalInput, 0, 0, Space.Self);
-        heightAngle += vwrticalInput;
-        if (heightAngle < -10)
-        {
-            heightController.Rotate(-vwrticalInput, 0, 0, Space.Self);
-            heightAngle -= vwrticalInput;
-        }
-        if (heightAngle > 10)
-        {
-            heightController.Rotate(-vwrticalInput, 0, 0, Space.Self);
-            heightAngle -= vwrticalInput;
-        }
-        float horInput = -Input.GetAxis("Mouse X") * Time.deltaTime * horizontalSensitivity;
-        if (!ControlActive)
-            horInput = 0;
-        horizontalController.Rotate(horInput, 0, 0, Space.Self);
-        horizontAngle += horInput;
-        if (horizontAngle < -10 || horizontAngle > 10)
-        {
-            horizontalController.Rotate(-horInput, 0, 0, Space.Self);
-            horizontAngle -= horInput;
-        }
-        if (Input.GetKeyDown(KeyCode.A) && ControlActive)
-        {
-            leftElleron.Rotate(maxEleronAngle, 0, 0);
-            rightElleron.Rotate(-maxEleronAngle, 0, 0);
-        }
-        if (Input.GetKeyUp(KeyCode.A) && ControlActive)
-        {
-            leftElleron.Rotate(-maxEleronAngle, 0, 0);
-            rightElleron.Rotate(maxEleronAngle, 0, 0);
-        }
-        if (Input.GetKeyDown(KeyCode.D) && ControlActive)
-        {
-            leftElleron.Rotate(-maxEleronAngle, 0, 0);
-            rightElleron.Rotate(maxEleronAngle, 0, 0);
-        }
-        if (Input.GetKeyUp(KeyCode.D) && ControlActive)
-        {
-            leftElleron.Rotate(maxEleronAngle, 0, 0);
-            rightElleron.Rotate(-maxEleronAngle, 0, 0);
-        }
+
+        //HorizontalController(horizontAngle);
+        
 
         for (int i = 0; i < engineLevels.Count; i++)
             engines[i].Level = engineLevels[i];
+    }
+    protected void HorizontalController(float input)
+    {
+        
+        //if (!ControlActive)
+        //    horInput = 0;
+        horizontalController.Rotate(input, 0, 0, Space.Self);
+        horizontAngle +=input;
+        if (horizontAngle < -10 || horizontAngle > 10)
+        {
+            horizontalController.Rotate(-input, 0, 0, Space.Self);
+            horizontAngle -= input;
+        }
+    }
+    protected void HeightController(float input)
+    {
+        heightController.Rotate(input, 0, 0, Space.Self);
+        heightAngle += input;
+        if (heightAngle < -10)
+        {
+            heightController.Rotate(-input, 0, 0, Space.Self);
+            heightAngle -= input;
+        }
+        if (heightAngle > 10)
+        {
+            heightController.Rotate(-input, 0, 0, Space.Self);
+            heightAngle -= input;
+        }
+    }
+    protected void Eleron(bool turnToTheLeft)
+    {
+        if (turnToTheLeft)
+        {
+            leftElleron.Rotate(maxEleronAngle, 0, 0);
+            rightElleron.Rotate(-maxEleronAngle, 0, 0);
+        }
+        else
+        {
+            leftElleron.Rotate(-maxEleronAngle, 0, 0);
+            rightElleron.Rotate(maxEleronAngle, 0, 0);
+        }
     }
     //void FixedUpdate()
     //{

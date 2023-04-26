@@ -13,7 +13,7 @@ public class Module : MonoBehaviour {
     public float TimeOfFiring { get; private set; }
     public bool flameable = false;
     public bool explosive = false;
-    public List<Material> materials;
+    private List<Material> materials;
     private GameObject fire;
 
 

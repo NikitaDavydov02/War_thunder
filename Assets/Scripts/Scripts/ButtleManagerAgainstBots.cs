@@ -26,23 +26,38 @@ public class ButtleManagerAgainstBots : ButtleManager
         
         string humanTankName = startSettings.playerTechnicName;
         Debug.Log("human technics: " + humanTankName);
-        GameObject humanTechnic = MainManager.technicsLibrary.GetHumanTechnicByName(humanTankName);
-        d
+        
 
-        for (int i = 1; i < redCurrentCount; i++)
+        for (int i = 0; i < redCurrentCount; i++)
         {
-            GameObject tank;
-            tank = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
+            GameObject technic;
+            if (i == 0)
+            {
+                technic = Instantiate( MainManager.technicsLibrary.GetHumanTechnicByName(humanTankName))as GameObject;
+                
+            }
+            else
+            {
+                technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
+            }
             if (redSpawnsForTanks.Count <= i)
                 continue;
-            tank.transform.position = redSpawnsForTanks[i];
-            tank.transform.Rotate(0, 180, 0);
-            tank.name = "playerRed" + i;
-            allred.Add(tank);
-            redFrags.Add(tank, 0);
+            switch (technic.GetComponent<Technic>().Type)
+            {
+                case TechnicsType.Tank:
+                    technic.transform.position = redSpawnsForTanks[i];
+                    break;
+                case TechnicsType.Plane:
+                    technic.transform.position = redSpawnsForPlanes[i];
+                    break;
+            }
+            technic.transform.Rotate(0, 180, 0);
+            technic.name = "playerRed" + i;
+            allred.Add(technic);
+            redFrags.Add(technic, 0);
 
-            TechnicsOfPlayers.Add(tank.name, tank);
-            results.Add(tank.name, new ButtleResult());
+            TechnicsOfPlayers.Add(technic.name, technic);
+            results.Add(technic.name, new ButtleResult());
         }
         for (int i = 0; i < blueCurrentCount; i++)
         {

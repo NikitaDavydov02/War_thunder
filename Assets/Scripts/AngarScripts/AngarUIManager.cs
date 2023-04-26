@@ -32,12 +32,13 @@ public class AngarUIManager : MonoBehaviour {
     void Start () {
         buttleResultPanel.gameObject.SetActive(false);
     }
-	public void DisplayButtleResults(int silver, int experience, int frags)
+	public void DisplayButtleResults(ButtleResult result)
     {
+        Debug.Log("Show buttle result");
         buttleResultPanel.gameObject.SetActive(true);
-        silverResultLabel.text = silver.ToString();
-        experienseResultLabel.text = experience.ToString();
-        fragsLabel.text = frags.ToString();
+        silverResultLabel.text = result.silver.ToString();
+        experienseResultLabel.text = result.expirience.ToString();
+        fragsLabel.text = result.frags.ToString();
         WayLabel.text = "";
 
     }

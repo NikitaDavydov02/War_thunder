@@ -21,39 +21,42 @@ public class ButtleManagerAgainstBots : ButtleManager
     {
         base.Update();
     }
-    protected override void SpawnTanks()
+    protected override void SpawnTechnics()
     {
-        startSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
+        
         string humanTankName = startSettings.playerTechnicName;
         Debug.Log("human technics: " + humanTankName);
+        GameObject humanTechnic = MainManager.technicsLibrary.GetHumanTechnicByName(humanTankName);
+        d
 
-        for (int i = 0; i < redCurrentCount; i++)
+        for (int i = 1; i < redCurrentCount; i++)
         {
             GameObject tank;
-            if (i==0)
-                tank = Instantiate(MainManager.technicsLibrary.GetHumanTechnicByName(humanTankName)) as GameObject;
-            else
-                tank = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
-            if (redSpawns.Count <= i)
+            tank = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
+            if (redSpawnsForTanks.Count <= i)
                 continue;
-            tank.transform.position = redSpawns[i];
+            tank.transform.position = redSpawnsForTanks[i];
             tank.transform.Rotate(0, 180, 0);
             tank.name = "playerRed" + i;
             allred.Add(tank);
             redFrags.Add(tank, 0);
-            results.Add(tank, new ButtleResult());
+
+            TechnicsOfPlayers.Add(tank.name, tank);
+            results.Add(tank.name, new ButtleResult());
         }
         for (int i = 0; i < blueCurrentCount; i++)
         {
             GameObject tank;
             tank = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
-            if (blueSpawns.Count <= i)
+            if (blueSpawnsForTanks.Count <= i)
                 continue;
-            tank.transform.position = blueSpawns[i];
+            tank.transform.position = blueSpawnsForTanks[i];
             tank.name = "playerBlue" + i;
             allblue.Add(tank);
             blueFrags.Add(tank, 0);
-            results.Add(tank, new ButtleResult());
+
+            TechnicsOfPlayers.Add(tank.name, tank);
+            results.Add(tank.name, new ButtleResult());
         }
         clientTank = allred[0];
     }

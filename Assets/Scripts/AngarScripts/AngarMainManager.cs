@@ -8,7 +8,6 @@ public class AngarMainManager : MonoBehaviour
     //REFACTORED
     private static AngarAudioManager angarAudioManager;
     private static AngarUIManager angarUIManager;
-    private static ButtleResult buttleResult;
     private static SaveManager saveManager;
     private static TechnicsManager technicsManager;
     private static AngarCamera angarCamera;
@@ -22,17 +21,31 @@ public class AngarMainManager : MonoBehaviour
         buttleStartSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
         GameObject camera = GameObject.FindWithTag("MainCamera");
 
+        
         GameObject buttleMainManager = GameObject.FindGameObjectWithTag("ButtleMainManager");
+        if (buttleMainManager != null)
+        {
+            
+            
+            ButtleResult result = buttleMainManager.GetComponent<ButtleManager>().results["playerRed0"];
+            Debug.Log("Find buttle manager " + buttleMainManager.GetComponent<ButtleManagerAgainstBots>());
+            foreach (string s in buttleMainManager.GetComponent<ButtleManager>().results.Keys)
+                if (s == "playerRed0")
+                    result = buttleMainManager.GetComponent<ButtleManager>().results[s];
+            Debug.Log("Find buttle result " + result);
+            angarUIManager.DisplayButtleResults(result);
+            angarAudioManager.PlayMusicAfterButtle(result.Win);
+            saveManager.UpdateResources(result);
 
-        ///Place where you should know tank of player
-        ButtleResult results = buttleMainManager.GetComponent<ButtleManager>().results[0];
+            Destroy(buttleMainManager.gameObject);
+        }
+        
         
         if (camera != null)
             angarCamera = camera.GetComponent<AngarCamera>();
         
         angarAudioManager = GetComponent<AngarAudioManager>();
         angarUIManager = GetComponent<AngarUIManager>();
-        buttleResult = GetComponent<ButtleResult>();
         technicsManager = GetComponent<TechnicsManager>();
         saveManager = GetComponent<SaveManager>();
         //buttleStartSettings = GetComponent<ButtleStartSettings>();
@@ -43,13 +56,6 @@ public class AngarMainManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        if (buttleResult != null)
-        {
-            //Coming back from buttle
-            angarAudioManager.PlayMusicAfterButtle(buttleResult.Win);
-            angarUIManager.DisplayButtleResults(buttleResult.silver, buttleResult.expirience, buttleResult.frags);
-            saveManager.UpdateResources(buttleResult.silver, buttleResult.expirience);
-        }
     }
     public static void Buttle()
     {

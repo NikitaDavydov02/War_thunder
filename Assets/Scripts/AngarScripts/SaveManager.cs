@@ -65,9 +65,9 @@ public class SaveManager : MonoBehaviour {
         experiense = (int)gamestate["experiense"];
         availableTechnics = gamestate["availableTechnics"] as Dictionary<string, GameObject>;
     }
-    public void UpdateResources(int additionalSilver, int additionalExperiense)
+    public void UpdateResources(ButtleResult result)
     {
-        silver += additionalSilver;
-        experiense += additionalExperiense;
+        silver += result.silver;
+        experiense += result.expirience;
     }
 }

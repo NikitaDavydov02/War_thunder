@@ -7,22 +7,35 @@ public class ButtleManager : MonoBehaviour {
     public List<GameObject> allblue { get; private set; }
     
     public List<GameObject> allred { get; private set; }
+
     public float blueScore { get; private set; } = 50;
     public float redScore { get; private set; } = 50;
+
     public int blueScoreDelta { get; private set; } = 0;
     public int redScoreDelta { get; private set; } = 0;
+
     private float scoreSpeed = 0.01f;
+
+
     [SerializeField]
-    public List<Vector3> redSpawns;
+    public List<Vector3> redSpawnsForTanks;
     [SerializeField]
-    public List<Vector3> blueSpawns;
+    public List<Vector3> blueSpawnsForTanks;
+
+    [SerializeField]
+    public List<Vector3> redSpawnsForPlanes;
+    [SerializeField]
+    public List<Vector3> blueSpawnsForPlanes;
 
     //Frags
     protected Dictionary<GameObject, int> redFrags;
     protected Dictionary<GameObject, int> blueFrags;
     public GameObject clientTank { get; protected set; } = null;
 
-    public Dictionary<GameObject, ButtleResult> results { get; protected set; }
+    public Dictionary<string, ButtleResult> results { get; protected set; }
+
+    protected Dictionary<string, GameObject> TechnicsOfPlayers;
+
     protected ButtleStartSettings startSettings;
 
 
@@ -32,21 +45,24 @@ public class ButtleManager : MonoBehaviour {
     // Use this for initialization
     protected void Awake () {
         MainManager.technicsLibrary.Inicialize();
+        startSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
         allred = new List<GameObject>();
         allblue = new List<GameObject>();
 
         redFrags = new Dictionary<GameObject, int>();
         blueFrags = new Dictionary<GameObject, int>();
 
-        results = new Dictionary<GameObject, ButtleResult>();
+        //Technics, players and results
+        results = new Dictionary<string, ButtleResult>();
+        TechnicsOfPlayers = new Dictionary<string, GameObject>();
 
-        SpawnTanks();
+        SpawnTechnics();
         Destroy(startSettings.gameObject);
         
         MainManager.userInterfaseManager.InicializeRedComand(allred);
         MainManager.userInterfaseManager.InicializeBlueComand(allblue);
     }
-    protected virtual void SpawnTanks()
+    protected virtual void SpawnTechnics()
     {
         
     }
@@ -69,23 +85,23 @@ public class ButtleManager : MonoBehaviour {
         {
             MainManager.FinishTheGame(true);
             foreach (GameObject go in allred)
-                results[go].Win = true;
+                results[go.name].Win = true;
             foreach (GameObject go in allblue)
-                results[go].Win = false;
+                results[go.name].Win = false;
         }
         if (blueScore == 100 || redCurrentCount==0)
         {
             MainManager.FinishTheGame(false);
             foreach (GameObject go in allred)
-                results[go].Win = false;
+                results[go.name].Win = false;
             foreach (GameObject go in allblue)
-                results[go].Win = true;
+                results[go.name].Win = true;
         }
     }
     public void AddShotToPlayerResults(GameObject player)
     {
-        if (results.ContainsKey(player))
-            results[player].AddShoot();
+        if (results.ContainsKey(player.name))
+            results[player.name].AddShoot();
     }
 
     public void PointIsCaptured(bool red)
@@ -116,7 +132,7 @@ public class ButtleManager : MonoBehaviour {
             if (go.name == killerName)
             {
                 redFrags[go]++;
-                results[go].AddFrag();
+                results[go.name].AddFrag();
                 MainManager.userInterfaseManager.UpdateFrag(go, redFrags[go]);
             }
                 
@@ -132,7 +148,7 @@ public class ButtleManager : MonoBehaviour {
             if (go.name == killerName)
             {
                 blueFrags[go]++;
-                results[go].AddFrag();
+                results[go.name].AddFrag();
                 MainManager.userInterfaseManager.UpdateFrag(go, blueFrags[go]);
             }
         }

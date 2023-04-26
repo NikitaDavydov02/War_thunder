@@ -5199,6 +5199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanTechnics:
   - {fileID: 3296742721656707179, guid: 9a21a84430110d5499bd46fa7959a3d2, type: 3}
+  botsTechnics: []
 --- !u!114 &1393274180
 MonoBehaviour:
   m_ObjectHideFlags: 0

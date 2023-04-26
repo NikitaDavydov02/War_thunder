@@ -21,6 +21,11 @@ public class AngarMainManager : MonoBehaviour
     {
         buttleStartSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
         GameObject camera = GameObject.FindWithTag("MainCamera");
+
+        GameObject buttleMainManager = GameObject.FindGameObjectWithTag("ButtleMainManager");
+
+        ///Place where you should know tank of player
+        ButtleResult results = buttleMainManager.GetComponent<ButtleManager>().results[0];
         
         if (camera != null)
             angarCamera = camera.GetComponent<AngarCamera>();

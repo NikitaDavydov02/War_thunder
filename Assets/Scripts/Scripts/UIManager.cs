@@ -106,10 +106,10 @@ public class UIManager : MonoBehaviour {
         resultText.gameObject.SetActive(true);
         angar.gameObject.SetActive(true);
     }
-    //public void Angar()
-    //{
-    //    Application.LoadLevel("Angar");
-    //}
+    public void Angar()
+    {
+        Application.LoadLevel("Angar");
+    }
     //Modules or thecnics that human destriyed
     public IEnumerator HumanDestroy()
     {

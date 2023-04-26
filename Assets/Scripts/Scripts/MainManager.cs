@@ -12,7 +12,7 @@ public class MainManager : MonoBehaviour {
     public static GameStatus GameStatus { get; private set; } = GameStatus.Loading;
 
     void Awake () {
-        ButtleStartSettings startSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
+        
         
 
         technicsLibrary = GetComponent<TechnicsLibrary>();
@@ -67,6 +67,12 @@ public class MainManager : MonoBehaviour {
             MainManager.userInterfaseManager.EndOfButtle("Поражение!");
             MainManager.musicManager.Fail();
         }
+    }
+    public static void PlayerFired(GameObject player, GameObject curb)
+    {
+        buttleManager.AddShotToPlayerResults(player);
+        if(player==buttleManager.clientTank)
+            Camera.AddFiredCurb(curb.transform);
     }
 }
 public enum GameStatus

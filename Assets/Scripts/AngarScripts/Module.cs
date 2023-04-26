@@ -104,6 +104,10 @@ public class Module : MonoBehaviour {
            OnModuleExplode();
            fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
            fire.transform.position = this.transform.position;
+           Vector3 scale = this.transform.localScale;
+           Vector3 newScale = new Vector3(1 / scale.x, 1 / scale.y, 1 / scale.z);
+           fire.transform.SetParent(this.transform);
+           fire.transform.localScale = newScale;
         }
         //OnModuleDamaged();
     }

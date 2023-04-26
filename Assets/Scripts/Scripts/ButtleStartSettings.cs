@@ -5,7 +5,7 @@ using UnityEngine;
 public class ButtleStartSettings : MonoBehaviour {
 	//REFACTORED_1
 	
-    public string playerTechnicName = "Т-34";
+    public string playerTechnicName = "";
 	public ButtleType buttleType = ButtleType.AgainstBots;
 	// Use this for initialization
 	void Start () {

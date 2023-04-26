@@ -183,7 +183,7 @@ MonoBehaviour:
   explosionRadius: 1.5
   curbScript: {fileID: 114938886339607510}
   directDamage: 300
-  impliciDamage: 1000
+  impliciDamage: 300
   vzvodTime: 0.002
   characteristicDamageLength: 1
 --- !u!1 &1896829830876644

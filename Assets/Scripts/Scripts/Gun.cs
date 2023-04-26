@@ -55,7 +55,7 @@ public class Gun : MonoBehaviour {
             curb.transform.position = transform.TransformPoint(Vector3.forward * 5f);
             curb.transform.eulerAngles = transform.eulerAngles;
             curb.name = controller.gameObject.name;
-            MainManager.buttleManager.AddShotToPlayerResults(controller.gameObject);
+            MainManager.PlayerFired(controller.gameObject, curb);
 
             if (audioManager != null)
                 audioManager.Shoot();

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SceneCamera : MonoBehaviour {
     //REFACTORED_1
+    private List<Transform> playerAndHisFiredCurbs;
     private Transform target;
     private Transform gun;
     //[SerializeField]
@@ -29,10 +30,13 @@ public class SceneCamera : MonoBehaviour {
     [SerializeField]
     ButtleManager buttleManager;
     private Camera cam;
+
+
     //private bool  bulletCam =false;
     //private Transform lastBullet;
     // Use this for initialization
     void Awake () {
+        playerAndHisFiredCurbs = new List<Transform>();
         cam = this.GetComponent<Camera>();
         cam.farClipPlane = 4000;
         _rotY = transform.eulerAngles.y;
@@ -42,7 +46,7 @@ public class SceneCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-        if (target == null)
+        if (target==null)
             return;
         if (!inZoom)
         {
@@ -92,17 +96,46 @@ public class SceneCamera : MonoBehaviour {
     void Update()
     {
         if (target == null)
-            return;
+        {
+            if (playerAndHisFiredCurbs.Count != 0)
+                target = playerAndHisFiredCurbs[0];
+            else
+                return;
+        }
         if (Input.GetKeyDown(KeyCode.V))
         {
             SwitchZoom();
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (inZoom)
+                ZoomOut();
+            int indexOfTarget = playerAndHisFiredCurbs.IndexOf(target);
+            if (indexOfTarget == playerAndHisFiredCurbs.Count - 1)
+                indexOfTarget = 0;
+            else
+                indexOfTarget++;
+            target = playerAndHisFiredCurbs[indexOfTarget];
+        }
+
+        List<Transform> transformToRemove = new List<Transform>();
+        foreach (Transform t in playerAndHisFiredCurbs)
+            if (t == null)
+                transformToRemove.Add(t);
+        foreach(Transform t in transformToRemove)
+            playerAndHisFiredCurbs.Remove(t);
+    }
+    public void AddFiredCurb(Transform curb)
+    {
+        playerAndHisFiredCurbs.Add(curb);
     }
     public void SetTargetForCamera(Transform target, Transform gun, ModuleController controller=null)
     {
         this.target = target;
         this.gun = gun;
         this.controller = controller;
+        playerAndHisFiredCurbs.Clear();
+        playerAndHisFiredCurbs.Add(target);
     }
     private void SwitchZoom()
     {

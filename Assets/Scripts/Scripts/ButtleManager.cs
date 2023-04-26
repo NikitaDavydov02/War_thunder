@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class ButtleManager : MonoBehaviour {
 
-
-    //public List<GameObject> currentBlue{ get; private set; }
-    //public List<GameObject> currentRed { get; private set; }
-    
     public List<GameObject> allblue { get; private set; }
     
     public List<GameObject> allred { get; private set; }
@@ -22,18 +18,20 @@ public class ButtleManager : MonoBehaviour {
     public List<Vector3> blueSpawns;
 
     //Frags
-    private Dictionary<GameObject, int> redFrags;
-    private Dictionary<GameObject, int> blueFrags;
-    public GameObject clientTank { get; private set; } = null;
+    protected Dictionary<GameObject, int> redFrags;
+    protected Dictionary<GameObject, int> blueFrags;
+    public GameObject clientTank { get; protected set; } = null;
 
-    private Dictionary<GameObject, ButtleResult> results;
-    
-    
+    public Dictionary<GameObject, ButtleResult> results { get; protected set; }
+    protected ButtleStartSettings startSettings;
+
+
     //public GameObject humanTank;
     public int redCurrentCount =2;
     public int blueCurrentCount = 2;
     // Use this for initialization
-    void Awake () {
+    protected void Awake () {
+        MainManager.technicsLibrary.Inicialize();
         allred = new List<GameObject>();
         allblue = new List<GameObject>();
 
@@ -42,38 +40,18 @@ public class ButtleManager : MonoBehaviour {
 
         results = new Dictionary<GameObject, ButtleResult>();
 
-        for(int i = 0; i < redCurrentCount; i++)
-        {
-            GameObject tank = Instantiate(MainManager.technicsLibrary.GetRandomHumanTank()) as GameObject;
-            if (redSpawns.Count <= i)
-                continue;
-            tank.transform.position = redSpawns[i];
-            tank.transform.Rotate(0, 180, 0);
-            tank.name = "playerRed" + i;
-            allred.Add(tank);
-            redFrags.Add(tank, 0);
-            results.Add(tank, new ButtleResult());
-        }
-        for (int i = 0; i < blueCurrentCount; i++)
-        {
-            GameObject tank;
-            tank = Instantiate(MainManager.technicsLibrary.GetRandomHumanTank()) as GameObject;
-            if (blueSpawns.Count <= i)
-                continue;
-            tank.transform.position = blueSpawns[i];
-            tank.name = "playerBlue" + i;
-            allblue.Add(tank);
-            blueFrags.Add(tank, 0);
-            results.Add(tank, new ButtleResult());
-        }
-        
+        SpawnTanks();
+        Destroy(startSettings.gameObject);
         
         MainManager.userInterfaseManager.InicializeRedComand(allred);
         MainManager.userInterfaseManager.InicializeBlueComand(allblue);
     }
-
+    protected virtual void SpawnTanks()
+    {
+        
+    }
     // Update is called once per frame
-    void Update () {
+    protected void Update () {
         if (MainManager.GameStatus!=GameStatus.Playing)
             return;
         redScore += redScoreDelta * Time.deltaTime * scoreSpeed;
@@ -113,26 +91,16 @@ public class ButtleManager : MonoBehaviour {
     public void PointIsCaptured(bool red)
     {
         if (red)
-        {
             redScoreDelta += 2;
-            //blueScoreDelta -= 2;
-        }
         else
-        {
-            //redScoreDelta -= 2;
             blueScoreDelta += 2;
-        }
     }
     public void PointIsDecaptured(bool byred)
     {
         if (byred)
-        {
             blueScoreDelta -= 2;
-        }
         else
-        {
             redScoreDelta -= 2;
-        }
     }
     public void PlayerDied(GameObject player, string killerName)
     {

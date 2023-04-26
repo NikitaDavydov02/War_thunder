@@ -10,6 +10,7 @@ TagManager:
   - Gun
   - Tower
   - StartSettings
+  - ButtleMainManager
   layers:
   - Default
   - TransparentFX

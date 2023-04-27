@@ -37,6 +37,8 @@ public class PlaneController : ForceCalculationManager
     public float horizontAngle = 0;
     public Vector3 centerOfMassLocal;
     public Vector3 inertiaTensor;
+    public float maxHeightAngle = 10;
+    public float maxHorizontalAngle = 10;
 
 
     public Vector3 VelocityInLocalCoordinates = Vector3.zero;
@@ -82,7 +84,8 @@ public class PlaneController : ForceCalculationManager
         //Debug.Log("Euler:" + heightController.localEulerAngles.x);
 
         //HorizontalController(horizontAngle);
-        
+
+        Debug.DrawLine(transform.position, transform.position + rb.velocity, Color.black);
 
         for (int i = 0; i < engineLevels.Count; i++)
             engines[i].Level = engineLevels[i];
@@ -94,7 +97,7 @@ public class PlaneController : ForceCalculationManager
         //    horInput = 0;
         horizontalController.Rotate(input, 0, 0, Space.Self);
         horizontAngle +=input;
-        if (horizontAngle < -10 || horizontAngle > 10)
+        if (horizontAngle < -maxHorizontalAngle || horizontAngle > maxHorizontalAngle)
         {
             horizontalController.Rotate(-input, 0, 0, Space.Self);
             horizontAngle -= input;
@@ -104,12 +107,12 @@ public class PlaneController : ForceCalculationManager
     {
         heightController.Rotate(input, 0, 0, Space.Self);
         heightAngle += input;
-        if (heightAngle < -10)
+        if (heightAngle < -maxHeightAngle)
         {
             heightController.Rotate(-input, 0, 0, Space.Self);
             heightAngle -= input;
         }
-        if (heightAngle > 10)
+        if (heightAngle > maxHeightAngle)
         {
             heightController.Rotate(-input, 0, 0, Space.Self);
             heightAngle -= input;

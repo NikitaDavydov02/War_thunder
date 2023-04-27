@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ButtleManager : MonoBehaviour {
 
-    public List<GameObject> allblue { get; private set; }
+    public List<GameObject> allblue { get; set; }
     
-    public List<GameObject> allred { get; private set; }
+    public List<GameObject> allred { get; set; }
 
     public float blueScore { get; private set; } = 50;
     public float redScore { get; private set; } = 50;

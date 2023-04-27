@@ -29,24 +29,29 @@ public class MainManager : MonoBehaviour {
         //Find tank to camera
         GameObject tank = buttleManager.clientTank;
         ModuleController controller = tank.GetComponent<ModuleController>();
-        GameObject[] guns = GameObject.FindGameObjectsWithTag("Gun");
-        GameObject gun = null;
-        foreach(GameObject g in guns)
-            if (g.transform.IsChildOf(tank.transform))
-            {
-                gun = g;
-                break;
-            }
-        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
-        GameObject tower = null;
-        foreach (GameObject g in towers)
-            if (g.transform.IsChildOf(tank.transform))
-            {
-                tower = g;
-                break;
-            }
-
-        Camera.SetTargetForCamera(tower.transform, gun.transform, controller);
+        Technic technic = tank.GetComponent<Technic>();
+        if (technic.Type == TechnicsType.Tank)
+        {
+            GameObject[] guns = GameObject.FindGameObjectsWithTag("Gun");
+            GameObject gun = null;
+            foreach (GameObject g in guns)
+                if (g.transform.IsChildOf(tank.transform))
+                {
+                    gun = g;
+                    break;
+                }
+            GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");
+            GameObject tower = null;
+            foreach (GameObject g in towers)
+                if (g.transform.IsChildOf(tank.transform))
+                {
+                    tower = g;
+                    break;
+                }
+            Camera.SetTargetForCamera(TechnicsType.Tank, tower.transform, gun.transform, controller);
+        }
+        if (technic.Type == TechnicsType.Plane)
+            Camera.SetTargetForCamera(TechnicsType.Plane, tank.transform, null, controller);
         GameStatus = GameStatus.Playing;
     }
 

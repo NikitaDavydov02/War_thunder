@@ -1,18 +1,22 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGun : Gun
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        base.Start();
+public class PlayerTankGun : TankGun {
+    //REFACTORED_1
+    public float sensetivityvert = 9f;
+	// Use this for initialization
+	void Start () {
     }
-
-    // Update is called once per frame
-    void Update()
+	void Awake()
     {
+    }
+    void OnDestroy()
+    {
+    }
+    
+	// Update is called once per frame
+	public void Update () {
         base.Update();
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -29,8 +33,13 @@ public class PlayerGun : Gun
             SwitchCurb(2);
             MainManager.userInterfaseManager.SwitchCurb();
         }
+        
 
+        float rot = Input.GetAxis("Mouse Y")*sensetivityvert;
+        Rot(rot);
         if (Input.GetKey(KeyCode.Space))
             Fire();
+        //if (Input.GetMouseButton(0) && gunType == GunType.AutomaticGun)
+            //Fire();
     }
 }

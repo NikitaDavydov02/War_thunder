@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class SceneCamera : MonoBehaviour {
     //REFACTORED_1
-    private List<Transform> playerAndHisFiredCurbs;
-    private Transform target;
+    private ModuleController controller;
     private Transform gun;
+    private TechnicsType typeOfTarget;
+
+    private List<Transform> playerAndHisFiredCurbs;
+    
+    
     //[SerializeField]
     //private Material tex;
     public float rotSpeeed = 1.5f;
@@ -24,12 +28,10 @@ public class SceneCamera : MonoBehaviour {
     public float minDistance = 5f;
     public float zoomSpeed = 5f;
     private float distance;
-    private ModuleController controller;
     public float rotXYSpeed = 10f;
     private float lastDeathRotXY = 0;
-    [SerializeField]
-    ButtleManager buttleManager;
     private Camera cam;
+    private Transform target;
 
 
     //private bool  bulletCam =false;
@@ -50,34 +52,59 @@ public class SceneCamera : MonoBehaviour {
             return;
         if (!inZoom)
         {
-            float deltaVert = Input.GetAxis("Mouse Y");
-            Vector3 o = _offset;
-            o.y += deltaVert * Time.deltaTime;
-            if (o.y > maxYOffset)
-                o.y = maxYOffset;
-            if (o.y < minYOffset)
-                o.y = minYOffset;
-            _offset = o;
 
             distance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime;
             if (distance > maxDistance) distance = maxDistance;
             if (distance < minDistance) distance = minDistance;
             float k = distance / _offset.magnitude;
             _offset *= k;
-            Quaternion rotation;
 
-            if (controller!=null && controller.alive)
+            Quaternion rotation = Quaternion.identity;
+            if (typeOfTarget != TechnicsType.Plane)
             {
-                rotation = Quaternion.Euler(0, target.eulerAngles.y, 0);
-                //Debug.Log("Attached"+ target.eulerAngles.y);
+                float deltaVert = Input.GetAxis("Mouse Y");
+                Vector3 o = _offset;
+                o.y += deltaVert * Time.deltaTime;
+                if (o.y > maxYOffset)
+                    o.y = maxYOffset;
+                if (o.y < minYOffset)
+                    o.y = minYOffset;
+                _offset = o;
             }
-            else
+            if (typeOfTarget == TechnicsType.Plane)
             {
-                lastDeathRotXY += Input.GetAxis("Mouse X") * rotXYSpeed * Time.deltaTime;
-                rotation = Quaternion.Euler(0, target.eulerAngles.y + lastDeathRotXY, 0);
+                //???/
+                _offset = new Vector3(0, 3, -10);
+                transform.position = target.transform.position + target.transform.TransformDirection(_offset);
+                //transform.position = target.transform.position + _offset;
+                transform.LookAt(target);
+                Vector3 euler = transform.localEulerAngles;
+                euler.z = target.localEulerAngles.z;
+                transform.localEulerAngles = euler;
             }
-            transform.position = target.position - (rotation * _offset);
-            transform.LookAt(target);
+            if (typeOfTarget == TechnicsType.Tank)
+            {
+                float deltaVert = Input.GetAxis("Mouse Y");
+                Vector3 o = _offset;
+                o.y += deltaVert * Time.deltaTime;
+                if (o.y > maxYOffset)
+                    o.y = maxYOffset;
+                if (o.y < minYOffset)
+                    o.y = minYOffset;
+                _offset = o;
+                if (controller != null && controller.alive)
+                {
+                    rotation = Quaternion.Euler(0, target.eulerAngles.y, 0);
+                    //Debug.Log("Attached"+ target.eulerAngles.y);
+                }
+                else
+                {
+                    lastDeathRotXY += Input.GetAxis("Mouse X") * rotXYSpeed * Time.deltaTime;
+                    rotation = Quaternion.Euler(0, target.eulerAngles.y + lastDeathRotXY, 0);
+                }
+                transform.position = target.position - (rotation * _offset);
+                transform.LookAt(target);
+            }
         }
         else
         {
@@ -129,11 +156,13 @@ public class SceneCamera : MonoBehaviour {
     {
         playerAndHisFiredCurbs.Add(curb);
     }
-    public void SetTargetForCamera(Transform target, Transform gun, ModuleController controller=null)
+    public void SetTargetForCamera(TechnicsType type, Transform target, Transform gun=null, ModuleController controller=null)
     {
         this.target = target;
-        this.gun = gun;
         this.controller = controller;
+        this.typeOfTarget = type;
+        if(type==TechnicsType.Tank)
+            this.gun = gun;
         playerAndHisFiredCurbs.Clear();
         playerAndHisFiredCurbs.Add(target);
     }

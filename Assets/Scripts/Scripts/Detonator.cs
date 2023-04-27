@@ -54,8 +54,9 @@ public class Detonator : MonoBehaviour
         if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit))
         {
             GameObject hitObject = hit.transform.gameObject;
-            if (hitObject.tag != "Curb" && !curbScript.stop)
+            if (hitObject.tag != "Curb")
             {
+                Debug.Log("Curb hited something " + hitObject.name);
                 bool probil = false;
                 transform.position = hit.point;
                 
@@ -84,11 +85,12 @@ public class Detonator : MonoBehaviour
                     }
                 }
 
-                if (probil)
+                if (probil||type==TypeOfCurp.Bomb)
                 {
                     if (hitObject.tag == "Tank")
                     {
-                        hitObject.GetComponent<ModuleController>().Killer = gameObject.transform.parent.name;
+                        string[] s = gameObject.transform.parent.name.Split('_');
+                        hitObject.GetComponent<ModuleController>().Killer = s[0];
                     }
                     Damage();
                 }
@@ -105,7 +107,7 @@ public class Detonator : MonoBehaviour
         Vector3 add = Vector3.ClampMagnitude(speed, putiDoVzryva);
 
         List<Module> damagedModels = new List<Module>();
-        if (type == TypeOfCurp.Фугасный)
+        if (type == TypeOfCurp.Фугасный||type==TypeOfCurp.Bomb)
         {
             Collider[] hits;
             Vector3 detonationCenter = transform.position+add;
@@ -160,7 +162,8 @@ public class Detonator : MonoBehaviour
     private IEnumerator Die()
     {
         destroyed = true;
-        curbScript.Stop();
+        if(curbScript!=null)
+            curbScript.Stop();
         GameObject smoke = Instantiate(Resources.Load("Prefabs/Smoke")as GameObject);
         smoke.transform.position = transform.position;
         yield return new WaitForSeconds(1.5f);

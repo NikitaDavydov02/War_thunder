@@ -177,12 +177,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 39647340932064683}
-  probitie: 80
+  probitie: 200
   ProbDecendingSpeed: 60
   type: 1
   explosionRadius: 1.5
   curbScript: {fileID: 114938886339607510}
-  directDamage: 300
+  directDamage: 500
   impliciDamage: 300
   vzvodTime: 0.002
   characteristicDamageLength: 1

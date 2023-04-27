@@ -8,11 +8,7 @@ public class Gun : MonoBehaviour {
     private GunAudioManager audioManager;
     [SerializeField]
     private GameObject smokePrefab;
-    private float _rot;
-
-    //Maximum vertical rotations of Gun
-    public float maxRot;
-    public float minRot;
+   
     [SerializeField]
     private List<GameObject> curbPrefabs;
     private int curbTypeIndex = 0;
@@ -20,29 +16,22 @@ public class Gun : MonoBehaviour {
     private float TimeSinseFire=10f;
     private GameObject smoke;
     [SerializeField]
-    private ModuleController controller;
-    public float verticalRotationSpeed = 1f;
+    protected ModuleController controller;
+    
     public float smokeDistanceFromCenter = 3.5f;
+    [SerializeField]
+    protected GunType gunType = GunType.Gun;
     // Use this for initialization
-    void Start () {
-        _rot = 0;
+    protected void Start () {
+        smokePrefab = Resources.Load("Prefabs/Smoke") as GameObject;
 	}
-	
-	// Update is called once per frame
-	public virtual void Update () {
+
+    // Update is called once per frame
+    protected void Update () {
         TimeSinseFire += Time.deltaTime;
     }
 
-    public void Rot(float input)
-    {
-        if (!controller.alive || MainManager.GameStatus!=GameStatus.Playing)
-            return;
-        _rot += input * verticalRotationSpeed * Time.deltaTime;
-        _rot = Mathf.Clamp(_rot, minRot, maxRot);
-        Vector3 rot = transform.localEulerAngles;
-        rot.x = _rot;
-        transform.localEulerAngles = rot;
-    }
+    
     public void Fire()
     {
         if (!controller.alive|| !controller.canFire|| MainManager.GameStatus != GameStatus.Playing)
@@ -54,7 +43,7 @@ public class Gun : MonoBehaviour {
             GameObject curb = Instantiate(curbPrefabs[curbTypeIndex]) as GameObject;
             curb.transform.position = transform.TransformPoint(Vector3.forward * 5f);
             curb.transform.eulerAngles = transform.eulerAngles;
-            curb.name = controller.gameObject.name;
+            curb.name = controller.gameObject.name+"_curb";
             MainManager.PlayerFired(controller.gameObject, curb);
 
             if (audioManager != null)
@@ -74,6 +63,8 @@ public class Gun : MonoBehaviour {
     }
     private IEnumerator Smoke()
     {
+        if (smokePrefab == null)
+            yield return null;
         smoke = Instantiate(smokePrefab);
         smoke.transform.position = transform.position;
         Vector3 gunRoot = transform.eulerAngles;
@@ -82,4 +73,9 @@ public class Gun : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         Destroy(smoke);
     }
+}
+public enum GunType
+{
+    Gun,
+    AutomaticGun,
 }

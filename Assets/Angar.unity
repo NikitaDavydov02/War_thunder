@@ -5272,7 +5272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   humanTechnics:
   - {fileID: 3296742721656707179, guid: 9a21a84430110d5499bd46fa7959a3d2, type: 3}
-  - {fileID: 82467768136119087, guid: 1bc406f05ff56d244bcd40b97a4e057e, type: 3}
+  - {fileID: 7561544977941177404, guid: 3dc18fd0516f2e64c82c2b985dffc6b3, type: 3}
   botsTechnics: []
 --- !u!114 &1393274180
 MonoBehaviour:

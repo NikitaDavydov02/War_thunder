@@ -15,8 +15,11 @@ public class ResistanceForce : MonoBehaviour, IForce
     private Vector3 lastPosition;
     public Rigidbody rb;
     bool rbFromParent = false;
-    public float KAirbus = 0.1f;
-    public float k2Airbus = 1f;
+    public float kParalel = 0.1f;
+    public float kPerp = 1f;
+    [SerializeField]
+    public Vector3 deltaForceApplicationPoint = Vector3.zero;
+    public Vector3 forwardDirectionVector = Vector3.forward;
     // Start is called before the first frame update
     void Start()
     {
@@ -103,17 +106,18 @@ public class ResistanceForce : MonoBehaviour, IForce
         }
         if (Primitive == Primitive.Airbus)
         {
-            Vector3 diskAxis = transform.TransformDirection(0, 1, 0);
-            Vector3 perpendicularVelosity = Vector3.Dot(velocity, diskAxis) * diskAxis;
-            Vector3 parallelVelosity = velocity - perpendicularVelosity;
-            Vector3 direction = -perpendicularVelosity.normalized;
-            Vector3 direction2 = -parallelVelosity.normalized;
+            Vector3 parallelVelosity = Vector3.Dot(velocity, transform.TransformDirection(forwardDirectionVector)) * transform.TransformDirection(forwardDirectionVector);
+            Vector3 perpendicularVelocity = velocity-parallelVelosity;
+            Debug.DrawLine(transform.position, transform.position + parallelVelosity, Color.black);
+            Debug.DrawLine(transform.position, transform.position + perpendicularVelocity, Color.black);
+            Vector3 directionPerp = -perpendicularVelocity.normalized;
+            Vector3 directionParal = -parallelVelosity.normalized;
 
-            area = Mathf.PI * diameter * diameter / 4;
-            float area2 = diameter * length;
-            float module = MainWeatherManager.AirDensity * perpendicularVelosity.magnitude * perpendicularVelosity.magnitude * KAirbus * area / 2;
-            float module2 = MainWeatherManager.AirDensity * parallelVelosity.magnitude * parallelVelosity.magnitude * k2Airbus * area2 / 2;
-            forceInGlobalCoordinates = direction * module + direction2 * module2;
+            float areaPerpToFlow = Mathf.PI * diameter * diameter / 4;
+            float areaParalToFlow = diameter * length;
+            float modulePerp = MainWeatherManager.AirDensity * perpendicularVelocity.magnitude* perpendicularVelocity.magnitude * kPerp* areaParalToFlow/ 2;
+            float moduleParal = MainWeatherManager.AirDensity * parallelVelosity.magnitude * parallelVelosity.magnitude * kParalel * areaPerpToFlow / 2;
+            forceInGlobalCoordinates = modulePerp * directionPerp + moduleParal * directionParal;
             //Debug.Log("Resistance Force:" + forceInGlobalCoordinates);
             //Debug.DrawLine(transform.TransformPoint(Vector3.zero), transform.TransformPoint(Vector3.zero) + forceInGlobalCoordinates * 4, Color.cyan);
         }
@@ -122,7 +126,7 @@ public class ResistanceForce : MonoBehaviour, IForce
         if (rbFromParent)
             AbsolutePointsOfForceApplying.Add(transform.position);
         else
-            AbsolutePointsOfForceApplying.Add(rb.worldCenterOfMass);
+            AbsolutePointsOfForceApplying.Add(rb.worldCenterOfMass+transform.TransformDirection(deltaForceApplicationPoint));
     }
 }
 public enum Primitive

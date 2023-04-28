@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombController : MonoBehaviour
 {
     [SerializeField]
-    List<FixedJoint> bombs;
+    List<Bomb> bombs;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,9 @@ public class BombController : MonoBehaviour
         {
             if (bombs.Count != 0)
             {
-                Destroy(bombs[bombs.Count - 1]);
+                bombs[bombs.Count - 1].Release(GetComponent<Rigidbody>().velocity);
+                Debug.Log("Initial velocity" + GetComponent<Rigidbody>().velocity);
+                MainManager.PlayerFired(gameObject, bombs[bombs.Count - 1].gameObject);
                 bombs.RemoveAt(bombs.Count - 1);
             }
         }

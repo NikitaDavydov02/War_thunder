@@ -5,15 +5,25 @@ using UnityEngine;
 public class Curb : MonoBehaviour {
     //REFACTORED_1
     public float speedScalyar = 100f;
-    public Vector3 speedVector;
-    private float g = -9.8f;
-    public bool stop { get; private set; } = false;
-	void Start () {
+    protected Vector3 speedVector;
+    protected float g = -9.8f;
+    public bool stop { get; protected set; } = false;
+    [SerializeField]
+    protected Detonator detonator;
+    protected void Start () {
+        if (detonator.type == TypeOfCurp.Bomb)
+        {
+            stop = true;
+        }
+        else
+        {
+            detonator.Vzvesti();
+        }
         Vector3 s = transform.forward*speedScalyar;
         speedVector = Vector3.ClampMagnitude(s, speedScalyar);
-	}
-	
-	void Update () {
+    }
+
+    protected void Update () {
         if (stop || MainManager.GameStatus != GameStatus.Playing)
             return;
         speedVector.y += g * Time.deltaTime;

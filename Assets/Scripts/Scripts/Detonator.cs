@@ -12,8 +12,9 @@ public class Detonator : MonoBehaviour
     private float probitie = 100;
     public float ProbDecendingSpeed = 60f;
 
-    private float timeSinceFire= 0;
+    private float timeSinceFire = -1;
     private bool vzveden = false;
+    public float ExplosionDistance = 1f;
 
     private bool destroyed = false;
     public TypeOfCurp type;
@@ -21,9 +22,11 @@ public class Detonator : MonoBehaviour
     
     [SerializeField]
     Curb curbScript;
+
     public float directDamage = 300f;
     public float impliciDamage = 10f;
-    public float vzvodTime = 0.002f;
+    public float vzvodTime = 0.05f;
+    
     private Vector3 lastPosition;
     [SerializeField]
     private float characteristicDamageLength = 1;
@@ -32,15 +35,24 @@ public class Detonator : MonoBehaviour
     {
         lastPosition = transform.position;
     }
-
+    public void Vzvesti()
+    {
+        timeSinceFire = 0;
+        Debug.Log("Vzveden method");
+    }
     // Update is called once per frame
     void Update()
     {
         if (destroyed)
             return;
-        if (timeSinceFire >= 0.05f)
+        if (timeSinceFire >= vzvodTime)
+        {
             vzveden = true;
-        timeSinceFire += Time.deltaTime;
+            Debug.Log("Vzv");
+        }
+           
+        if(timeSinceFire>=0)
+            timeSinceFire += Time.deltaTime;
         if (timeSinceFire > 10)
         {
             Destroy(this.gameObject.transform.parent.gameObject);
@@ -51,12 +63,30 @@ public class Detonator : MonoBehaviour
 
         //Detect hiting
         RaycastHit hit;
-        if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit))
+        Debug.DrawLine(lastPosition, transform.position, Color.red, 10f);
+        if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit)&&vzveden)
         {
+            Debug.Log("Hit!");
             GameObject hitObject = hit.transform.gameObject;
-            if (hitObject.tag != "Curb")
+
+            if (hitObject.tag != "Curb" && (hit.point - lastPosition).magnitude <= 5*(transform.position - lastPosition).magnitude)
             {
-                Debug.Log("Curb hited something " + hitObject.name);
+                // (hit.point - lastPosition).magnitude <= (transform.position -lastPosition).magnitude
+                //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                //sph.GetComponent<Collider>().isTrigger = true;
+                //sph.transform.position = hit.point;
+
+                //sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                //sph.GetComponent<Collider>().isTrigger = true;
+                //sph.transform.position = lastPosition;
+
+                //sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+                //sph.GetComponent<Collider>().isTrigger = true;
+                //sph.transform.position = transform.position;
+                //Debug.Log("Curb hited something " + hitObject.name);
                 bool probil = false;
                 transform.position = hit.point;
                 
@@ -102,9 +132,8 @@ public class Detonator : MonoBehaviour
     }
     private void Damage()
     {
-        Vector3 speed = curbScript.speedVector;
-        float putiDoVzryva = vzvodTime * curbScript.speedVector.magnitude;
-        Vector3 add = Vector3.ClampMagnitude(speed, putiDoVzryva);
+
+        Vector3 add = transform.TransformDirection(Vector3.forward * ExplosionDistance);
 
         List<Module> damagedModels = new List<Module>();
         if (type == TypeOfCurp.Фугасный||type==TypeOfCurp.Bomb)

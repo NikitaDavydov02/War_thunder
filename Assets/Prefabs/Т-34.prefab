@@ -4940,14 +4940,15 @@ MonoBehaviour:
   audioManager: {fileID: 6232296357026253463}
   smokePrefab: {fileID: 1079795546207462, guid: cbefe168b1033fa40b1a5fee41114438,
     type: 3}
-  maxRot: 20
-  minRot: -20
   curbPrefabs:
   - {fileID: 1021522103940426, guid: 978ac55765bf5c64fa37983d554f904e, type: 3}
   timeOfRecharging: 5
   controller: {fileID: 2339105420963850541}
-  verticalRotationSpeed: 1
   smokeDistanceFromCenter: 3.5
+  gunType: 0
+  maxRot: 20
+  minRot: -20
+  verticalRotationSpeed: 1
   sensetivityvert: 4
 --- !u!114 &6232296357026253463
 MonoBehaviour:

@@ -5157,7 +5157,7 @@ MonoBehaviour:
   curbScript: {fileID: 3065330778116632206}
   directDamage: 5000
   impliciDamage: 5000
-  vzvodTime: 0.5
+  vzvodTime: 0.2
   characteristicDamageLength: 1
 --- !u!1 &5440124296831666019
 GameObject:

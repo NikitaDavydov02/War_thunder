@@ -120,37 +120,33 @@ public class ButtleManager : MonoBehaviour {
     }
     public void PlayerDied(GameObject player, string killerName)
     {
+        GameObject killerTechnics = null;
+        if (TechnicsOfPlayers.ContainsKey(killerName))
+            killerTechnics = TechnicsOfPlayers[killerName];
+        if ((allred.Contains(killerTechnics) && allred.Contains(player)) || (allblue.Contains(killerTechnics) && allblue.Contains(player)))
+            return;
         Debug.Log("ButtleManager: Died"+ player.name);
-        foreach(GameObject go in allred)
+        if (allred.Contains(player))
         {
-            if (go == player)
-            {
-                redCurrentCount--;
-                blueScoreDelta += 1;
-                MainManager.userInterfaseManager.RemoveTank(player);
-            }
-            if (go.name == killerName)
-            {
-                redFrags[go]++;
-                results[go.name].AddFrag();
-                MainManager.userInterfaseManager.UpdateFrag(go, redFrags[go]);
-            }
-                
+            //Victim
+            redCurrentCount--;
+            blueScoreDelta += 1;
+            MainManager.userInterfaseManager.RemoveTank(player);
+            //Killer
+            redFrags[killerTechnics]++;
+            results[killerName].AddFrag();
+            MainManager.userInterfaseManager.UpdateFrag(killerTechnics, redFrags[killerTechnics]);
         }
-        foreach (GameObject go in allblue)
+        if (allblue.Contains(player))
         {
-            if (go == player)
-            {
-                blueCurrentCount--;
-                redScoreDelta += 1;
-                MainManager.userInterfaseManager.RemoveTank(player);
-            }
-            if (go.name == killerName)
-            {
-                blueFrags[go]++;
-                results[go.name].AddFrag();
-                MainManager.userInterfaseManager.UpdateFrag(go, blueFrags[go]);
-            }
+            //Victim
+            blueCurrentCount--;
+            redScoreDelta += 1;
+            MainManager.userInterfaseManager.RemoveTank(player);
+            //Killer
+            blueFrags[killerTechnics]++;
+            results[killerName].AddFrag();
+            MainManager.userInterfaseManager.UpdateFrag(killerTechnics, redFrags[killerTechnics]);
         }
         if (player == clientTank)
             MainManager.userInterfaseManager.ThisPlayerIsDestroied();
@@ -160,5 +156,5 @@ public class ButtleManager : MonoBehaviour {
 }
 public enum ButtleType
 {
-    AgainstBots
+    AgainstBots,
 }

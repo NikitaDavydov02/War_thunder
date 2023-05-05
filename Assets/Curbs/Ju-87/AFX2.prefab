@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedScalyar: 800
+  speedVector: {x: 0, y: 0, z: 0}
+  stop: 0
   detonator: {fileID: 114330354000985442}
 --- !u!1 &1042848788014046
 GameObject:
@@ -183,10 +185,11 @@ MonoBehaviour:
   ExplosionDistance: 1
   type: 1
   explosionRadius: 1.5
-  curbScript: {fileID: 114938886339607510}
   directDamage: 500
   impliciDamage: 300
+  vzvodTime: 0.05
   characteristicDamageLength: 1
+  OwnerName: 
 --- !u!1 &1896829830876644
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +394,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0

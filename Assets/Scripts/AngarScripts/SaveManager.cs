@@ -69,5 +69,6 @@ public class SaveManager : MonoBehaviour {
     {
         silver += result.silver;
         experiense += result.expirience;
+        SaveGame();
     }
 }

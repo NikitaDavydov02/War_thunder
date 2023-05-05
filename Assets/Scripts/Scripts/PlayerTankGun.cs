@@ -2,11 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTankGun : TankGun {
+public class PlayerTankGun : PlayerGun, IVerticalRotatable {
     //REFACTORED_1
     public float sensetivityvert = 9f;
-	// Use this for initialization
-	void Start () {
+
+    private float _rot;
+
+    //Maximum vertical rotations of Gun
+    public float maxRot;
+    public float minRot;
+    public float verticalRotationSpeed = 1f;
+    // Use this for initialization
+    void Start () {
+        base.Start();
+        _rot = 0;
     }
 	void Awake()
     {
@@ -18,28 +27,27 @@ public class PlayerTankGun : TankGun {
 	// Update is called once per frame
 	public void Update () {
         base.Update();
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SwitchCurb(0);
-            MainManager.userInterfaseManager.SwitchCurb();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SwitchCurb(1);
-            MainManager.userInterfaseManager.SwitchCurb();
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SwitchCurb(2);
-            MainManager.userInterfaseManager.SwitchCurb();
-        }
         
 
         float rot = Input.GetAxis("Mouse Y")*sensetivityvert;
-        Rot(rot);
+        Rotate(rot);
         if (Input.GetKey(KeyCode.Space))
             Fire();
         //if (Input.GetMouseButton(0) && gunType == GunType.AutomaticGun)
             //Fire();
     }
+    public void Rotate(float input)
+    {
+        if (!controller.alive || MainManager.GameStatus != GameStatus.Playing)
+            return;
+        _rot += input * verticalRotationSpeed * Time.deltaTime;
+        _rot = Mathf.Clamp(_rot, minRot, maxRot);
+        Vector3 rot = transform.localEulerAngles;
+        rot.x = _rot;
+        transform.localEulerAngles = rot;
+    }
+}
+public interface IVerticalRotatable
+{
+    public void Rotate(float input);
 }

@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedScalyar: 750
+  speedVector: {x: 0, y: 0, z: 0}
+  stop: 0
   detonator: {fileID: 114330354000985442}
 --- !u!1 &1042848788014046
 GameObject:
@@ -165,9 +167,9 @@ MonoBehaviour:
   ExplosionDistance: 1
   type: 1
   explosionRadius: 1.5
-  curbScript: {fileID: 114938886339607510}
   directDamage: 500
   impliciDamage: 300
+  vzvodTime: 0.05
   characteristicDamageLength: 1
 --- !u!1 &1896829830876644
 GameObject:

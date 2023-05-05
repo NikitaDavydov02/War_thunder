@@ -5,19 +5,19 @@ using UnityEngine;
 public class ButtleManagerAgainstBots : ButtleManager
 {
 
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         
     }
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         base.Update();
     }
@@ -46,9 +46,11 @@ public class ButtleManagerAgainstBots : ButtleManager
             {
                 case TechnicsType.Tank:
                     technic.transform.position = redSpawnsForTanks[i];
+                    technic.transform.localEulerAngles = redSpawnsForTanksOrientation[i];
                     break;
                 case TechnicsType.Plane:
                     technic.transform.position = redSpawnsForPlanes[i];
+                    technic.transform.localEulerAngles = redSpawnsForPlanesOrientation[i];
                     break;
             }
             technic.transform.Rotate(0, 180, 0);
@@ -66,13 +68,18 @@ public class ButtleManagerAgainstBots : ButtleManager
             if (blueSpawnsForTanks.Count <= i)
                 continue;
             tank.transform.position = blueSpawnsForTanks[i];
+            tank.transform.localEulerAngles = blueSpawnsForTanksOrientation[i];
             tank.name = "playerBlue" + i;
             allblue.Add(tank);
             blueFrags.Add(tank, 0);
 
             TechnicsOfPlayers.Add(tank.name, tank);
             results.Add(tank.name, new ButtleResult());
+            
         }
+        foreach (string s in results.Keys)
+            Debug.Log(s + "has result" + results[s]);
+        Debug.Log("End of buttle against bot mnager output");
         clientTank = allred[0];
     }
 }

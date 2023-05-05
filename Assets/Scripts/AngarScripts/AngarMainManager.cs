@@ -13,6 +13,7 @@ public class AngarMainManager : MonoBehaviour
     private static AngarCamera angarCamera;
 
     private static ButtleStartSettings buttleStartSettings;
+    private GameObject buttleMainManager;
 
     //public static ButtleManager buttleManager;
     // Use this for initialization
@@ -22,23 +23,7 @@ public class AngarMainManager : MonoBehaviour
         GameObject camera = GameObject.FindWithTag("MainCamera");
 
         
-        GameObject buttleMainManager = GameObject.FindGameObjectWithTag("ButtleMainManager");
-        if (buttleMainManager != null)
-        {
-            
-            
-            ButtleResult result = buttleMainManager.GetComponent<ButtleManager>().results["playerRed0"];
-            Debug.Log("Find buttle manager " + buttleMainManager.GetComponent<ButtleManagerAgainstBots>());
-            foreach (string s in buttleMainManager.GetComponent<ButtleManager>().results.Keys)
-                if (s == "playerRed0")
-                    result = buttleMainManager.GetComponent<ButtleManager>().results[s];
-            Debug.Log("Find buttle result " + result);
-            angarUIManager.DisplayButtleResults(result);
-            angarAudioManager.PlayMusicAfterButtle(result.Win);
-            saveManager.UpdateResources(result);
-
-            Destroy(buttleMainManager.gameObject);
-        }
+        buttleMainManager = GameObject.FindGameObjectWithTag("ButtleMainManager");
         
         
         if (camera != null)
@@ -50,12 +35,36 @@ public class AngarMainManager : MonoBehaviour
         saveManager = GetComponent<SaveManager>();
         //buttleStartSettings = GetComponent<ButtleStartSettings>();
         saveManager.LoadGameState();
-        angarUIManager.DisplayUsersSavings(saveManager.gold, saveManager.silver, saveManager.experiense);
+        
     }
 
     // Update is called once per frame
     void Start()
     {
+        if (buttleMainManager != null)
+        {
+
+
+            ButtleResult result = buttleMainManager.GetComponent<ButtleManagerAgainstBots>().results["playerRed0"];
+            Debug.Log("Find buttle manager " + buttleMainManager.GetComponent<ButtleManagerAgainstBots>());
+            Debug.Log("Find buttle result " + result);
+            foreach (string s in buttleMainManager.GetComponent<ButtleManagerAgainstBots>().results.Keys)
+            {
+                Debug.Log(s + "has result " + buttleMainManager.GetComponent<ButtleManagerAgainstBots>().results[s]);
+            }
+            //}
+            //    if (s == "playerRed0")
+            //        result = buttleMainManager.GetComponent<ButtleManagerAgainstBots>().results[s];
+            Debug.Log("Find buttle result2 " + result);
+            angarUIManager.DisplayButtleResults(result);
+            angarAudioManager.PlayMusicAfterButtle(result.Win);
+            saveManager.UpdateResources(result);
+
+            Destroy(buttleMainManager.gameObject);
+        }
+        angarUIManager.DisplayUsersSavings(saveManager.gold, saveManager.silver, saveManager.experiense);
+        
+
     }
     public static void Buttle()
     {

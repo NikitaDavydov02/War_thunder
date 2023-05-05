@@ -21,18 +21,28 @@ public class ButtleManager : MonoBehaviour {
     public List<Vector3> redSpawnsForTanks;
     [SerializeField]
     public List<Vector3> blueSpawnsForTanks;
+    [SerializeField]
+    public List<Vector3> redSpawnsForTanksOrientation;
+    [SerializeField]
+    public List<Vector3> blueSpawnsForTanksOrientation;
 
     [SerializeField]
     public List<Vector3> redSpawnsForPlanes;
     [SerializeField]
     public List<Vector3> blueSpawnsForPlanes;
+    [SerializeField]
+    public List<Vector3> redSpawnsForPlanesOrientation;
+    [SerializeField]
+    public List<Vector3> blueSpawnsForPlanesOrientation;
 
     //Frags
     protected Dictionary<GameObject, int> redFrags;
     protected Dictionary<GameObject, int> blueFrags;
     public GameObject clientTank { get; protected set; } = null;
 
-    public Dictionary<string, ButtleResult> results { get; protected set; }
+    //public Dictionary<string, ButtleResult> results { get; protected set; }
+    [SerializeField]
+    public Dictionary<string, ButtleResult> results;
 
     protected Dictionary<string, GameObject> TechnicsOfPlayers;
 
@@ -43,8 +53,9 @@ public class ButtleManager : MonoBehaviour {
     public int redCurrentCount =2;
     public int blueCurrentCount = 2;
     // Use this for initialization
-    protected void Awake () {
+    protected virtual void Awake () {
         MainManager.technicsLibrary.Inicialize();
+        DontDestroyOnLoad(this.gameObject);
         startSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
         allred = new List<GameObject>();
         allblue = new List<GameObject>();
@@ -57,17 +68,22 @@ public class ButtleManager : MonoBehaviour {
         TechnicsOfPlayers = new Dictionary<string, GameObject>();
 
         SpawnTechnics();
+        foreach (string s in results.Keys)
+            Debug.Log(s + "has result" + results[s]);
+        Debug.Log("End of buttle mnager output");
+
         Destroy(startSettings.gameObject);
         
         MainManager.userInterfaseManager.InicializeRedComand(allred);
         MainManager.userInterfaseManager.InicializeBlueComand(allblue);
     }
+    protected virtual void Start() { }
     protected virtual void SpawnTechnics()
     {
         
     }
     // Update is called once per frame
-    protected void Update () {
+    protected virtual void Update () {
         if (MainManager.GameStatus!=GameStatus.Playing)
             return;
         redScore += redScoreDelta * Time.deltaTime * scoreSpeed;
@@ -120,12 +136,12 @@ public class ButtleManager : MonoBehaviour {
     }
     public void PlayerDied(GameObject player, string killerName)
     {
+        Debug.Log("Buttle managerplayer died: " + player.name + " killer" + killerName);
         GameObject killerTechnics = null;
         if (TechnicsOfPlayers.ContainsKey(killerName))
             killerTechnics = TechnicsOfPlayers[killerName];
         if ((allred.Contains(killerTechnics) && allred.Contains(player)) || (allblue.Contains(killerTechnics) && allblue.Contains(player)))
             return;
-        Debug.Log("ButtleManager: Died"+ player.name);
         if (allred.Contains(player))
         {
             //Victim
@@ -133,7 +149,7 @@ public class ButtleManager : MonoBehaviour {
             blueScoreDelta += 1;
             MainManager.userInterfaseManager.RemoveTank(player);
             //Killer
-            redFrags[killerTechnics]++;
+            blueFrags[killerTechnics]++;
             results[killerName].AddFrag();
             MainManager.userInterfaseManager.UpdateFrag(killerTechnics, redFrags[killerTechnics]);
         }
@@ -144,7 +160,7 @@ public class ButtleManager : MonoBehaviour {
             redScoreDelta += 1;
             MainManager.userInterfaseManager.RemoveTank(player);
             //Killer
-            blueFrags[killerTechnics]++;
+            redFrags[killerTechnics]++;
             results[killerName].AddFrag();
             MainManager.userInterfaseManager.UpdateFrag(killerTechnics, redFrags[killerTechnics]);
         }

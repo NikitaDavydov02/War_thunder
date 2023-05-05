@@ -32,6 +32,7 @@ public class MainManager : MonoBehaviour {
         Technic technic = tank.GetComponent<Technic>();
         if (technic.Type == TechnicsType.Tank)
         {
+            //Setting camera tergets
             GameObject[] guns = GameObject.FindGameObjectsWithTag("Gun");
             GameObject gun = null;
             foreach (GameObject g in guns)
@@ -54,7 +55,13 @@ public class MainManager : MonoBehaviour {
             Camera.SetTargetForCamera(TechnicsType.Plane, tank.transform, null, controller);
         GameStatus = GameStatus.Playing;
     }
-
+    public static void GoToAngar()
+    {
+        Destroy(userInterfaseManager);
+        Destroy(musicManager);
+        Destroy(technicsLibrary);
+        Application.LoadLevel("Angar");
+    }
     // Update is called once per frame
     void Update () {
 		

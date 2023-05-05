@@ -14,5 +14,19 @@ public class PlaneModuleController : ModuleController
     void Update()
     {
         base.Update();
+        int diedCrew = 0;
+        foreach (Module ec in crew)
+        {
+            if (ec.state == ModuleStates.Destroed)
+            {
+                diedCrew++;
+                if (ec.nameOfModule == ModuleType.Пилот)
+                {
+                    canMove = false;
+                    canFire = false;
+                    canReloadGun = false;
+                }
+            }
+        }
     }
 }

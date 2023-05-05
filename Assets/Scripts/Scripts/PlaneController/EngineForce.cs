@@ -17,6 +17,9 @@ public class EngineForce : MonoBehaviour, IForce
     Vector3 firstRotationForceRelative;
     Vector3 secondRotationForceRelative;
 
+    [SerializeField]
+    private Module engineModule;
+
     public bool clockwiseRotation;
     // Start is called before the first frame update
     void Start()
@@ -34,8 +37,15 @@ public class EngineForce : MonoBehaviour, IForce
 
     public void CountForce(out List<Vector3> CurrentForceVectors, out List<Vector3> AbsolutePointsOfForceApplying)
     {
+        
+            
         CurrentForceVectors = new List<Vector3>();
         AbsolutePointsOfForceApplying = new List<Vector3>();
+        if (engineModule.state == ModuleStates.Destroed)
+        {
+
+            return;
+        }
         Vector3 force = AxisDirection * MaxForce * Level;
 
         force = transform.TransformDirection(force);

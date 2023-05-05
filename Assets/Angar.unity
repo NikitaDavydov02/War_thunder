@@ -1097,8 +1097,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1027669152}
   m_HandleRect: {fileID: 1027669151}
   m_Direction: 0
-  m_Value: 0.4999999
-  m_Size: 0.59999996
+  m_Value: 0.5
+  m_Size: 0.6
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2454,6 +2454,7 @@ MonoBehaviour:
   nameOfModule: 0
   flameable: 0
   explosive: 0
+  controller: {fileID: 0}
 --- !u!1 &705411075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2984,7 +2985,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c2a3ed51cb183a543825e62f0eb39de3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 512cb8f9d3b5cc2469c28df8f7c95c6c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7800,7 +7801,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ecbbede7f3fce9a418594b5de1ee18ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2b1d19946979654585e6ee157836d58, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

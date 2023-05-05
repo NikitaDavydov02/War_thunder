@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour {
     }
     public void Angar()
     {
-        Application.LoadLevel("Angar");
+        MainManager.GoToAngar();
     }
     //Modules or thecnics that human destriyed
     public IEnumerator HumanDestroy()

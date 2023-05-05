@@ -4179,7 +4179,6 @@ GameObject:
   - component: {fileID: 6338900640596449243}
   - component: {fileID: 6281108062059491709}
   - component: {fileID: 6273451091721504521}
-  - component: {fileID: 3299168827149615613}
   - component: {fileID: 3296742721656707179}
   - component: {fileID: 5674830696109826556}
   m_Layer: 8
@@ -4242,30 +4241,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1.5, z: 6}
   m_Center: {x: 0, y: 0.75, z: -0.6}
---- !u!114 &3299168827149615613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6336174713348507131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd6811ef7054854fbf7d5546cca6460, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  modules:
-  - {fileID: 6232674207996671877}
-  - {fileID: 6232603730649297691}
-  - {fileID: 6232415100980549523}
-  - {fileID: 6232418969586918793}
-  - {fileID: 6519338645741130070}
-  - {fileID: 6232330176249191039}
-  - {fileID: 6232629833787110463}
-  - {fileID: 6232389090127900417}
-  - {fileID: 6232625878887661033}
-  - {fileID: 6232403532383642167}
-  Killer: 
 --- !u!114 &3296742721656707179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4310,7 +4285,7 @@ MonoBehaviour:
   - {fileID: 6232476199818456135}
   - {fileID: 6232674207996671877}
   - {fileID: 6232603730649297691}
-  Killer: 
+  killer: 
   tower: {fileID: 6335663375523520011}
   gun: {fileID: 6336235226366550985}
 --- !u!1 &6336194405552697553

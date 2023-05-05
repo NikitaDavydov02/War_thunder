@@ -30,16 +30,18 @@ public class AngarUIManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        buttleResultPanel.gameObject.SetActive(false);
+        buttleResultPanel.SetActive(false);
+        Debug.Log("silverLabel" + silverResultLabel);
     }
 	public void DisplayButtleResults(ButtleResult result)
     {
-        Debug.Log("Show buttle result");
-        buttleResultPanel.gameObject.SetActive(true);
+        Debug.Log("Show buttle result" + result.silver+" "+ result.expirience + " " + result.frags);
+        Debug.Log("silverLabel" + silverResultLabel);
+        buttleResultPanel.SetActive(true);
         silverResultLabel.text = result.silver.ToString();
         experienseResultLabel.text = result.expirience.ToString();
         fragsLabel.text = result.frags.ToString();
-        WayLabel.text = "";
+        //WayLabel.text = "";
 
     }
     public void DisplayUsersSavings(int gold, int silver, int experience)
@@ -58,7 +60,7 @@ public class AngarUIManager : MonoBehaviour {
     }
     public void CloseButtleResultPanel()
     {
-        buttleResultPanel.gameObject.SetActive(false);
+        buttleResultPanel.SetActive(false);
     }
     public void ChangeTechnic(string newTechnickName)
     {

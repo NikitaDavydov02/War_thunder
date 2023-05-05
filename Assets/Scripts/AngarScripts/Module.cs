@@ -15,6 +15,7 @@ public class Module : MonoBehaviour {
     public bool explosive = false;
     private List<Material> materials;
     private GameObject fire;
+    public ModuleController controller;
 
 
     void Start () {
@@ -23,7 +24,6 @@ public class Module : MonoBehaviour {
         materials.Add(Resources.Load("Materials/Damaged") as Material);
         materials.Add(Resources.Load("Materials/Crit") as Material);
         materials.Add(Resources.Load("Materials/Destroyed") as Material);
-        Debug.Log(materials.Count);
         state = ModuleStates.Normal;
         TimeOfFiring = 0;
         //timeStillCrit = null;
@@ -64,12 +64,14 @@ public class Module : MonoBehaviour {
             nameOfModule == ModuleType.Наводчик ||
             nameOfModule == ModuleType.Радист ||
             nameOfModule == ModuleType.Командир ||
-            nameOfModule == ModuleType.Заряжающий)
+            nameOfModule == ModuleType.Заряжающий ||
+            nameOfModule == ModuleType.Пилот)
             return true;
         return false;
     }
-    public void Damage(float damage)
+    public void Damage(float damage, string killerName)
     {
+        controller.Killer = killerName;
         currentHP -= damage;
         if (currentHP < 0)
             currentHP = 0;
@@ -92,8 +94,7 @@ public class Module : MonoBehaviour {
             {
                 if (!IsFiring)
                 {
-                    fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
-                    fire.transform.position = this.transform.position;
+                    InstantiateFire();
                 }
                 IsFiring = true;
 
@@ -102,14 +103,18 @@ public class Module : MonoBehaviour {
         if (explosive && state== ModuleStates.Destroed)
         {
            OnModuleExplode();
-           fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
-           fire.transform.position = this.transform.position;
-           Vector3 scale = this.transform.localScale;
-           Vector3 newScale = new Vector3(1 / scale.x, 1 / scale.y, 1 / scale.z);
-           fire.transform.SetParent(this.transform);
-           fire.transform.localScale = newScale;
+           InstantiateFire();
         }
         //OnModuleDamaged();
+    }
+    public void InstantiateFire()
+    {
+        fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
+        fire.transform.position = this.transform.position;
+        Vector3 scale = this.transform.localScale;
+        Vector3 newScale = new Vector3(1 / scale.x, 1 / scale.y, 1 / scale.z);
+        fire.transform.SetParent(this.transform);
+        fire.transform.localScale = newScale;
     }
     private void OnModuleExplode()
     {

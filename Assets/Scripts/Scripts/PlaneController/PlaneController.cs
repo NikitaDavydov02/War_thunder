@@ -43,6 +43,7 @@ public class PlaneController : ForceCalculationManager
 
     public Vector3 VelocityInLocalCoordinates = Vector3.zero;
     public Vector3 AngularVelocityInLocalCoordinates = Vector3.zero;
+
     // Start is called before the first frame update
     protected void Start()
     {

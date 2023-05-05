@@ -15,14 +15,14 @@ public class Bomb : Curb
     {
         base.Update();
     }
-    public void Release(Vector3 initialVelocity)
-    {
-        Debug.Log("Relese");
-        stop = false;
-        //speedVector = initialVelocity;
-        speedVector = initialVelocity;
-        //stop = false;
-        detonator.Vzvesti();
-        transform.parent = null;
-    }
+    //public void Release(Vector3 initialVelocity)
+    //{
+    //    Debug.Log("Relese");
+    //    stop = false;
+    //    //speedVector = initialVelocity;
+    //    speedVector = initialVelocity;
+    //    //stop = false;
+    //    detonator.Vzvesti();
+    //    transform.parent = null;
+    //}
 }

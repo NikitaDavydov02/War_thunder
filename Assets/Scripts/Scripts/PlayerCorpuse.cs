@@ -9,6 +9,7 @@ public class PlayerCorpuse : Corpuse {
 
     private float lastAngleY;
     void Start () {
+        base.Start();
     }
 
     // Update is called once per frame
@@ -20,10 +21,11 @@ public class PlayerCorpuse : Corpuse {
         
         Vector3 movement = new Vector3(0, 0, aheadInput);
         movement = transform.parent.transform.TransformDirection(movement);
-        float turn = Input.GetAxis("Horizontal")* rotationalSensetivity * Time.deltaTime;
-        
-        Move(movement);
-       
+        float turn = Input.GetAxis("Horizontal");
+
+        //Move(movement);
+        Move(aheadInput);
+
         Turn(turn);
         
     }

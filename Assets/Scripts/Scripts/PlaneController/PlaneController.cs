@@ -45,9 +45,10 @@ public class PlaneController : ForceCalculationManager
     public Vector3 AngularVelocityInLocalCoordinates = Vector3.zero;
 
     // Start is called before the first frame update
-    protected void Start()
+    
+    protected override void Start()
     {
-        Init();
+        base.Start();
         rb.centerOfMass = centerOfMassLocal;
         Debug.Log("Inertia tensor" + rb.inertiaTensor);
         if (inertiaTensor != Vector3.zero)
@@ -68,8 +69,9 @@ public class PlaneController : ForceCalculationManager
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected override void Update()
     {
+        base.Update();
         CountState();
         
         if (generalLevel > 1)
@@ -90,6 +92,10 @@ public class PlaneController : ForceCalculationManager
 
         for (int i = 0; i < engineLevels.Count; i++)
             engines[i].Level = engineLevels[i];
+    }
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
     protected void HorizontalController(float input)
     {

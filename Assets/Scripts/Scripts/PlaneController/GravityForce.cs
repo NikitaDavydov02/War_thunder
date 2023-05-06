@@ -5,7 +5,7 @@ using UnityEngine;
 public class GravityForce : MonoBehaviour, IForce
 {
     public float mass;
-    public float g;
+    public float g = -9.81f;
     public Vector3 CenterOfMass;
     //public List<Vector3> CurrentForceVector { get; private set; }
 

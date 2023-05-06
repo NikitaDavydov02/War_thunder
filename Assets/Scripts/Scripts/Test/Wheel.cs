@@ -12,6 +12,7 @@ public class Wheel : MonoBehaviour
     private float turnAngle;
     public WheelCollider wcol;
     private Transform wmesh;
+    public bool left = true;
     
     private void Start()
     {

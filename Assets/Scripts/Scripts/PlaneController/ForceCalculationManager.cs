@@ -14,17 +14,17 @@ public abstract class ForceCalculationManager : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         forceSources = new List<IForce>();
     }
-    void Start()
+    protected virtual void Start()
     {
         Init();
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
 
     }
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         ////Physics counting
         //Physics counting
@@ -35,10 +35,11 @@ public abstract class ForceCalculationManager : MonoBehaviour
         foreach (IForce force in forceSources)
         {
             force.CountForce(out CurrentForceVectors, out AbsolutePointsOfForceApplying);
+            
             for (int i = 0; i < CurrentForceVectors.Count; i++)
             {
                 AddForce(CurrentForceVectors[i], AbsolutePointsOfForceApplying[i]);
-                Debug.DrawLine(AbsolutePointsOfForceApplying[i], AbsolutePointsOfForceApplying[i] + CurrentForceVectors[i], Color.red);
+                //Debug.DrawLine(AbsolutePointsOfForceApplying[i], AbsolutePointsOfForceApplying[i] + CurrentForceVectors[i], Color.red);
             }
 
         }
@@ -69,6 +70,9 @@ public abstract class ForceCalculationManager : MonoBehaviour
         Vector3 dM = -Vector3.Cross(r, forceInWorldCoordinates);
         //Debug.Log("dM: " + dM);
         MomentInCoordinatesTranslatedToCenterOfMass += dM;
+
+        //Drawing
+        //Debug.Log("drawing");
         Debug.DrawLine(pointOfApplicationINWorldCoordinates, pointOfApplicationINWorldCoordinates + forceInWorldCoordinates, Color.red);
         Debug.DrawLine(pointOfApplicationINWorldCoordinates, pointOfApplicationINWorldCoordinates + dM, Color.blue);
         Debug.DrawLine(rb.worldCenterOfMass, rb.worldCenterOfMass + r, Color.green);

@@ -22,13 +22,13 @@ public class WheelForce : MonoBehaviour, IForce
     public float springInitialLength;
 
     //Interaction with enviroment
-    public Vector3 lastContactPosition;
+    public Vector3 lastContactPosition { get; set; }
     public Vector3 slipForce;
     public Vector3 axisForceInGlobalCoordinates;
-    public float angularVelocity;
+    private float angularVelocity;
 
     // Engine force
-    public float force = 1f;
+    //public float force = 1f;
     public float engineLevel = 0;
     public bool left = false;
     public bool powered = false;
@@ -65,13 +65,23 @@ public class WheelForce : MonoBehaviour, IForce
         //Debug.DrawLine(transform.position, transform.position + platformRb.velocity, Color.white);
         Vector3 frictionForceInWorldCoordinates = Vector3.zero;
         //if (platformRb.velocity.magnitude <0.1f)
+        if(Mathf.Abs(engineLevel)<0.1f || !powered)
         {
             if (Mathf.Abs(tangetAxisForce) <= maxFrictionForce)
                 frictionForceInRelativeCoordinates = new Vector3(0, 0, -tangetAxisForce);
             else
                 frictionForceInRelativeCoordinates = new Vector3(0, 0, -maxFrictionForce);
-            frictionForceInWorldCoordinates = transform.TransformDirection(frictionForceInRelativeCoordinates);
+            
         }
+        else
+        {
+            if(engineLevel>0)
+                frictionForceInRelativeCoordinates = new Vector3(0, 0, maxFrictionForce*engineLevel);
+            else if(platformRb.transform.InverseTransformDirection(platformRb.velocity).z>0)
+                frictionForceInRelativeCoordinates = new Vector3(0, 0, maxFrictionForce * engineLevel);
+        }
+                
+        frictionForceInWorldCoordinates = transform.TransformDirection(frictionForceInRelativeCoordinates);
         //else
         //{
         //    if (Vector3.Dot(platformRb.velocity , transform.TransformDirection(Vector3.forward)) > 0)
@@ -95,7 +105,7 @@ public class WheelForce : MonoBehaviour, IForce
         angularVelocity = platformRb.velocity.magnitude / (lastContactPosition - transform.position).magnitude;
         Vector3 velocityOfContactPoint = platformRb.velocity -Vector3.Cross((lastContactPosition - transform.position),Vector3.right*angularVelocity);
         Debug.DrawLine(transform.position, transform.position + velocityOfContactPoint, Color.cyan);
-        Debug.Log("Point Velocity:" + velocityOfContactPoint.magnitude);
+        //Debug.Log("Point Velocity:" + velocityOfContactPoint.magnitude);
 
         //Output forces
         CurrentForceVectors.Add(frictionForceInWorldCoordinates);

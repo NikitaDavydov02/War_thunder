@@ -12,8 +12,8 @@ public class CarForceManager : ForceCalculationManager
     public Vector3 inertiaTensor;
     public float generalLevel = 0;
     public float inputSensetivity = 1f;
-    public float horSensetivity = 1f;
-    public float rotLevel = 0;
+    //public float horSensetivity = 1f;
+    private float rotLevel = 0;
     public float slipCoeffitient = 2f;
     public float slipTreshhold = 0.1f;
     public float mass = 10f;
@@ -61,18 +61,22 @@ public class CarForceManager : ForceCalculationManager
                 w.transform.localEulerAngles = transform.localEulerAngles;
             }
             float wheelLevel = generalLevel;
-            //if (rotLevel < 0)
-            //{
-            //    if (w.left)
-            //        wheelLevel = generalLevel * (1 - rotLevel);
-            //}
-            //if (rotLevel > 0)
-            //{
-            //    if (!w.left)
-            //        wheelLevel = -generalLevel * (1 - rotLevel);
-            //}
-            //w.engineLevel = wheelLevel;
-            w.axisForceInGlobalCoordinates = new Vector3(0, -mass * 9.81f / 4, 0);
+            if (rotLevel < 0)
+            {
+                if (w.left)
+                    wheelLevel =   (rotLevel);
+                else
+                    wheelLevel = -1 * (rotLevel);
+            }
+            if (rotLevel > 0)
+            {
+                if (!w.left)
+                   wheelLevel = -1 * (rotLevel);
+                else
+                   wheelLevel = (rotLevel);
+            }
+            w.engineLevel = wheelLevel;
+            w.axisForceInGlobalCoordinates = new Vector3(0, -mass * 9.81f / wheels.Count, 0);
 
 
 
@@ -103,7 +107,12 @@ public class CarForceManager : ForceCalculationManager
         if (generalLevel < -1)
             generalLevel = -1;
 
-        rotLevel += Input.GetAxis("Horizontal") * horSensetivity * Time.deltaTime;
+        rotLevel = 0;
+        if (Input.GetKey(KeyCode.A))
+            rotLevel = -1;
+        if (Input.GetKey(KeyCode.D))
+            rotLevel = 1;
+        //rotLevel += Input.GetAxis("Horizontal") * horSensetivity * Time.deltaTime;
         if (rotLevel > 1)
             rotLevel = 1;
         if (rotLevel < -1)

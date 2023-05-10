@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64377b3e6f5f5ff4d9e27e2686ad7dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springK: 2000000
+  springK: 10000000
   damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64377b3e6f5f5ff4d9e27e2686ad7dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springK: 2000000
+  springK: 10000000
   damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
@@ -892,9 +892,10 @@ GameObject:
   - component: {fileID: 5086678439189503906}
   - component: {fileID: 5086678439189503904}
   - component: {fileID: 5086678439189503907}
-  m_Layer: 0
+  - component: {fileID: 4330985861255403687}
+  m_Layer: 2
   m_Name: "\u0422-34"
-  m_TagString: Untagged
+  m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -968,6 +969,19 @@ MonoBehaviour:
   Killer: 
   tower: {fileID: 5086678439203972988}
   gun: {fileID: 5086678439017358236}
+--- !u!65 &4330985861255403687
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5086678439189503909}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 6}
+  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!1 &5086678439203972988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1149,7 +1163,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 1000000
+  engineForce: 2000000
   left: 1
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -1184,7 +1198,7 @@ GameObject:
   - component: {fileID: 5086678439280500531}
   - component: {fileID: 5086678439280500528}
   - component: {fileID: 5086678439280500529}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Platform
   m_TagString: Tank
   m_Icon: {fileID: 0}
@@ -1276,8 +1290,9 @@ MonoBehaviour:
   - {fileID: 5086678440750285651}
   gravityForce: {fileID: 5086678439280500531}
   centerOfMassLocal: {x: 0, y: 1.5, z: 0}
-  inertiaTensor: {x: 3200000, y: 150000, z: 64000}
+  inertiaTensor: {x: 32000000, y: 1500000, z: 640000}
   generalLevel: 0
+  rotationPower: 0.05
   resistanceForce: {fileID: 5086678439280500529}
   maWheelDistance: 1.5
 --- !u!114 &5086678439280500529
@@ -1868,7 +1883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64377b3e6f5f5ff4d9e27e2686ad7dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springK: 2000000
+  springK: 10000000
   damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
@@ -2868,7 +2883,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 1000000
+  engineForce: 2000000
   left: 0
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -4038,7 +4053,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678440139816997}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -4858,7 +4873,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 1000000
+  engineForce: 2000000
   left: 1
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -5335,7 +5350,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 1000000
+  engineForce: 2000000
   left: 0
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -6162,7 +6177,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678440977872033}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -6208,7 +6223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c8a20bbb98fe049b96b7cf2a72fb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bronyaThickness: 45
+  bronyaThickness: 10
 --- !u!1 &5086678440982021929
 GameObject:
   m_ObjectHideFlags: 0
@@ -6506,7 +6521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64377b3e6f5f5ff4d9e27e2686ad7dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  springK: 2000000
+  springK: 10000000
   damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}

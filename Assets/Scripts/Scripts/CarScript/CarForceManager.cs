@@ -16,6 +16,7 @@ public class CarForceManager : ForceCalculationManager
     //public float inputSensetivity = 1f;
     //public float horSensetivity = 1f;
     private float rotLevel = 0;
+    public float rotationPower = 0.05f;
     //public float slipCoeffitient = 2f;
     //public float slipTreshhold = 0.1f;
     //public float mass = 10f;
@@ -56,16 +57,16 @@ public class CarForceManager : ForceCalculationManager
             if (rotLevel < 0)
             {
                 if (t.left)
-                    trackLevel = (rotLevel);
+                    trackLevel = (rotLevel)* rotationPower;
                 else
-                    trackLevel = -1 * (rotLevel);
+                    trackLevel = -1 * (rotLevel)*rotationPower;
             }
             if (rotLevel > 0)
             {
                 if (!t.left)
-                    trackLevel = -1 * (rotLevel);
+                    trackLevel = -1 * (rotLevel)* rotationPower;
                 else
-                    trackLevel = (rotLevel);
+                    trackLevel = (rotLevel)* rotationPower;
             }
             t.engineLevel = trackLevel;
         }

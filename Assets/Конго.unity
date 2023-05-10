@@ -2292,7 +2292,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066766224}
   m_CullTransparentMesh: 0
---- !u!28 &1108206656
+--- !u!28 &1100999946
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2885,7 +2885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTextures:
-  - {fileID: 1108206656}
+  - {fileID: 1100999946}
   - {fileID: 472252210}
   - {fileID: 1353498338}
   - {fileID: 1395221074}
@@ -2911,7 +2911,8 @@ MonoBehaviour:
   - http://89.163.206.23/AssetStore/TreeOffers/Offer_10.jpg
   - http://89.163.206.23/AssetStore/TreeOffers/Offer_11.jpg
   LinksURL:
-  - 
+  - 'Unable to round-trip http request to upstream: dial tcp4 89.163.206.23:80: i/o
+    timeout'
   - 
   - 
   - 
@@ -3279,7 +3280,7 @@ MonoBehaviour:
   - {fileID: 5086678439189503904, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
   - {fileID: 7561544977941177404, guid: 3dc18fd0516f2e64c82c2b985dffc6b3, type: 3}
   botsTechnics:
-  - {fileID: 3296742721656707179, guid: d555b5ebb92a53e4fb3469348e360a6e, type: 3}
+  - {fileID: 5086678439189503904, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
 --- !u!114 &1529577770
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -84,9 +84,10 @@ public class Detonator : MonoBehaviour
             Debug.Log("Hit " + hitObject.name);
             //Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
             //Debug.Log("Hit distance " + hit.distance);
-            if (hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
+            //if (hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
+            if (hitObject.tag != "Curb"&& hitObject.tag!="Terrain")
             {
-                //Debug.Log("Hit " + hitObject.name);
+                Debug.Log("Hit " + hitObject.name);
                 // Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
                 //Debug.Log("Hit distance " + hit.distance);
                 //Debug.Log("transform.position - lastPosition " + (transform.position - lastPosition).magnitude);

@@ -23,7 +23,7 @@ public class TracksForce : MonoBehaviour, IForce
 
     //
     //Slip force
-    public float slipCoeffitient = 10f;
+    public float slipCoeffitient = 1000f;
     public float slipTreshhold = 0f;
 
     public void CountForce(out List<Vector3> CurrentForceVectors, out List<Vector3> AbsolutePointsOfForceApplying)
@@ -47,7 +47,7 @@ public class TracksForce : MonoBehaviour, IForce
         if (engineLevel > 0)
             frictionForceInRelativeCoordinates =Vector3.forward *engineForce * engineLevel;
         frictionForceInWorldCoordinates = transform.TransformDirection(frictionForceInRelativeCoordinates);
-        Debug.Log("Engine force inrelative"+frictionForceInRelativeCoordinates);
+        //Debug.Log("Engine force inrelative"+frictionForceInRelativeCoordinates);
         CurrentForceVectors.Add(frictionForceInWorldCoordinates);
         AbsolutePointsOfForceApplying.Add(transform.position);
 
@@ -71,7 +71,7 @@ public class TracksForce : MonoBehaviour, IForce
         Debug.DrawLine(transform.position, transform.position + velocity*5, Color.black);
         Debug.DrawLine(transform.position, transform.position + perpendicularSlip*5, Color.black);
 
-        Vector3 slipForce = -perpendicularSlip.normalized * 1000f;
+        Vector3 slipForce = -perpendicularSlip.normalized * slipCoeffitient;
         //slipForce += transform.TransformDirection(Vector3.forward) * engineForce;
 
         CurrentForceVectors.Add(slipForce);

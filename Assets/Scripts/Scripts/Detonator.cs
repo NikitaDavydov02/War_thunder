@@ -81,7 +81,7 @@ public class Detonator : MonoBehaviour
         if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit))
         {
             GameObject hitObject = hit.transform.gameObject;
-            //Debug.Log("Hit " + hitObject.name);
+            Debug.Log("Hit " + hitObject.name);
             //Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
             //Debug.Log("Hit distance " + hit.distance);
             if (hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
@@ -143,7 +143,7 @@ public class Detonator : MonoBehaviour
     }
     private void Damage()
     {
-
+        //Debug.Log("Detonator: damage");
         Vector3 add = transform.TransformDirection(Vector3.forward * ExplosionDistance);
 
         List<Module> damagedModels = new List<Module>();
@@ -162,6 +162,7 @@ public class Detonator : MonoBehaviour
                     float distance = Vector3.Magnitude(m.transform.position - detonationCenter);
                     float realDamage = impliciDamage * Mathf.Exp(-distance/characteristicDamageLength);
                     m.Damage(realDamage, OwnerName);
+                    
                     damagedModels.Add(m);
                 }
             }
@@ -177,12 +178,12 @@ public class Detonator : MonoBehaviour
                 if (m != null)
                 {
                     m.Damage(directDamage, OwnerName);
-                    m.controller.Killer = OwnerName;
+                    //m.controller.Killer = OwnerName;
                     damagedModels.Add(m);
                 }
             }
         }
-        if (OwnerName == MainManager.buttleManager.clientTank.name)
+        if (MainManager.buttleManager.clientTank!=null && OwnerName == MainManager.buttleManager.clientTank.name)
         {
             Debug.Log("Display damaged modules");
             foreach (Module m in damagedModels)

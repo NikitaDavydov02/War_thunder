@@ -7,42 +7,67 @@ public class CarForceManager : ForceCalculationManager
     [SerializeField]
     public List<WheelForce> wheels;
     [SerializeField]
+    public List<TracksForce> tracks;
+    [SerializeField]
     public GravityForce gravityForce;
     public Vector3 centerOfMassLocal;
     public Vector3 inertiaTensor;
     public float generalLevel = 0;
-    public float inputSensetivity = 1f;
+    //public float inputSensetivity = 1f;
     //public float horSensetivity = 1f;
     private float rotLevel = 0;
-    public float slipCoeffitient = 2f;
-    public float slipTreshhold = 0.1f;
-    public float mass = 10f;
+    //public float slipCoeffitient = 2f;
+    //public float slipTreshhold = 0.1f;
+    //public float mass = 10f;
     [SerializeField]
     public ResistanceForce resistanceForce;
+    //[SerializeField]
+    //private Rigidbody carRb;
+    public float maWheelDistance = 1.5f;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
+        //rb = carRb;
         rb.centerOfMass = centerOfMassLocal;
         Debug.Log("Inertia tensor" + rb.inertiaTensor);
         if (inertiaTensor != Vector3.zero)
             rb.inertiaTensor = inertiaTensor;
 
-        //lastPosition = transform.position;
+        
         generalLevel = 0;
-        //for (int i = 0; i < engines.Count; i++)
-        //{
-        //    engineLevels.Add(0);
-        //    forceSources.Add(engines[i]);
-        //}
+        
         foreach (WheelForce w in wheels)
             forceSources.Add(w);
+        
+        foreach (TracksForce t in tracks)
+            forceSources.Add(t);
         forceSources.Add(gravityForce);
         forceSources.Add(resistanceForce);
     }
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        foreach(TracksForce t in tracks)
+        {
+            t.forceFromPlatformInWorldCoordinates = new Vector3(0, -rb.mass * 9.81f / wheels.Count, 0);
+            float trackLevel = generalLevel;
+            if (rotLevel < 0)
+            {
+                if (t.left)
+                    trackLevel = (rotLevel);
+                else
+                    trackLevel = -1 * (rotLevel);
+            }
+            if (rotLevel > 0)
+            {
+                if (!t.left)
+                    trackLevel = -1 * (rotLevel);
+                else
+                    trackLevel = (rotLevel);
+            }
+            t.engineLevel = trackLevel;
+        }
         foreach (WheelForce w in wheels)
         {
             RaycastHit hit;
@@ -53,47 +78,13 @@ public class CarForceManager : ForceCalculationManager
             {
 
                 float distance = hit.distance - w.diametr / 2;
-                w.transform.position = hit.point + transform.TransformDirection(Vector3.up * w.diametr / 2);
-                //float xAngle = w.transform.eulerAngles.x;
-                //Vector3 eulerAngles = transform.eulerAngles;
-                //eulerAngles.x = xAngle;
-                //w.transform.eulerAngles = eulerAngles;
+                //if (distance >= maWheelDistance)
+                    //w.transform.position = origin + dir.normalized * maWheelDistance;
+                //else
+                    w.transform.position = hit.point + transform.TransformDirection(Vector3.up * w.diametr / 2);
+               
                 w.transform.localEulerAngles = transform.localEulerAngles;
             }
-            float wheelLevel = generalLevel;
-            if (rotLevel < 0)
-            {
-                if (w.left)
-                    wheelLevel =   (rotLevel);
-                else
-                    wheelLevel = -1 * (rotLevel);
-            }
-            if (rotLevel > 0)
-            {
-                if (!w.left)
-                   wheelLevel = -1 * (rotLevel);
-                else
-                   wheelLevel = (rotLevel);
-            }
-            w.engineLevel = wheelLevel;
-            w.axisForceInGlobalCoordinates = new Vector3(0, -mass * 9.81f / wheels.Count, 0);
-
-
-
-
-            //Sliping force
-            Vector3 slipingVelocity = (hit.point - w.lastContactPosition) / Time.deltaTime;
-            Debug.DrawLine(hit.point, hit.point + slipingVelocity, Color.black);
-            float paralelMovment = Vector3.Dot(transform.TransformDirection(Vector3.forward), slipingVelocity);
-
-            Vector3 perpendicularSlip = slipingVelocity - (paralelMovment * transform.TransformDirection(Vector3.forward));
-            Debug.DrawLine(hit.point, hit.point + perpendicularSlip, Color.black);
-            if (perpendicularSlip.magnitude < slipTreshhold)
-                perpendicularSlip = Vector3.zero;
-
-            Vector3 slipForce = -perpendicularSlip.normalized * slipCoeffitient;
-            w.slipForce = slipForce;
-            w.lastContactPosition = hit.point;
         }
         
     }
@@ -101,7 +92,7 @@ public class CarForceManager : ForceCalculationManager
     protected override void Update()
     {
         base.Update();
-        generalLevel += Input.GetAxis("Vertical") * inputSensetivity * Time.deltaTime;
+        generalLevel = Input.GetAxis("Vertical");
         if (generalLevel > 1)
             generalLevel = 1;
         if (generalLevel < -1)

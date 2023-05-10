@@ -35,9 +35,10 @@ public abstract class ForceCalculationManager : MonoBehaviour
         foreach (IForce force in forceSources)
         {
             force.CountForce(out CurrentForceVectors, out AbsolutePointsOfForceApplying);
-            
+            //Debug.Log("Force" + CurrentForceVectors.Count);
             for (int i = 0; i < CurrentForceVectors.Count; i++)
             {
+                //Debug.Log("Force sourse"+force.)
                 AddForce(CurrentForceVectors[i], AbsolutePointsOfForceApplying[i]);
                 //Debug.DrawLine(AbsolutePointsOfForceApplying[i], AbsolutePointsOfForceApplying[i] + CurrentForceVectors[i], Color.red);
             }
@@ -72,7 +73,7 @@ public abstract class ForceCalculationManager : MonoBehaviour
         MomentInCoordinatesTranslatedToCenterOfMass += dM;
 
         //Drawing
-        //Debug.Log("drawing");
+       // Debug.Log("drawing force:" + forceInWorldCoordinates + " app;yingPoint " + pointOfApplicationINWorldCoordinates); ;
         Debug.DrawLine(pointOfApplicationINWorldCoordinates, pointOfApplicationINWorldCoordinates + forceInWorldCoordinates, Color.red);
         Debug.DrawLine(pointOfApplicationINWorldCoordinates, pointOfApplicationINWorldCoordinates + dM, Color.blue);
         Debug.DrawLine(rb.worldCenterOfMass, rb.worldCenterOfMass + r, Color.green);

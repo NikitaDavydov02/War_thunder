@@ -21,8 +21,8 @@ public class Tower : MonoBehaviour {
 	}
     public void Rotate(float input)
     {
-        if (!controller.alive|| MainManager.GameStatus != GameStatus.Playing)
-            return;
+        //if (!controller.alive|| MainManager.GameStatus != GameStatus.Playing)
+        //    return;
         if (audioManager != null)
         {
             if (input == 0)

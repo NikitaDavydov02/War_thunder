@@ -34,6 +34,7 @@ public class TankModuleController : ModuleController
         foreach (Module m in modules)
             if (m.nameOfModule == ModuleType.МеханизмПоворотаБашни)
                 m.InstantiateFire();
+        Debug.Log("Tank controller call die after explosion");
         Die();
     }
 }

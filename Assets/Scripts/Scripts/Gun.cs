@@ -34,8 +34,8 @@ public class Gun : MonoBehaviour {
     
     public void Fire()
     {
-        if (!controller.alive|| !controller.canFire|| MainManager.GameStatus != GameStatus.Playing)
-            return;
+        //if (!controller.alive|| !controller.canFire|| MainManager.GameStatus != GameStatus.Playing)
+            //return;
         
         if (TimeSinseFire >= timeOfRecharging)
         {

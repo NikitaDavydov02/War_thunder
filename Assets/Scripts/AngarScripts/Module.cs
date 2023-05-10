@@ -71,6 +71,8 @@ public class Module : MonoBehaviour {
     }
     public void Damage(float damage, string killerName)
     {
+        Debug.Log("Module " + nameOfModule + " damaged by " + killerName);
+        //OnModuleDamaged(killerName);
         controller.Killer = killerName;
         currentHP -= damage;
         if (currentHP < 0)
@@ -122,7 +124,14 @@ public class Module : MonoBehaviour {
         if (eventHandler != null)
             eventHandler(this, new EventArgs());
     }
+    private void OnModuleDamaged(string killer)
+    {
+        EventHandler eventHandler = ModuleExplode;
+        if (eventHandler != null)
+            eventHandler(this, new ModuleDamagedEventArgs(killer));
+    }
     public event EventHandler ModuleExplode;
+    public event EventHandler ModuleDamaged;
     //private void OnModuleDamaged()
     //{
     //    EventHandler eventHandler = ModuleDamaged;
@@ -158,13 +167,12 @@ public class Module : MonoBehaviour {
         }
     }
 }
-//public class ModuleDamagedEventArgs:EventArgs
-//{
-//    public ModuleType moduleType { get; private set; }
+public class ModuleDamagedEventArgs:EventArgs
+{
+  public string Killer { get; private set; }
 //    public ModuleStates moduleState { get; private set; }
-//    public ModuleDamagedEventArgs(ModuleType type, ModuleStates state)
-//    {
-//        moduleState = state;
-//        moduleType = type;
-//    }
-//}
+    public ModuleDamagedEventArgs(string killer)
+    {
+        Killer = killer;
+    }
+}

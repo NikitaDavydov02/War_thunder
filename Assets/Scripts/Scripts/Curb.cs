@@ -31,7 +31,7 @@ public class Curb : MonoBehaviour {
 	}
     private void Stop()
     {
-        Debug.Log("Stop curb");
+        //Debug.Log("Stop curb");
         stop = true;
         speedVector = Vector3.zero;
     }

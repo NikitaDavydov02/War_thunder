@@ -75,10 +75,10 @@ public class Corpuse : MonoBehaviour {
                     accelerationLevel = currentTurnLevel;
             }
             //w.Steer(horInput);
-            if(w.left)
-                Debug.Log("Left:" + accelerationLevel);
-            else
-                Debug.Log("Right:" + accelerationLevel);
+            //if(w.left)
+            //    Debug.Log("Left:" + accelerationLevel);
+            ////else
+            //    Debug.Log("Right:" + accelerationLevel);
             w.Accelerate(accelerationLevel * power);
             w.UpdatePosition();
         }

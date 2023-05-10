@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ButtleManager : MonoBehaviour {
 
-    public List<GameObject> allblue { get; set; }
-    
-    public List<GameObject> allred { get; set; }
+    public List<GameObject> allblue;
+
+    public List<GameObject> allred;
 
     public float blueScore { get; private set; } = 50;
     public float redScore { get; private set; } = 50;
@@ -44,7 +44,7 @@ public class ButtleManager : MonoBehaviour {
     [SerializeField]
     public Dictionary<string, ButtleResult> results;
 
-    protected Dictionary<string, GameObject> TechnicsOfPlayers;
+    public Dictionary<string, GameObject> TechnicsOfPlayers;
 
     protected ButtleStartSettings startSettings;
 
@@ -116,6 +116,8 @@ public class ButtleManager : MonoBehaviour {
     }
     public void AddShotToPlayerResults(GameObject player)
     {
+        if (results == null)
+            return;
         if (results.ContainsKey(player.name))
             results[player.name].AddShoot();
     }
@@ -136,7 +138,7 @@ public class ButtleManager : MonoBehaviour {
     }
     public void PlayerDied(GameObject player, string killerName)
     {
-        Debug.Log("Buttle managerplayer died: " + player.name + " killer" + killerName);
+        Debug.Log("Buttle manager player died: " + player.name + " killer " + killerName);
         GameObject killerTechnics = null;
         if (TechnicsOfPlayers.ContainsKey(killerName))
             killerTechnics = TechnicsOfPlayers[killerName];
@@ -144,6 +146,8 @@ public class ButtleManager : MonoBehaviour {
             return;
         if (allred.Contains(player))
         {
+            foreach (string s in TechnicsOfPlayers.Keys)
+                Debug.Log("Technics of " + s + "is " + TechnicsOfPlayers[s].name);
             //Victim
             redCurrentCount--;
             blueScoreDelta += 1;

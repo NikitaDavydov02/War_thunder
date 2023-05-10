@@ -12,11 +12,11 @@ public class ModuleController : MonoBehaviour {
     protected List<Module> crew;
 
     public float TimeUntilRepairingFinished { get; private set; } = 0;
-    public bool alive { get; private set; } = true;
+    public bool alive = true;
     public bool canMove { get; protected set; } = true;
     public bool canFire { get; protected set; } = true;
     public bool canReloadGun { get; protected set; } = true;
-    public string Killer { get; set; }
+    public string Killer;
 
 
     
@@ -25,12 +25,21 @@ public class ModuleController : MonoBehaviour {
         crew = new List<Module>();
         foreach (Module module in modules)
         {
+            module.ModuleDamaged += Module_ModuleDamaged;
             //module.ModuleExplode += Explode;
             if (module.IsHuman())
                 crew.Add(module);
             module.controller = this;
         }
 
+    }
+
+    private void Module_ModuleDamaged(object sender, EventArgs e)
+    {
+        
+        ModuleDamagedEventArgs args = e as ModuleDamagedEventArgs;
+        Killer = args.Killer;
+        Debug.Log("Module controller received killer" + Killer);
     }
 
     // Update is called once per frame
@@ -106,13 +115,13 @@ public class ModuleController : MonoBehaviour {
     
     protected void Die()
     {
-        
 
+        Debug.Log("Die is called in module controller alive" + alive) ;
         if (!alive)
             return;
         MainManager.buttleManager.PlayerDied(this.gameObject, Killer);
         alive = false;
-        Debug.Log("Module controller "+this.gameObject.name+": Die " + alive);
+        Debug.Log("Module controller "+this.gameObject.name+" died ");
         AudioSource source = Instantiate(MainManager.musicManager.sourcePrefab);
         source.clip = Resources.Load("Music/Crash") as AudioClip;
         source.transform.position = transform.position;

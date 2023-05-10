@@ -86,7 +86,8 @@ public class CarForceManager : ForceCalculationManager
                 w.transform.localEulerAngles = transform.localEulerAngles;
             }
         }
-        
+        if (rb.velocity.magnitude < 10.1f)
+            rb.velocity = Vector3.zero;
     }
     // Update is called once per frame
     protected override void Update()

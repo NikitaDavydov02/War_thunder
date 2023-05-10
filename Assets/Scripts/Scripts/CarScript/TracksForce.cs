@@ -12,12 +12,19 @@ public class TracksForce : MonoBehaviour, IForce
     [SerializeField]
     private Rigidbody rb;
     private Vector3 velocity;
+    private Vector3 lastSlipVelocity;
+    
     
     public float engineLevel = 0f;
     public float dynamicFrictionVelocityTreshhold = 0.1f;
     public float engineForce = 1f;
     public bool left = false;
     public float normalizationSlope = 1f;
+
+    //
+    //Slip force
+    public float slipCoeffitient = 10f;
+    public float slipTreshhold = 0f;
 
     public void CountForce(out List<Vector3> CurrentForceVectors, out List<Vector3> AbsolutePointsOfForceApplying)
     {
@@ -45,17 +52,38 @@ public class TracksForce : MonoBehaviour, IForce
         Vector2 tangentForceInLocalCoordinates= new Vector2(forceFromPlatformInLocalCoordinated.x, forceFromPlatformInLocalCoordinated.z);
 
 
-        if (normalAxisForce > 0)
-        {
+       // if (normalAxisForce > 0)
+        //{
             //You are flying
-            return;
-        }
+            //return;
+       // }
             
         float maxFrictionForce = -normalAxisForce * frictionCoeffitient;
 
         Vector3 frictionForceInWorldCoordinates = Vector3.zero;
+
+
+        //Slip force
+        float paralelMovment = Vector3.Dot(transform.TransformDirection(Vector3.forward), velocity);
+        Vector3 perpendicularSlip = velocity - (paralelMovment * transform.TransformDirection(Vector3.forward));
+        float slipAceleration = (perpendicularSlip - lastSlipVelocity).magnitude / Time.deltaTime;
+        lastSlipVelocity = perpendicularSlip;
+
+        //if (perpendicularSlip.magnitude < slipTreshhold)
+        //    perpendicularSlip = Vector3.zero;
+        Debug.DrawLine(transform.position, transform.position + velocity*5, Color.black);
+        Debug.DrawLine(transform.position, transform.position + perpendicularSlip*5, Color.black);
+
+        Vector3 slipForce = -perpendicularSlip.normalized * 1000f;
+
+        CurrentForceVectors.Add(slipForce);
+        AbsolutePointsOfForceApplying.Add(transform.position);
         
-        //if (Mathf.Abs(engineLevel) < 0.1f)
+
+
+
+
+        /*//if (Mathf.Abs(engineLevel) < 0.1f)
         {
             Vector3 planarVelocity = transform.InverseTransformDirection(velocity);
             planarVelocity.y = 0;
@@ -65,11 +93,18 @@ public class TracksForce : MonoBehaviour, IForce
             {
                 //Dynamic friction
                 //frictionForceInRelativeCoordinates = -planarVelocity*planarVelocity.magnitude* maxFrictionForce/normalizationSlope;
-                frictionForceInRelativeCoordinates = -planarVelocity.normalized * maxFrictionForce;
+                //frictionForceInRelativeCoordinates = -planarVelocity.normalized * maxFrictionForce;
+                frictionForceInRelativeCoordinates = -planarVelocity.normalized*forceFromPlatformInLocalCoordinated.magnitude;
+                frictionForceInRelativeCoordinates.y = 0;
                 Debug.Log("Dinamic frition");
             }
             else
             {
+                Debug.Log("Static frition");
+                //frictionForceInRelativeCoordinates = -forceFromPlatformInLocalCoordinated;
+                //frictionForceInRelativeCoordinates.y = 0;
+                //normalizationSlope = dynamicFrictionVelocityTreshhold * forceFromPlatformInLocalCoordinated.magnitude;
+                frictionForceInRelativeCoordinates = -planarVelocity / normalizationSlope;
                 //Static friction
                 if (tangentForceInLocalCoordinates.magnitude <= maxFrictionForce)
                 {
@@ -93,15 +128,16 @@ public class TracksForce : MonoBehaviour, IForce
             //    frictionForceInRelativeCoordinates = new Vector3(0, 0, -maxFrictionForce);
 
         }
+        */
         //else
         {
-            if (engineLevel > 0)
-                frictionForceInRelativeCoordinates.z=engineForce * engineLevel;
+           
             //else if(platformRb.transform.InverseTransformDirection(platformRb.velocity).z>0)
             //else
             //    frictionForceInRelativeCoordinates = new Vector3(0, 0, maxFrictionForce * engineLevel);
         }
-
+        if (engineLevel > 0)
+            frictionForceInRelativeCoordinates.z = engineForce * engineLevel;
         frictionForceInWorldCoordinates = transform.TransformDirection(frictionForceInRelativeCoordinates);
         CurrentForceVectors.Add(frictionForceInWorldCoordinates);
         AbsolutePointsOfForceApplying.Add(transform.position);

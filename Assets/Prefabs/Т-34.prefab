@@ -1148,10 +1148,12 @@ MonoBehaviour:
   forceFromPlatformInWorldCoordinates: {x: 0, y: 0, z: 0}
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
-  dynamicFrictionVelocityTreshhold: 1
-  engineForce: 20000
+  dynamicFrictionVelocityTreshhold: 0.1
+  engineForce: 100000
   left: 1
   normalizationSlope: 10
+  slipCoeffitient: 10
+  slipTreshhold: 0
 --- !u!54 &5086678439260064535
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2865,10 +2867,12 @@ MonoBehaviour:
   forceFromPlatformInWorldCoordinates: {x: 0, y: 0, z: 0}
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
-  dynamicFrictionVelocityTreshhold: 1
-  engineForce: 20000
+  dynamicFrictionVelocityTreshhold: 0.1
+  engineForce: 100000
   left: 0
   normalizationSlope: 10
+  slipCoeffitient: 10
+  slipTreshhold: 0
 --- !u!54 &5086678439909067001
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4853,10 +4857,12 @@ MonoBehaviour:
   forceFromPlatformInWorldCoordinates: {x: 0, y: 0, z: 0}
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
-  dynamicFrictionVelocityTreshhold: 1
-  engineForce: 20000
+  dynamicFrictionVelocityTreshhold: 0.1
+  engineForce: 100000
   left: 1
   normalizationSlope: 10
+  slipCoeffitient: 10
+  slipTreshhold: 0
 --- !u!54 &5086678440599762672
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5328,10 +5334,12 @@ MonoBehaviour:
   forceFromPlatformInWorldCoordinates: {x: 0, y: 0, z: 0}
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
-  dynamicFrictionVelocityTreshhold: 1
-  engineForce: 20000
+  dynamicFrictionVelocityTreshhold: 0.1
+  engineForce: 100000
   left: 0
   normalizationSlope: 10
+  slipCoeffitient: 10
+  slipTreshhold: 0
 --- !u!54 &5086678440750285650
 Rigidbody:
   m_ObjectHideFlags: 0

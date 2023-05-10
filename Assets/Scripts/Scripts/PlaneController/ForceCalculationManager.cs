@@ -44,6 +44,7 @@ public abstract class ForceCalculationManager : MonoBehaviour
             }
 
         }
+        //Debug.DrawLine(transform.position,transform.position+ForceToCenterOfMass,Color.cyan);
         rb.AddForce(ForceToCenterOfMass, ForceMode.Force);
         MomentInCoordinatesTranslatedToCenterOfMass *= -1;
         //Debug.Log("M: " + (MomentInCoordinatesTranslatedToCenterOfMass));

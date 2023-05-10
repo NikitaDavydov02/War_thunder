@@ -24,6 +24,7 @@ public class CarForceManager : ForceCalculationManager
     //[SerializeField]
     //private Rigidbody carRb;
     public float maWheelDistance = 1.5f;
+    //public float force = 1000000f;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -68,6 +69,7 @@ public class CarForceManager : ForceCalculationManager
             }
             t.engineLevel = trackLevel;
         }
+        //rb.AddRelativeForce(0, 0, force);
         foreach (WheelForce w in wheels)
         {
             RaycastHit hit;

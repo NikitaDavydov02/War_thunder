@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springK: 2000000
-  damping: 10000
+  damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
   diametr: 1
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springK: 2000000
-  damping: 10000
+  damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
   diametr: 1
@@ -907,7 +907,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678439189503909}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.66315997, y: 1.83, z: 2783.7305}
+  m_LocalPosition: {x: 0, y: 1.83, z: 2783.7305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -995,7 +995,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678439203972988}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.026840031, y: 1.79, z: 0.6616211}
+  m_LocalPosition: {x: 0, y: 1.79, z: 0.6616211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1126,7 +1126,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678439260064553}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e9459c4c51b627498973df706310886, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 100000
+  engineForce: 1000000
   left: 1
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   - {fileID: 5086678440750285651}
   gravityForce: {fileID: 5086678439280500531}
   centerOfMassLocal: {x: 0, y: 1.5, z: 0}
-  inertiaTensor: {x: 32000, y: 150000, z: 6400}
+  inertiaTensor: {x: 3200000, y: 150000, z: 64000}
   generalLevel: 0
   resistanceForce: {fileID: 5086678439280500529}
   maWheelDistance: 1.5
@@ -1869,7 +1869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springK: 2000000
-  damping: 10000
+  damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
   diametr: 1
@@ -2845,7 +2845,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678439909067003}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e9459c4c51b627498973df706310886, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -2868,7 +2868,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 100000
+  engineForce: 1000000
   left: 0
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -4835,7 +4835,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678440599762674}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e9459c4c51b627498973df706310886, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -4858,7 +4858,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 100000
+  engineForce: 1000000
   left: 1
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -5312,7 +5312,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678440750285652}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e9459c4c51b627498973df706310886, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
@@ -5335,7 +5335,7 @@ MonoBehaviour:
   rb: {fileID: 5086678439280500534}
   engineLevel: 0
   dynamicFrictionVelocityTreshhold: 0.1
-  engineForce: 100000
+  engineForce: 1000000
   left: 0
   normalizationSlope: 10
   slipCoeffitient: 10
@@ -6081,7 +6081,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5086678440977872033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.026840031, y: 0.03, z: 0.5695801}
+  m_LocalPosition: {x: 0, y: 0.03, z: 0.5695801}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6507,7 +6507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springK: 2000000
-  damping: 10000
+  damping: 100000
   inertiaTensor: {x: 0, y: 0, z: 0}
   platformRb: {fileID: 5086678439280500534}
   diametr: 1

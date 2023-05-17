@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 public class Gun : MonoBehaviour {
     //REFACTORED_1
@@ -46,11 +48,19 @@ public class Gun : MonoBehaviour {
             curb.name = controller.gameObject.name+"_curb";
             curb.GetComponent<Curb>().Release(controller.gameObject.name);
             MainManager.PlayerFired(controller.gameObject, curb);
+            OnFired();
 
             if (audioManager != null)
                 audioManager.Shoot();
             StartCoroutine(Smoke());
         }
+    }
+    public event EventHandler Fired;
+    private void OnFired()
+    {
+        EventHandler handler = Fired;
+        if (handler != null)
+            handler(this, new EventArgs());
     }
     protected void SwitchCurb(int index)
     {

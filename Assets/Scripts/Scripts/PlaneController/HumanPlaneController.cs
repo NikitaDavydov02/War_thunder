@@ -9,6 +9,7 @@ public class HumanPlaneController : PlaneController
     public float gasSensitivity;
     public float heigtSensitivity;
     public float horizontalSensitivity;
+    public bool active = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,8 @@ public class HumanPlaneController : PlaneController
     void Update()
     {
         base.Update();
+        if (!active)
+            return;
         if (Input.GetKeyDown(KeyCode.A))
             Eleron(true);
         if (Input.GetKeyUp(KeyCode.A))

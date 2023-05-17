@@ -294,7 +294,7 @@ MonoBehaviour:
   nameOfModule: 15
   flameable: 0
   explosive: 0
-  controller: {fileID: 0}
+  controller: {fileID: 988684907189734916}
 --- !u!1 &3638535439916366646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,6 +1318,7 @@ MonoBehaviour:
   gasSensitivity: 1
   heigtSensitivity: 50
   horizontalSensitivity: 50
+  active: 1
 --- !u!114 &988684907189734916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1341,6 +1342,8 @@ MonoBehaviour:
   - {fileID: 988828752304600049}
   - {fileID: 1215806425357055621}
   - {fileID: 597603412197967876}
+  alive: 1
+  Killer: 
 --- !u!114 &7561544977941177404
 MonoBehaviour:
   m_ObjectHideFlags: 0

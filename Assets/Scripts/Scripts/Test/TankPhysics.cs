@@ -20,6 +20,9 @@ public class TankPhysics : MonoBehaviour
     public float rotationPower = 0.05f;
     public Vector3 centerOfMass = Vector3.zero;
     public Vector3 inertiaTensor = Vector3.zero;
+    [SerializeField]
+    public Gun gun;
+    public float impuls = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +38,15 @@ public class TankPhysics : MonoBehaviour
             lastLength.Add(initialLengthsToGround);
             levels.Add(0);
         }
+        if(gun!=null)
+            gun.Fired += Gun_Fired;
+    }
+
+    private void Gun_Fired(object sender, System.EventArgs e)
+    {
+        Vector3 force = transform.TransformDirection(Vector3.back * impuls);
+        Vector3 point = transform.position + transform.TransformDirection(0, 2, 0);
+        rb.AddForceAtPosition(force, point, ForceMode.Impulse);
     }
 
     // Update is called once per frame
@@ -76,7 +88,7 @@ public class TankPhysics : MonoBehaviour
                     currentDistance = 0;
                 float deltaSpring = currentDistance - initialLengthsToGround;
                 float springVelocity = (currentDistance - lastLength[i]) / Time.deltaTime;
-                if (springVelocity > 10)
+                if (springVelocity > 10|| springVelocity < -10)
                     springVelocity = 0;
                 Vector3 springForce = new Vector3(0, (-deltaSpring * springK) - (springVelocity * damping), 0);
                 //Vector3 springForce = new Vector3(0, (-deltaSpring * springK), 0);

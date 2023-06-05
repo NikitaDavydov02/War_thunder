@@ -79,7 +79,7 @@ public class TankPhysics : MonoBehaviour
             Ray downRay = new Ray(origin, dir);
             if (Physics.Raycast(downRay, out hit))
             {
-                Debug.Log(hit.collider.gameObject);
+                //Debug.Log(hit.collider.gameObject);
                 Debug.DrawLine(origin, hit.point, Color.cyan);
                 float currentDistance = hit.distance;
                 if (currentDistance > 2)
@@ -94,10 +94,10 @@ public class TankPhysics : MonoBehaviour
                 //Vector3 springForce = new Vector3(0, (-deltaSpring * springK), 0);
                 lastLength[i] = currentDistance;
                 Vector3 force = transform.TransformDirection(springForce);
-                Debug.Log(force);
+                //Debug.Log(force);
                 Debug.DrawLine(origin, origin + force, Color.red);
                 rb.AddForceAtPosition(force, origin);
-                Debug.Log("Spring " + i + " force is " + force);
+                //Debug.Log("Spring " + i + " force is " + force);
 
                 //Slip force
                 Vector3 velocity = rb.velocity - Vector3.Cross(origin - rb.transform.position, rb.angularVelocity);

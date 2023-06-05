@@ -4904,10 +4904,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5434950620533012031}
-  - component: {fileID: 8410136373118848984}
   - component: {fileID: 1041751087099366736}
   - component: {fileID: 1089593441402968610}
   - component: {fileID: 1125985888928301641}
+  - component: {fileID: 8013637285900691046}
   m_Layer: 2
   m_Name: Bomb
   m_TagString: Curb
@@ -4932,22 +4932,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8410136373118848984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5440124296831666019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67c0e5c95d9b21e46af6eaf168cc9df7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedScalyar: 0
-  speedVector: {x: 0, y: 0, z: 0}
-  stop: 1
-  detonator: {fileID: 1041751087099366736}
 --- !u!114 &1041751087099366736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5081,3 +5065,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8013637285900691046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5440124296831666019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedScalyar: 100
+  speedVector: {x: 0, y: 0, z: 0}
+  stop: 1
+  detonator: {fileID: 1041751087099366736}

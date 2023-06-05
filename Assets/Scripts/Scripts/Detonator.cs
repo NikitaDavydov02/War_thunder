@@ -81,7 +81,7 @@ public class Detonator : MonoBehaviour
         if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit))
         {
             GameObject hitObject = hit.transform.gameObject;
-            Debug.Log("Hit " + hitObject.name);
+            //Debug.Log("Hit " + hitObject.name);
             //Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
             //Debug.Log("Hit distance " + hit.distance);
             if (hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)

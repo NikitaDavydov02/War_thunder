@@ -69,6 +69,10 @@ public class TechnicsLibrary : MonoBehaviour {
     {
         return botsTanks[Random.Range(0, botsTanks.Count-1)].gameObject;
     }
+    public GameObject GetRandomBotsPlane()
+    {
+        return botsPlanes[Random.Range(0, botsTanks.Count - 1)].gameObject;
+    }
     public GameObject GetHumanTechnicByName(string name)
     {
         foreach (Technic technics in humanTechnics)

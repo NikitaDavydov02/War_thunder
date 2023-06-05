@@ -16,7 +16,7 @@ public class ModuleController : MonoBehaviour {
     public bool canMove { get; protected set; } = true;
     public bool canFire { get; protected set; } = true;
     public bool canReloadGun { get; protected set; } = true;
-    public string Killer;
+    public string Killer { get; set; }
 
 
     

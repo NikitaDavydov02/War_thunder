@@ -38,8 +38,12 @@ public class ButtleManagerAgainstBots : ButtleManager
             }
             else
             {
-                technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
+                if(i==1)
+                    technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
+                else
+                    technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
             }
+
             if (redSpawnsForTanks.Count <= i)
                 continue;
             switch (technic.GetComponent<Technic>().Type)

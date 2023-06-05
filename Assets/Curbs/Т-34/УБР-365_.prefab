@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4505900941502330268}
-  - component: {fileID: 4539684111130495580}
   - component: {fileID: 960483688373804103}
   - component: {fileID: 5932005010245340210}
   - component: {fileID: 8724746964692305077}
+  - component: {fileID: 6429324496316279757}
   m_Layer: 0
   m_Name: "\u0423\u0411\u0420-365_"
   m_TagString: Curb
@@ -37,22 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4539684111130495580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4511423729857660096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67c0e5c95d9b21e46af6eaf168cc9df7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedScalyar: 750
-  speedVector: {x: 0, y: 0, z: 0}
-  stop: 0
-  detonator: {fileID: 8724746964692305077}
 --- !u!54 &960483688373804103
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -106,6 +90,22 @@ MonoBehaviour:
   vzvodTime: 0.05
   characteristicDamageLength: 1
   OwnerName: 
+--- !u!114 &6429324496316279757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4511423729857660096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedScalyar: 760
+  speedVector: {x: 0, y: 0, z: 0}
+  stop: 0
+  detonator: {fileID: 8724746964692305077}
 --- !u!1 &4512281110986194030
 GameObject:
   m_ObjectHideFlags: 0

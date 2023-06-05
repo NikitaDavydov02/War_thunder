@@ -8,33 +8,35 @@ public class Gun : MonoBehaviour {
     //REFACTORED_1
     [SerializeField]
     private GunAudioManager audioManager;
-    [SerializeField]
-    private GameObject smokePrefab;
+    
    
     [SerializeField]
     private List<GameObject> curbPrefabs;
     private int curbTypeIndex = 0;
     public float timeOfRecharging=5f;
     private float TimeSinseFire=10f;
+    
+    private GameObject smokePrefab;
     private GameObject smoke;
+    public float smokeDistanceFromCenter = 3.5f;
     [SerializeField]
     protected ModuleController controller;
     
-    public float smokeDistanceFromCenter = 3.5f;
+    
     [SerializeField]
     protected GunType gunType = GunType.Gun;
     // Use this for initialization
-    protected void Start () {
+    protected virtual void Start () {
         smokePrefab = Resources.Load("Prefabs/Smoke") as GameObject;
 	}
 
     // Update is called once per frame
-    protected void Update () {
+    protected virtual void Update () {
         TimeSinseFire += Time.deltaTime;
     }
 
     
-    public void Fire()
+    public Curb Fire()
     {
         //if (!controller.alive|| !controller.canFire|| MainManager.GameStatus != GameStatus.Playing)
             //return;
@@ -45,15 +47,27 @@ public class Gun : MonoBehaviour {
             GameObject curb = Instantiate(curbPrefabs[curbTypeIndex]) as GameObject;
             curb.transform.position = transform.TransformPoint(Vector3.forward * 5f);
             curb.transform.eulerAngles = transform.eulerAngles;
-            curb.name = controller.gameObject.name+"_curb";
-            curb.GetComponent<Curb>().Release(controller.gameObject.name);
-            MainManager.PlayerFired(controller.gameObject, curb);
+            if (controller != null)
+            {
+                curb.name = controller.gameObject.name + "_curb";
+                curb.GetComponent<Curb>().Release(controller.gameObject.name);
+                MainManager.PlayerFired(controller.gameObject, curb);
+            }
+            else
+            {
+                curb.name = "playerBlue0_curb";
+                curb.GetComponent<Curb>().Release("playerBlue0");
+            }
+                
+            
             OnFired();
 
             if (audioManager != null)
                 audioManager.Shoot();
             StartCoroutine(Smoke());
+            return curb.GetComponent<Curb>();
         }
+        return null;
     }
     public event EventHandler Fired;
     private void OnFired()

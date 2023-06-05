@@ -36,8 +36,10 @@ public class ButtleManager : MonoBehaviour {
     public List<Vector3> blueSpawnsForPlanesOrientation;
 
     //Frags
-    protected Dictionary<GameObject, int> redFrags;
-    protected Dictionary<GameObject, int> blueFrags;
+    [SerializeField]
+    public Dictionary<GameObject, int> redFrags;
+    [SerializeField]
+    public Dictionary<GameObject, int> blueFrags;
     public GameObject clientTank { get; protected set; } = null;
 
     //public Dictionary<string, ButtleResult> results { get; protected set; }
@@ -142,12 +144,13 @@ public class ButtleManager : MonoBehaviour {
         GameObject killerTechnics = null;
         if (TechnicsOfPlayers.ContainsKey(killerName))
             killerTechnics = TechnicsOfPlayers[killerName];
+        Debug.Log("Killer technics: " + killerTechnics);
         if ((allred.Contains(killerTechnics) && allred.Contains(player)) || (allblue.Contains(killerTechnics) && allblue.Contains(player)))
             return;
         if (allred.Contains(player))
         {
             foreach (string s in TechnicsOfPlayers.Keys)
-                Debug.Log("Technics of " + s + "is " + TechnicsOfPlayers[s].name);
+                Debug.Log("Technics of " + s + "is " + TechnicsOfPlayers[s]);
             //Victim
             redCurrentCount--;
             blueScoreDelta += 1;
@@ -155,7 +158,9 @@ public class ButtleManager : MonoBehaviour {
             //Killer
             blueFrags[killerTechnics]++;
             results[killerName].AddFrag();
-            MainManager.userInterfaseManager.UpdateFrag(killerTechnics, redFrags[killerTechnics]);
+            Debug.Log("Frags");
+            
+            MainManager.userInterfaseManager.UpdateFrag(killerTechnics, blueFrags[killerTechnics]);
         }
         if (allblue.Contains(player))
         {

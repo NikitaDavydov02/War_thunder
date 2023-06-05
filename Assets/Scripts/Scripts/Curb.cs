@@ -8,10 +8,10 @@ public class Curb : MonoBehaviour {
     public Vector3 speedVector;
     protected float g = -9.8f;
     [SerializeField]
-    private bool stop = false;
+    protected bool stop = false;
     [SerializeField]
     protected Detonator detonator;
-    protected void Start () {
+    protected virtual void Start () {
         Vector3 s = transform.forward*speedScalyar;
         speedVector = Vector3.ClampMagnitude(s, speedScalyar);
         if(detonator!=null)
@@ -23,12 +23,12 @@ public class Curb : MonoBehaviour {
         Stop();
     }
 
-    protected void Update () {
-        if (stop || MainManager.GameStatus != GameStatus.Playing)
-            return;
-        speedVector.y += g * Time.deltaTime;
-        transform.Translate(speedVector*Time.deltaTime, Space.World);
-	}
+ //   protected virtual void Update () {
+ //       if (stop || MainManager.GameStatus != GameStatus.Playing)
+ //           return;
+ //       speedVector.y += g * Time.deltaTime;
+ //       transform.Translate(speedVector*Time.deltaTime, Space.World);
+	//}
     private void Stop()
     {
         //0Debug.Log("Stop curb");

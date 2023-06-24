@@ -12,6 +12,7 @@ public class TankPhysics : MonoBehaviour
     public float springK;
     public float damping;
     private Rigidbody rb;
+
     public float slipCoeffitient = 100f;
     public float slipTreshhold = 0.1f;
     public float generalLevel = 0f;
@@ -22,7 +23,8 @@ public class TankPhysics : MonoBehaviour
     public Vector3 inertiaTensor = Vector3.zero;
     [SerializeField]
     public Gun gun;
-    public float impuls = 100;
+    public float recoilImpuls = 100;
+    public float airDragCoeffitient = 100f;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +46,7 @@ public class TankPhysics : MonoBehaviour
 
     private void Gun_Fired(object sender, System.EventArgs e)
     {
-        Vector3 force = transform.TransformDirection(Vector3.back * impuls);
+        Vector3 force = transform.TransformDirection(Vector3.back * recoilImpuls);
         Vector3 point = transform.position + transform.TransformDirection(0, 2, 0);
         rb.AddForceAtPosition(force, point, ForceMode.Impulse);
     }
@@ -71,6 +73,10 @@ public class TankPhysics : MonoBehaviour
                 else
                     trackLevel = (rotLevel) * rotationPower;
             }
+            //if (trackLevel > 1)
+             //   trackLevel = 1;
+            //if (trackLevel < -1)
+            //    trackLevel = -1;
             levels[i] = trackLevel;
 
             RaycastHit hit;
@@ -127,6 +133,9 @@ public class TankPhysics : MonoBehaviour
                 Debug.DrawLine(origin, origin + engineForce, Color.red);
                 //CurrentForceVectors.Add(slipForce, origin);
                 //AbsolutePointsOfForceApplying.Add(transform.position);
+                Vector3 airDragForce = -velocity * airDragCoeffitient * velocity.magnitude;
+                rb.AddForceAtPosition(airDragForce, rb.worldCenterOfMass);
+                Debug.DrawLine(origin, origin + airDragForce, Color.red);
             }
         }
            

@@ -1680,7 +1680,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -2288,6 +2288,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u0422-34"
       objectReference: {fileID: 0}
+    - target: {fileID: 237909582734784038, guid: 0ab2bc3e3e15893458b214eb95d0b69a,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 237909582734784038, guid: 0ab2bc3e3e15893458b214eb95d0b69a,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
 --- !u!1 &1214616295
@@ -2843,7 +2853,7 @@ MonoBehaviour:
   - {fileID: 237909582340005136, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
   - {fileID: 7561544977941177404, guid: 3dc18fd0516f2e64c82c2b985dffc6b3, type: 3}
   botsTechnics:
-  - {fileID: 7147888556653381764, guid: d555b5ebb92a53e4fb3469348e360a6e, type: 3}
+  - {fileID: 237909582340005136, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
   - {fileID: 7561544977941177404, guid: 3dc18fd0516f2e64c82c2b985dffc6b3, type: 3}
 --- !u!114 &1529577770
 MonoBehaviour:

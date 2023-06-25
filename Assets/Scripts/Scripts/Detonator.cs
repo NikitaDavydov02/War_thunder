@@ -87,7 +87,7 @@ public class Detonator : MonoBehaviour
             if (hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
             //if (hitObject.tag != "Curb"&& hitObject.tag!="Terrain")
             {
-                Debug.Log("Hit " + hitObject.name);
+                //Debug.Log("Hit " + hitObject.name);
                 // Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
                 //Debug.Log("Hit distance " + hit.distance);
                 //Debug.Log("transform.position - lastPosition " + (transform.position - lastPosition).magnitude);
@@ -101,12 +101,12 @@ public class Detonator : MonoBehaviour
 
                 if (TryToProbit(hit.point, hitObject)|| type == TypeOfCurp.Bomb)
                 {
-                    Debug.Log("Probitie!");
+                    //Debug.Log("Probitie!");
                     Damage();
                     
                 }
                 else
-                    Debug.Log("No Probitie:(");
+                    //Debug.Log("No Probitie:(");
 
                 destroyed = true;
                 StartCoroutine(Die());
@@ -120,7 +120,7 @@ public class Detonator : MonoBehaviour
         if (timeSinceFire >= vzvodTime && !vzveden)
         {
             vzveden = true;
-            Debug.Log("Ready");
+            //Debug.Log("Ready");
         }
            
         if(timeSinceFire>=0)
@@ -158,7 +158,7 @@ public class Detonator : MonoBehaviour
                     float distance = Vector3.Magnitude(m.transform.position - detonationCenter);
                     float realDamage = impliciDamage * Mathf.Exp(-distance/characteristicDamageLength);
                     m.Damage(realDamage, OwnerName);
-                    Debug.Log("Damage module: " + m.nameOfModule + " " + realDamage);
+                    //Debug.Log("Damage module: " + m.nameOfModule + " " + realDamage);
                     
                     damagedModels.Add(m);
                 }
@@ -168,7 +168,7 @@ public class Detonator : MonoBehaviour
         }
         if (type == TypeOfCurp.Бронебойный || type == TypeOfCurp.Кумулятивный)
         {
-            Collider[] capsuleHits = Physics.OverlapCapsule(transform.position, transform.position + add, 0.2f);
+            Collider[] capsuleHits = Physics.OverlapCapsule(transform.position,transform.position + add, 0.2f);
             foreach (Collider hited in capsuleHits)
             {
                 Module m = hited.gameObject.GetComponent<Module>();
@@ -176,7 +176,7 @@ public class Detonator : MonoBehaviour
                 {
                     m.Damage(directDamage, OwnerName);
                     //m.controller.Killer = OwnerName;
-                    Debug.Log("Damage module: " + m.nameOfModule + " " + directDamage);
+                    //Debug.Log("Damage module: " + m.nameOfModule + " " + directDamage);
                     damagedModels.Add(m);
                 }
             }

@@ -97,21 +97,16 @@ public class Detonator : MonoBehaviour
                 sph.GetComponent<Collider>().isTrigger = true;
                 sph.transform.position = hit.point;
 
-                sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                sph.GetComponent<Collider>().isTrigger = true;
-                sph.transform.position = lastPosition;
-
-                sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-                sph.GetComponent<Collider>().isTrigger = true;
-                sph.transform.position = transform.position;
+                
 
                 if (TryToProbit(hit.point, hitObject)|| type == TypeOfCurp.Bomb)
                 {
+                    Debug.Log("Probitie!");
                     Damage();
                     
                 }
+                else
+                    Debug.Log("No Probitie:(");
 
                 destroyed = true;
                 StartCoroutine(Die());
@@ -122,15 +117,15 @@ public class Detonator : MonoBehaviour
     {
         if (destroyed)
             return;
-        if (timeSinceFire >= vzvodTime)
+        if (timeSinceFire >= vzvodTime && !vzveden)
         {
             vzveden = true;
-            //Debug.Log("Vzveden");
+            Debug.Log("Ready");
         }
            
         if(timeSinceFire>=0)
             timeSinceFire += Time.deltaTime;
-        if (timeSinceFire > 10)
+        if (timeSinceFire > 30)
         {
             Destroy(this.gameObject);
             return;
@@ -163,6 +158,7 @@ public class Detonator : MonoBehaviour
                     float distance = Vector3.Magnitude(m.transform.position - detonationCenter);
                     float realDamage = impliciDamage * Mathf.Exp(-distance/characteristicDamageLength);
                     m.Damage(realDamage, OwnerName);
+                    Debug.Log("Damage module: " + m.nameOfModule + " " + realDamage);
                     
                     damagedModels.Add(m);
                 }
@@ -180,13 +176,14 @@ public class Detonator : MonoBehaviour
                 {
                     m.Damage(directDamage, OwnerName);
                     //m.controller.Killer = OwnerName;
+                    Debug.Log("Damage module: " + m.nameOfModule + " " + directDamage);
                     damagedModels.Add(m);
                 }
             }
         }
         if (MainManager.buttleManager.clientTank!=null && OwnerName == MainManager.buttleManager.clientTank.name)
         {
-            Debug.Log("Display damaged modules");
+            //Debug.Log("Display damaged modules");
             foreach (Module m in damagedModels)
             {
                 if (m.state == ModuleStates.Damaged)

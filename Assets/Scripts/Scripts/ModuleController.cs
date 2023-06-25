@@ -25,7 +25,7 @@ public class ModuleController : MonoBehaviour {
         crew = new List<Module>();
         foreach (Module module in modules)
         {
-            module.ModuleDamaged += Module_ModuleDamaged;
+            //module.ModuleDamaged += Module_ModuleDamaged;
             //module.ModuleExplode += Explode;
             if (module.IsHuman())
                 crew.Add(module);
@@ -34,13 +34,13 @@ public class ModuleController : MonoBehaviour {
 
     }
 
-    private void Module_ModuleDamaged(object sender, EventArgs e)
-    {
+    //private void Module_ModuleDamaged(object sender, EventArgs e)
+    //{
         
-        ModuleDamagedEventArgs args = e as ModuleDamagedEventArgs;
-        Killer = args.Killer;
-        Debug.Log("Module controller received killer" + Killer);
-    }
+    //    ModuleDamagedEventArgs args = e as ModuleDamagedEventArgs;
+    //    Killer = args.Killer;
+    //    Debug.Log("Module controller received killer" + Killer);
+    //}
 
     // Update is called once per frame
     protected virtual void Update () {

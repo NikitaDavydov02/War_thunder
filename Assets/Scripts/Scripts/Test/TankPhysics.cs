@@ -25,10 +25,13 @@ public class TankPhysics : MonoBehaviour
     public Gun gun;
     public float recoilImpuls = 100;
     public float airDragCoeffitient = 100f;
+    [SerializeField]
+    CorpuseAudioManager audioManager;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
         if (centerOfMass != Vector3.zero)
             rb.centerOfMass = centerOfMass;
         if (inertiaTensor != Vector3.zero)
@@ -55,6 +58,7 @@ public class TankPhysics : MonoBehaviour
     void Update()
     {
         generalLevel = Input.GetAxis("Vertical");
+        audioManager.ChangePitch(generalLevel);
         rotLevel = Input.GetAxis("Horizontal");
         for (int i=0;i<SpringConnectionPoints.Count;i++)
         {

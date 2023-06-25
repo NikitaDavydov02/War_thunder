@@ -52,8 +52,8 @@ public class Corpuse : MonoBehaviour {
     }
     public void Move(float input)
     {
-        //if (!controller.alive||!controller.canMove|| MainManager.GameStatus!=GameStatus.Playing)
-        //    return;
+        if (!controller.alive||!controller.canMove|| MainManager.GameStatus!=GameStatus.Playing)
+            return;
         //rigidbody.AddRelativeForce(maxForce * Vector3.forward * input);
         //return;
         foreach (Wheel w in wheelsWithLeft)
@@ -82,7 +82,7 @@ public class Corpuse : MonoBehaviour {
             w.Accelerate(accelerationLevel * power);
             w.UpdatePosition();
         }
-
+        Debug.Log("Change pitch");
         audioManager.ChangePitch(input);
     }
     public void Turn(float turn)

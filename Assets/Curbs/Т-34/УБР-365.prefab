@@ -163,14 +163,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 39647340932064683}
   probitie: 200
-  ProbDecendingSpeed: 60
+  ProbDecendingSpeed: 10
   ExplosionDistance: 1
   type: 1
-  explosionRadius: 1.5
+  explosionRadius: 2
   directDamage: 500
-  impliciDamage: 300
+  impliciDamage: 200
   vzvodTime: 0.05
   characteristicDamageLength: 1
+  OwnerName: 
 --- !u!1 &1896829830876644
 GameObject:
   m_ObjectHideFlags: 0

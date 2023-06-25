@@ -2021,6 +2021,7 @@ MonoBehaviour:
   gun: {fileID: 237909582520410410}
   recoilImpuls: 10000
   airDragCoeffitient: 50
+  audioManager: {fileID: 237909582734784028}
 --- !u!65 &3220054542573789247
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2083,7 +2084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 237909582371546570}
-  rotSpeed: 20
+  rotSpeed: 5
   controller: {fileID: 237909582340005139}
 --- !u!114 &237909582371546570
 MonoBehaviour:
@@ -2360,6 +2361,9 @@ MonoBehaviour:
   timeOfRecharging: 5
   smokeDistanceFromCenter: 3.5
   controller: {fileID: 237909582340005139}
+  recoilDistance: 1
+  recoilTime: 1
+  recoilingPart: {fileID: 237909583315283602}
   gunType: 0
   sensetivityvert: 4
   maxRot: 20
@@ -2895,6 +2899,8 @@ MonoBehaviour:
   stopClip: {fileID: 8300000, guid: 9405e8290d43db141b7e16377ce7b799, type: 3}
   gazClip: {fileID: 8300000, guid: 5e19a47977b78b345a3847f377594db6, type: 3}
   k: 0.0001
+  maxPitch: 0.9
+  minPitch: 0.7
 --- !u!114 &237909582734784031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3777,7 +3783,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.6
-  m_Pitch: 1
+  m_Pitch: 2.75
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -4473,8 +4479,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.536
-  m_Pitch: 1
+  m_Volume: 0.561
+  m_Pitch: -0.95
   Loop: 1
   Mute: 0
   Spatialize: 0

@@ -23,7 +23,7 @@ public class ToweAudioManager : MonoBehaviour {
     {
         if (!rotationStarted)
         {
-            towerAudioSource.Stop();
+            towerAudioSource.Pause();
             towerAudioSource.clip = null;
         }
         if(rotationStarted&&towerAudioSource.clip==null)

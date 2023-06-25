@@ -105,18 +105,20 @@ public class Module : MonoBehaviour {
         if (explosive && state== ModuleStates.Destroed)
         {
            OnModuleExplode();
-           InstantiateFire();
+           //InstantiateFire();
         }
         //OnModuleDamaged();
     }
     public void InstantiateFire()
     {
+        Debug.Log("Instatniate fire");
         fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
         fire.transform.position = this.transform.position;
-        Vector3 scale = this.transform.localScale;
-        Vector3 newScale = new Vector3(1 / scale.x, 1 / scale.y, 1 / scale.z);
-        fire.transform.SetParent(this.transform);
-        fire.transform.localScale = newScale;
+        //Vector3 scale = this.transform.localScale;
+        //Vector3 newScale = new Vector3(1 / scale.x, 1 / scale.y, 1 / scale.z);
+        fire.transform.SetParent(this.transform, false);
+        fire.transform.localPosition = Vector3.zero;
+        //fire.transform.localScale = newScale;
     }
     private void OnModuleExplode()
     {
@@ -124,14 +126,7 @@ public class Module : MonoBehaviour {
         if (eventHandler != null)
             eventHandler(this, new EventArgs());
     }
-    private void OnModuleDamaged(string killer)
-    {
-        EventHandler eventHandler = ModuleExplode;
-        if (eventHandler != null)
-            eventHandler(this, new ModuleDamagedEventArgs(killer));
-    }
     public event EventHandler ModuleExplode;
-    public event EventHandler ModuleDamaged;
     //private void OnModuleDamaged()
     //{
     //    EventHandler eventHandler = ModuleDamaged;

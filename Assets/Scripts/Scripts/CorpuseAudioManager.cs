@@ -10,18 +10,26 @@ public class CorpuseAudioManager : MonoBehaviour {
     [SerializeField]
     public AudioClip gazClip;
     public float k = 1;
+    public float maxPitch = 10f;
+    public float minPitch = 1f;
     // Use this for initialization
     void Start () {
-        engineAudioSource.clip = stopClip;
+        engineAudioSource.clip = gazClip;
         engineAudioSource.Play();
+       
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        k = maxPitch - minPitch;
     }
 
-    public void ChangePitch(float pitch)
+    public void ChangePitch(float gaz)
     {
-        engineAudioSource.pitch = 1 - pitch/2;
+        engineAudioSource.pitch = k * Mathf.Abs(gaz)+minPitch;
+        if (engineAudioSource.pitch < minPitch)
+            engineAudioSource.pitch = minPitch;
+        if (engineAudioSource.pitch > maxPitch)
+            engineAudioSource.pitch = maxPitch;
     }
 }

@@ -13,9 +13,11 @@ public class ModuleController : MonoBehaviour {
 
     public float TimeUntilRepairingFinished { get; private set; } = 0;
     public bool alive = true;
-    public bool canMove { get; protected set; } = true;
-    public bool canFire { get; protected set; } = true;
-    public bool canReloadGun { get; protected set; } = true;
+    private float repairTime = 0;
+    List<Module> mustBeRepaired;
+    //public bool canMove { get; protected set; } = true;
+    //public bool canFire { get; protected set; } = true;
+    //public bool canReloadGun { get; protected set; } = true;
     public string Killer { get; set; }
 
 
@@ -64,13 +66,23 @@ public class ModuleController : MonoBehaviour {
             }
         }
         if (TimeUntilRepairingFinished > 0)
+        {
             TimeUntilRepairingFinished -= Time.deltaTime;
+            MainManager.userInterfaseManager.UpdateRepairTime(TimeUntilRepairingFinished);
+        }
+            
         if (TimeUntilRepairingFinished < 0)
+        {
             TimeUntilRepairingFinished = 0;
+            MainManager.userInterfaseManager.UpdateRepairTime(TimeUntilRepairingFinished);
+            //Repairing finished
+            foreach (Module m in mustBeRepaired)
+                m.Repair();
+        }
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            List<Module> mustBeRepaired = new List<Module>();
+            mustBeRepaired = new List<Module>();
             List<float> timeOfRepairing = new List<float>();
             foreach(Module module in modules)
                 if(module.state >= ModuleStates.Crit)
@@ -84,10 +96,11 @@ public class ModuleController : MonoBehaviour {
                 SumTimeOfRepair+=t;
             if (SumTimeOfRepair>0)
             {
-                canMove = false;
+                Debug.Log("repair");
+                //canMove = false;
                 TimeUntilRepairingFinished = SumTimeOfRepair;
-                StartCoroutine(Repair(mustBeRepaired, timeOfRepairing, SumTimeOfRepair));
-                canMove = true;
+                //StartCoroutine(Repair(mustBeRepaired, timeOfRepairing, SumTimeOfRepair));
+                //canMove = true;
             }
         }
         int diedCrew = 0;
@@ -96,21 +109,21 @@ public class ModuleController : MonoBehaviour {
             if (ec.state == ModuleStates.Destroed)
             {
                 diedCrew++;
-                if (ec.nameOfModule == ModuleType.Мехвод)
-                    canMove = false;
-                if (ec.nameOfModule == ModuleType.Наводчик)
-                    canFire = false;
-                if (ec.nameOfModule == ModuleType.Заряжающий)
-                    canReloadGun = false;
+                //if (ec.nameOfModule == ModuleType.Мехвод)
+                //    canMove = false;
+                //if (ec.nameOfModule == ModuleType.Наводчик)
+                    //canFire = false;
+                //if (ec.nameOfModule == ModuleType.Заряжающий)
+                 //   canReloadGun = false;
             }
         }
         if (crew.Count <= (diedCrew * 2))
             Die();
-        foreach(Module m in modules)
-        {
-            if (m.nameOfModule == ModuleType.Двигатель&&m.state==ModuleStates.Destroed)
-                canMove = false;
-        }
+        //foreach(Module m in modules)
+        //{
+        //    if (m.nameOfModule == ModuleType.Двигатель&&m.state==ModuleStates.Destroed)
+        //        canMove = false;
+        //}
 	}
     
     protected void Die()
@@ -127,25 +140,55 @@ public class ModuleController : MonoBehaviour {
         source.transform.position = transform.position;
         source.Play();
     }
-    private IEnumerator Repair(List<Module> repairModules, List<float> time, float sumTime)
+    //private IEnumerator Repair(List<Module> repairModules, List<float> time, float sumTime)
+    //{
+    //    MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
+    //    //MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
+    //    for (int i = 0; i < repairModules.Count; i++)
+    //    {
+    //        MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
+    //        yield return new WaitForSeconds(time[i]);
+
+    //        //if (repairModules[i].nameOfModule == ModuleType.Мехвод|| repairModules[i].nameOfModule == ModuleType.Двигатель)
+    //        //    canMove = true;
+    //        //if (repairModules[i].nameOfModule == ModuleType.Наводчик)
+    //        //    canFire = true;
+    //        //if (repairModules[i].nameOfModule == ModuleType.Заряжающий)
+    //          //  canReloadGun= true;
+
+    //        sumTime -= time[i];
+    //        repairModules[i].Repair();
+    //    }
+    //    //canMove = true;
+    //}
+    public bool CheckIfCanMove()
     {
-        MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
-        //MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
-        for (int i = 0; i < repairModules.Count; i++)
+        if (TimeUntilRepairingFinished > 0)
+            return false;
+        foreach (Module m in modules)
         {
-            MainManager.userInterfaseManager.UpdateRepairTime(sumTime);
-            yield return new WaitForSeconds(time[i]);
-
-            if (repairModules[i].nameOfModule == ModuleType.Мехвод|| repairModules[i].nameOfModule == ModuleType.Двигатель)
-                canMove = true;
-            if (repairModules[i].nameOfModule == ModuleType.Наводчик)
-                canFire = true;
-            if (repairModules[i].nameOfModule == ModuleType.Заряжающий)
-                canReloadGun= true;
-
-            sumTime -= time[i];
-            repairModules[i].Repair();
+            if (m.nameOfModule == ModuleType.Двигатель && m.state == ModuleStates.Destroed)
+                return false;
+            if (m.nameOfModule == ModuleType.Мехвод && m.state == ModuleStates.Destroed)
+                return false;
+            if (m.nameOfModule == ModuleType.Пилот && m.state == ModuleStates.Destroed)
+                return false;
         }
-        canMove = true;
+
+        return true;
+    }
+    public bool CheckIfCanFire()
+    {
+        if (TimeUntilRepairingFinished > 0)
+            return false;
+        foreach (Module m in modules)
+        {
+            if (m.nameOfModule == ModuleType.Орудие && m.state == ModuleStates.Destroed)
+                return false;
+            if (m.nameOfModule == ModuleType.Наводчик && m.state == ModuleStates.Destroed)
+                return false;
+        }
+
+        return true;
     }
 }

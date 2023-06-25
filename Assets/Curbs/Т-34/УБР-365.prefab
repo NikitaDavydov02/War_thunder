@@ -164,13 +164,13 @@ MonoBehaviour:
   source: {fileID: 39647340932064683}
   probitie: 200
   ProbDecendingSpeed: 10
-  ExplosionDistance: 1
+  ExplosionDistance: 0
   type: 1
-  explosionRadius: 2
-  directDamage: 500
-  impliciDamage: 200
+  explosionRadius: 1
+  directDamage: 200
+  impliciDamage: 50
   vzvodTime: 0.05
-  characteristicDamageLength: 1
+  characteristicDamageLength: 0.5
   OwnerName: 
 --- !u!1 &1896829830876644
 GameObject:

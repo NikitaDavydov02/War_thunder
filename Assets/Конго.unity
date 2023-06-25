@@ -2378,7 +2378,7 @@ PrefabInstance:
     - target: {fileID: 237909582520410410, guid: 0ab2bc3e3e15893458b214eb95d0b69a,
         type: 3}
       propertyPath: timeOfRecharging
-      value: 500
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 237909582734784038, guid: 0ab2bc3e3e15893458b214eb95d0b69a,
         type: 3}

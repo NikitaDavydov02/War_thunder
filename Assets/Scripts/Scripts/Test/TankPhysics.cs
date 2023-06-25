@@ -27,11 +27,12 @@ public class TankPhysics : MonoBehaviour
     public float airDragCoeffitient = 100f;
     [SerializeField]
     CorpuseAudioManager audioManager;
+    TankModuleController controller;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        controller = GetComponent<TankModuleController>();
         if (centerOfMass != Vector3.zero)
             rb.centerOfMass = centerOfMass;
         if (inertiaTensor != Vector3.zero)
@@ -133,7 +134,8 @@ public class TankPhysics : MonoBehaviour
                 rb.AddForceAtPosition(slipForce, origin);
 
                 Vector3 engineForce = enginePower * levels[i] * transform.TransformDirection(Vector3.forward);
-                rb.AddForceAtPosition(engineForce, origin);
+                if(controller.CheckIfCanMove())
+                    rb.AddForceAtPosition(engineForce, origin);
                 Debug.DrawLine(origin, origin + engineForce, Color.red);
                 //CurrentForceVectors.Add(slipForce, origin);
                 //AbsolutePointsOfForceApplying.Add(transform.position);
@@ -150,4 +152,5 @@ public class TankPhysics : MonoBehaviour
         //Spring force
         
     }
+   
 }

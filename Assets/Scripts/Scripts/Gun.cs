@@ -42,7 +42,7 @@ public class Gun : MonoBehaviour {
     
     public Curb Fire()
     {
-        if (!controller.alive || !controller.canFire || MainManager.GameStatus != GameStatus.Playing)
+        if (!controller.alive ||!controller.CheckIfCanFire()|| MainManager.GameStatus != GameStatus.Playing)
             return null;
         
         if (TimeSinseFire >= timeOfRecharging)

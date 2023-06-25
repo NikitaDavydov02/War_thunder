@@ -22,9 +22,9 @@ public class PlaneModuleController : ModuleController
                 diedCrew++;
                 if (ec.nameOfModule == ModuleType.Пилот)
                 {
-                    canMove = false;
-                    canFire = false;
-                    canReloadGun = false;
+                    //canMove = false;
+                    //canFire = false;
+                    //canReloadGun = false;
                 }
             }
         }

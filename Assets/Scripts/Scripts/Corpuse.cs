@@ -52,7 +52,7 @@ public class Corpuse : MonoBehaviour {
     }
     public void Move(float input)
     {
-        if (!controller.alive||!controller.canMove|| MainManager.GameStatus!=GameStatus.Playing)
+        if (!controller.alive|| MainManager.GameStatus!=GameStatus.Playing)
             return;
         //rigidbody.AddRelativeForce(maxForce * Vector3.forward * input);
         //return;

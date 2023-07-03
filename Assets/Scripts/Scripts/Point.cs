@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Point : MonoBehaviour {
     //REFACTORED_1
@@ -23,7 +24,7 @@ public class Point : MonoBehaviour {
     Material blueMaterial;
     [SerializeField]
     Material redMaterial;
-    private PointState state = PointState.Free;
+    public PointState state { get; private set; } = PointState.Free;
     // Use this for initialization
     void Start () {
         GetComponent<Renderer>().material = normalMaterial;
@@ -86,8 +87,24 @@ public class Point : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         Debug.Log("Point entered" + other.gameObject.name);
+        if (other.gameObject.name == "playerRed0")
+            Debug.Log("You are detected");
+        foreach (GameObject r in MainManager.buttleManager.allred)
+            if (r.name == other.gameObject.name)
+                red.Add(r);
+        foreach (GameObject b in MainManager.buttleManager.allblue)
+            if (b.name == other.gameObject.name)
+                blue.Add(b);
     }
-
+    private void OnTriggerExit(Collider other)
+    {
+        foreach (GameObject r in MainManager.buttleManager.allred)
+            if (r.name == other.gameObject.name)
+                red.Remove(r);
+        foreach (GameObject b in MainManager.buttleManager.allred)
+            if (b.name == other.gameObject.name)
+                blue.Remove(b);
+    }
 }
 public enum PointState {
  Free,

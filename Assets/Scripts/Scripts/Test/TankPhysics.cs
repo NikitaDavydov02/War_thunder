@@ -56,7 +56,7 @@ public class TankPhysics : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         generalLevel = Input.GetAxis("Vertical");
         audioManager.ChangePitch(generalLevel);
@@ -93,21 +93,25 @@ public class TankPhysics : MonoBehaviour
                 //Debug.Log(hit.collider.gameObject);
                 Debug.DrawLine(origin, hit.point, Color.cyan);
                 float currentDistance = hit.distance;
-                if (currentDistance > 2)
-                    currentDistance = 2;
-                if (currentDistance < 0)
-                    currentDistance = 0;
+                //if (currentDistance > 2)
+                //    currentDistance = 2;
+                //if (currentDistance < 0)
+                //    currentDistance = 0;
                 float deltaSpring = currentDistance - initialLengthsToGround;
-                float springVelocity = (currentDistance - lastLength[i]) / Time.deltaTime;
-                if (springVelocity > 10|| springVelocity < -10)
-                    springVelocity = 0;
+                float springVelocity = (currentDistance - lastLength[i]) / Time.fixedDeltaTime;
+                //if (springVelocity > 10)
+                //    springVelocity = 10;
+                //if (springVelocity < -10)
+                //   springVelocity = -10;
                 Vector3 springForce = new Vector3(0, (-deltaSpring * springK) - (springVelocity * damping), 0);
+                //springForce = new Vector3(0, (-deltaSpring * springK), 0);
                 //Vector3 springForce = new Vector3(0, (-deltaSpring * springK), 0);
                 lastLength[i] = currentDistance;
                 Vector3 force = transform.TransformDirection(springForce);
                 //Debug.Log(force);
                 Debug.DrawLine(origin, origin + force, Color.red);
                 rb.AddForceAtPosition(force, origin);
+                //Debug.Log(force);
                 //Debug.Log("Spring " + i + " force is " + force);
 
                 //Slip force

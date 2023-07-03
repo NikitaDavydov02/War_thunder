@@ -242,10 +242,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blue: []
   red: []
-  scoreOfRed: 100
-  speed: 1
-  buttleManager: {fileID: 0}
-  radius: 0
+  scoreInFavourOfRed: 0
+  speed: 2
   pointAudioSource: {fileID: 2387974670860489954}
   zahvatClip: {fileID: 8300000, guid: 4578ea414f1fc4e4aa53bbbd3c60a62a, type: 3}
   normalMaterial: {fileID: 2100000, guid: 0a44d3d4a9b99c843bfaaceda0402f68, type: 2}

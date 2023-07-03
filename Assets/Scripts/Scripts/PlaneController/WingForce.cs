@@ -13,6 +13,7 @@ public class WingForce : MonoBehaviour, IForce
     public AnimationCurve CyDependenceVSAngleOfAtack;
     private float area;
     public Rigidbody rb;
+    private Module module;
     public void CountForce(out List<Vector3> CurrentForceVectors, out List<Vector3> AbsolutePointsOfForceApplying)
     {
         velocity = rb.velocity - MainWeatherManager.GetWind(transform.position) + Vector3.Cross(rb.angularVelocity, transform.position - rb.gameObject.transform.position);
@@ -21,6 +22,11 @@ public class WingForce : MonoBehaviour, IForce
         //Debug.DrawLine(transform.position, transform.position + velocity, Color.yellow);
         CurrentForceVectors = new List<Vector3>() { Vector3.zero };
         AbsolutePointsOfForceApplying = new List<Vector3>() { transform.position };
+        if (module != null)
+        {
+            if (module.state == ModuleStates.Destroed)
+                return;
+        }
         Vector3 flowVelocityInSelfCoordinates = transform.InverseTransformDirection(-velocity);
         //Debug.Log("Flow velocity: " + -velocity);
         //Debug.Log("Flow velocity in SC: " + flowVelocityInSelfCoordinates);
@@ -51,6 +57,7 @@ public class WingForce : MonoBehaviour, IForce
 
         Vector3 absoluteForce = dragAbsolute + liftAbsolute;
         Vector3 absolutePoint = transform.TransformPoint(0, 0, 0);
+        
         CurrentForceVectors.Add(absoluteForce);
         AbsolutePointsOfForceApplying.Add(absolutePoint);
     }
@@ -60,7 +67,7 @@ public class WingForce : MonoBehaviour, IForce
     {
         area = length * chord;
         rb = gameObject.transform.parent.GetComponent<Rigidbody>();
-
+        module = gameObject.GetComponent<Module>();
 
     }
 

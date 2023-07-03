@@ -29,22 +29,23 @@ public class Module : MonoBehaviour {
         //timeStillCrit = null;
         if (nameOfModule == ModuleType.Бензобак)
             maxHp = 200;
-        if (nameOfModule == ModuleType.Боеукладка)
+        else if (nameOfModule == ModuleType.Боеукладка)
             maxHp = 150;
-        if (nameOfModule == ModuleType.Двигатель)
+        else if (nameOfModule == ModuleType.Двигатель)
             maxHp = 300;
-        if (IsHuman())
+        else if (IsHuman())
             maxHp = 100;
-        if (nameOfModule == ModuleType.МеханизмПоворотаБашни)
+        else if (nameOfModule == ModuleType.МеханизмПоворотаБашни)
             maxHp = 150;
-        if (nameOfModule == ModuleType.Оптика)
+        else if (nameOfModule == ModuleType.Оптика)
             maxHp = 10;
-        if (nameOfModule == ModuleType.Орудие)
+        else if (nameOfModule == ModuleType.Орудие)
             maxHp = 175;
-        if (nameOfModule == ModuleType.Рация)
+        else if (nameOfModule == ModuleType.Рация)
             maxHp = 75;
-        if (nameOfModule == ModuleType.Трансмиссия)
+        else if (nameOfModule == ModuleType.Трансмиссия)
             maxHp = 250;
+        else maxHp = 100;
         currentHP = maxHp;
     }
 	
@@ -71,7 +72,7 @@ public class Module : MonoBehaviour {
     }
     public void Damage(float damage, string killerName)
     {
-        Debug.Log("Module " + nameOfModule + " damaged by " + killerName);
+        //Debug.Log("Module " + nameOfModule + " damaged by " + killerName);
         //OnModuleDamaged(killerName);
         controller.Killer = killerName;
         currentHP -= damage;
@@ -111,7 +112,7 @@ public class Module : MonoBehaviour {
     }
     public void InstantiateFire()
     {
-        Debug.Log("Instatniate fire");
+        //Debug.Log("Instatniate fire");
         fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
         fire.transform.position = this.transform.position;
         //Vector3 scale = this.transform.localScale;

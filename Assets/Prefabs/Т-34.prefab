@@ -2007,9 +2007,9 @@ MonoBehaviour:
   - {x: 1, y: 1, z: -2}
   - {x: -1, y: 1, z: 2}
   - {x: -1, y: 1, z: -2}
-  initialLengthsToGround: 1
+  initialLengthsToGround: 1.2
   springK: 50000
-  damping: 10000
+  damping: 8000
   slipCoeffitient: 10000
   slipTreshhold: 0.1
   generalLevel: 0

@@ -82,7 +82,7 @@ MonoBehaviour:
   source: {fileID: 7297089561520715554}
   probitie: 250
   ProbDecendingSpeed: 60
-  ExplosionDistance: 0.5
+  ExplosionDistance: 1
   type: 1
   explosionRadius: 2
   directDamage: 300

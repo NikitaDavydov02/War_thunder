@@ -38,9 +38,9 @@ public class ButtleManagerAgainstBots : ButtleManager
             }
             else
             {
-                if(i==1)
-                    technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
-                else
+                //if(i==1)
+                 //   technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
+                //else
                     technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
             }
 
@@ -67,18 +67,31 @@ public class ButtleManagerAgainstBots : ButtleManager
         }
         for (int i = 0; i < blueCurrentCount; i++)
         {
-            GameObject tank;
-            tank = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
-            if (blueSpawnsForTanks.Count <= i)
-                continue;
-            tank.transform.position = blueSpawnsForTanks[i];
-            tank.transform.localEulerAngles = blueSpawnsForTanksOrientation[i];
-            tank.name = "playerBlue" + i;
-            allblue.Add(tank);
-            blueFrags.Add(tank, 0);
+            GameObject technic;
+            if (i == 0)
+                technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
+            else
+                technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
 
-            TechnicsOfPlayers.Add(tank.name, tank);
-            results.Add(tank.name, new ButtleResult());
+            switch (technic.GetComponent<Technic>().Type)
+            {
+                case TechnicsType.Tank:
+                    technic.transform.position = blueSpawnsForTanks[i];
+                    technic.transform.localEulerAngles = blueSpawnsForTanksOrientation[i];
+                    break;
+                case TechnicsType.Plane:
+                    technic.transform.position = blueSpawnsForPlanes[i];
+                    technic.transform.localEulerAngles = blueSpawnsForPlanesOrientation[i];
+                    break;
+            }
+
+
+            technic.name = "playerBlue" + i;
+            allblue.Add(technic);
+            blueFrags.Add(technic, 0);
+
+            TechnicsOfPlayers.Add(technic.name, technic);
+            results.Add(technic.name, new ButtleResult());
             
         }
         foreach (string s in results.Keys)

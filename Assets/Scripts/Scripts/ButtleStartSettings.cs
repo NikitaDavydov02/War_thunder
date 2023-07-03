@@ -7,6 +7,7 @@ public class ButtleStartSettings : MonoBehaviour {
 	
     public string playerTechnicName = "";
 	public ButtleType buttleType = ButtleType.AgainstBots;
+	public Regime regime = Regime.OnePoint;
 	// Use this for initialization
 	void Start () {
         DontDestroyOnLoad(this.gameObject);

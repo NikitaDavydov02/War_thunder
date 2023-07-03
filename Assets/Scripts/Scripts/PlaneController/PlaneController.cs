@@ -8,6 +8,8 @@ public class PlaneController : ForceCalculationManager
     //public float generalLevelChangingSpeed = 1f;
     List<float> engineLevels = new List<float>();
     public float maxEleronAngle = 2;
+    [SerializeField]
+    private float destoingImpuls = 1000f;
 
     [SerializeField]
     List<EngineForce> engines;
@@ -97,7 +99,7 @@ public class PlaneController : ForceCalculationManager
     {
         base.FixedUpdate();
     }
-    protected void HorizontalController(float input)
+    public void HorizontalController(float input)
     {
         
         //if (!ControlActive)
@@ -110,7 +112,7 @@ public class PlaneController : ForceCalculationManager
             horizontAngle -= input;
         }
     }
-    protected void HeightController(float input)
+    public void HeightController(float input)
     {
         heightController.Rotate(input, 0, 0, Space.Self);
         heightAngle += input;
@@ -125,17 +127,39 @@ public class PlaneController : ForceCalculationManager
             heightAngle -= input;
         }
     }
-    protected void Eleron(bool turnToTheLeft)
+    private EleronPosition eleronPosition = EleronPosition.Neutral;
+    public void Eleron(EleronPosition targetEleronPosition)
+    {
+        int act = targetEleronPosition - eleronPosition;
+
+        leftElleron.Rotate(act*maxEleronAngle, 0, 0);
+        rightElleron.Rotate(-act*maxEleronAngle, 0, 0);
+
+        eleronPosition = targetEleronPosition;
+    }
+    public void Eleron(bool turnToTheLeft)
     {
         if (turnToTheLeft)
         {
+            if (eleronPosition == EleronPosition.Left)
+                return;
             leftElleron.Rotate(maxEleronAngle, 0, 0);
             rightElleron.Rotate(-maxEleronAngle, 0, 0);
+            if (eleronPosition == EleronPosition.Neutral)
+                eleronPosition = EleronPosition.Left;
+            if (eleronPosition == EleronPosition.Right)
+                eleronPosition = EleronPosition.Neutral;
         }
         else
         {
+            if (eleronPosition == EleronPosition.Right)
+                return;
             leftElleron.Rotate(-maxEleronAngle, 0, 0);
             rightElleron.Rotate(maxEleronAngle, 0, 0);
+            if (eleronPosition == EleronPosition.Neutral)
+                eleronPosition = EleronPosition.Right;
+            if (eleronPosition == EleronPosition.Left)
+                eleronPosition = EleronPosition.Neutral;
         }
     }
     //void FixedUpdate()
@@ -181,4 +205,50 @@ public class PlaneController : ForceCalculationManager
     //    Debug.DrawLine(pointOfApplicationINWorldCoordinates, pointOfApplicationINWorldCoordinates + dM, Color.blue);
     //    Debug.DrawLine(rb.worldCenterOfMass, rb.worldCenterOfMass + r, Color.green);
     //}
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision");
+        if (collision.impulse.magnitude > destoingImpuls)
+        {
+            Debug.Log("Destroy");
+            DestroyPlane();
+        }
+    }
+    private void DestroyPlane()
+    {
+        GameObject explosion = Instantiate(Resources.Load("Prefabs/Explosion") as GameObject);
+        explosion.transform.position = transform.position;
+        AudioSource source = Instantiate(MainManager.musicManager.sourcePrefab);
+        source.clip = Resources.Load("Music/Crash") as AudioClip;
+        source.transform.position = transform.position;
+        source.Play();
+        InstantiateFire();
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, 10f);
+        foreach (Collider hited in hits)
+        {
+            Module m = hited.gameObject.GetComponent<Module>();
+            if (m != null)
+            {
+                m.Damage(10000,gameObject.name);
+            }
+        }
+    }
+    private void InstantiateFire()
+    {
+        Debug.Log("Instatniate fire");
+        GameObject fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
+        fire.transform.position = this.transform.position;
+        //Vector3 scale = this.transform.localScale;
+        //Vector3 newScale = new Vector3(1 / scale.x, 1 / scale.y, 1 / scale.z);
+        fire.transform.SetParent(this.transform, false);
+        fire.transform.localPosition = Vector3.zero;
+        //fire.transform.localScale = newScale;
+    }
+}
+public enum EleronPosition
+{
+    Right=-1,
+    Neutral=0,
+    Left = 1,
 }

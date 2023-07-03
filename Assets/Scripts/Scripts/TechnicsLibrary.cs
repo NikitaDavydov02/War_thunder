@@ -71,7 +71,7 @@ public class TechnicsLibrary : MonoBehaviour {
     }
     public GameObject GetRandomBotsPlane()
     {
-        return botsPlanes[Random.Range(0, botsTanks.Count - 1)].gameObject;
+        return botsPlanes[Random.Range(0, botsPlanes.Count - 1)].gameObject;
     }
     public GameObject GetHumanTechnicByName(string name)
     {

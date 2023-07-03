@@ -43,7 +43,7 @@ public class TankModuleController : ModuleController
         GameObject explosion = Instantiate(Resources.Load("Prefabs/Explosion") as GameObject);
         explosion.transform.position = transform.position;
 
-        Debug.Log("Tank controller call die after explosion");
+        //Debug.Log("Tank controller call die after explosion");
         Die();
     }
 }

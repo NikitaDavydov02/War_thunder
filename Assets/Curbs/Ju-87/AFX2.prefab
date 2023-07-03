@@ -181,13 +181,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 39647340932064683}
   probitie: 500
-  ProbDecendingSpeed: 60
+  ProbDecendingSpeed: 50
   ExplosionDistance: 1
   type: 1
   explosionRadius: 1.5
-  directDamage: 500
-  impliciDamage: 300
-  vzvodTime: 0.05
+  directDamage: 20
+  impliciDamage: 30
+  vzvodTime: 0.2
   characteristicDamageLength: 1
   OwnerName: 
 --- !u!1 &1896829830876644

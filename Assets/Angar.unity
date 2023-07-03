@@ -389,6 +389,7 @@ GameObject:
   - component: {fileID: 109405009}
   - component: {fileID: 109405008}
   - component: {fileID: 109405007}
+  - component: {fileID: 109405010}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -474,6 +475,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109405005}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &109405010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109405005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 824061c8eacc9674cb8c5a016da1dcf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &110117330
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,6 +2827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTechnicName: "\u0422-34"
   buttleType: 0
+  regime: 1
 --- !u!4 &758973403
 Transform:
   m_ObjectHideFlags: 0

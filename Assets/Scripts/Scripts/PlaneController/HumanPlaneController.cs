@@ -22,14 +22,23 @@ public class HumanPlaneController : PlaneController
         base.Update();
         if (!active)
             return;
-        if (Input.GetKeyDown(KeyCode.A))
+        /*if (Input.GetKeyDown(KeyCode.A))
             Eleron(true);
         if (Input.GetKeyUp(KeyCode.A))
             Eleron(false);
         if (Input.GetKeyDown(KeyCode.D))
             Eleron(false);
         if (Input.GetKeyUp(KeyCode.D))
-            Eleron(true);
+            Eleron(true);*/
+        if (Input.GetKeyDown(KeyCode.A))
+           Eleron(EleronPosition.Left);
+       if (Input.GetKeyUp(KeyCode.A))
+           Eleron(EleronPosition.Neutral);
+       if (Input.GetKeyDown(KeyCode.D))
+           Eleron(EleronPosition.Right);
+       if (Input.GetKeyUp(KeyCode.D))
+           Eleron(EleronPosition.Neutral);
+
         if (Input.GetKey(KeyCode.W))
             generalLevel += generalLevelChangingSpeed * Time.deltaTime;
         if (Input.GetKey(KeyCode.S))

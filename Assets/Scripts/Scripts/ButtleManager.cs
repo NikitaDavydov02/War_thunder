@@ -13,8 +13,10 @@ public class ButtleManager : MonoBehaviour {
 
     public int blueScoreDelta { get; private set; } = 0;
     public int redScoreDelta { get; private set; } = 0;
-
-    private float scoreSpeed = 0.01f;
+    private int redPointCaptureScore = 0;
+    private int bluePointCaptureScore = 0;
+    [SerializeField]
+    private float scoreSpeed = 0.05f;
 
 
     [SerializeField]
@@ -54,11 +56,28 @@ public class ButtleManager : MonoBehaviour {
     //public GameObject humanTank;
     public int redCurrentCount =2;
     public int blueCurrentCount = 2;
+
+    //For buttles with points
+    [SerializeField]
+    private List<Vector3> pointsCoordinates;
+    private List<Point> points = new List<Point>();
+    [SerializeField]
+    private GameObject pointPrefab;
+
+
     // Use this for initialization
     protected virtual void Awake () {
         MainManager.technicsLibrary.Inicialize();
         DontDestroyOnLoad(this.gameObject);
         startSettings = GameObject.FindGameObjectWithTag("StartSettings").GetComponent<ButtleStartSettings>();
+
+        if (startSettings.regime == Regime.OnePoint)
+        {
+            GameObject p = Instantiate(pointPrefab) as GameObject;
+            p.transform.position = pointsCoordinates[0];
+            points.Add(p.GetComponent<Point>());
+        }
+
         allred = new List<GameObject>();
         allblue = new List<GameObject>();
 
@@ -88,8 +107,17 @@ public class ButtleManager : MonoBehaviour {
     protected virtual void Update () {
         if (MainManager.GameStatus!=GameStatus.Playing)
             return;
-        redScore += redScoreDelta * Time.deltaTime * scoreSpeed;
-        blueScore += blueScoreDelta * Time.deltaTime * scoreSpeed;
+        foreach(Point p in points)
+        {
+            redPointCaptureScore = 0;
+            bluePointCaptureScore = 0;
+            if (p.state == PointState.CapturedByRed)
+                redPointCaptureScore += 1;
+            if (p.state == PointState.CapturedByBlue)
+                bluePointCaptureScore += 1;
+        }
+        redScore += (redScoreDelta+redPointCaptureScore) * Time.deltaTime * scoreSpeed;
+        blueScore += (blueScoreDelta+bluePointCaptureScore) * Time.deltaTime * scoreSpeed;
         if (redScore > 100)
             redScore = 100;
         if (redScore < 0)
@@ -182,4 +210,9 @@ public class ButtleManager : MonoBehaviour {
 public enum ButtleType
 {
     AgainstBots,
+}
+public enum Regime
+{
+    WithoutPoints,
+    OnePoint,
 }

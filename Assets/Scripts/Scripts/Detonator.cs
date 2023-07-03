@@ -84,7 +84,7 @@ public class Detonator : MonoBehaviour
             //Debug.Log("Hit " + hitObject.name);
             //Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
             //Debug.Log("Hit distance " + hit.distance);
-            if (hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
+            if (!hitObject.gameObject.name.ToString().Contains(OwnerName) & hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
             //if (hitObject.tag != "Curb"&& hitObject.tag!="Terrain")
             {
                 //Debug.Log("Hit " + hitObject.name);
@@ -101,11 +101,12 @@ public class Detonator : MonoBehaviour
 
                 if (TryToProbit(hit.point, hitObject)|| type == TypeOfCurp.Bomb)
                 {
+                    transform.position = hit.point;
                     //Debug.Log("Probitie!");
                     Damage();
                     
                 }
-                else
+                //else
                     //Debug.Log("No Probitie:(");
 
                 destroyed = true;
@@ -141,12 +142,20 @@ public class Detonator : MonoBehaviour
     {
         //Debug.Log("Detonator: damage");
         Vector3 add = transform.TransformDirection(Vector3.forward * ExplosionDistance);
+        //Debug.Log("Add: " + add.magnitude);
+        //Debug.Log("Enter point: " + transform.position);
+        //Debug.Log("Detonation center: " + add);
 
         List<Module> damagedModels = new List<Module>();
         if (type == TypeOfCurp.Фугасный||type==TypeOfCurp.Bomb)
         {
             Collider[] hits;
             Vector3 detonationCenter = transform.position+add;
+
+            GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sph.transform.position = detonationCenter;
+            sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            sph.GetComponent<Collider>().isTrigger = true;
 
 
             hits = Physics.OverlapSphere(detonationCenter, explosionRadius);

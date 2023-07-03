@@ -1011,6 +1011,9 @@ MonoBehaviour:
   timeOfRecharging: 0.1
   smokeDistanceFromCenter: 3.5
   controller: {fileID: 988684907189734916}
+  recoilDistance: 0.5
+  recoilTime: 1
+  recoilingPart: {fileID: 0}
   gunType: 1
 --- !u!1 &5825214316042104765
 GameObject:
@@ -1230,7 +1233,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
-  m_CookingOptions: 30
+  m_CookingOptions: 0
   m_Mesh: {fileID: -8545447256379345787, guid: d412e4bcc4b844140af9c2ae963aa9c2, type: 3}
 --- !u!54 &8051625633219426540
 Rigidbody:
@@ -1283,6 +1286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generalLevel: 1
   maxEleronAngle: 2
+  destoingImpuls: 20000
   engines:
   - {fileID: 8051625634329765399}
   gravityForce: {fileID: 0}
@@ -2187,7 +2191,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8051625634143517344}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2737,8 +2741,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 182.8617
-      value: 0.0020971298
+      time: 183.87378
+      value: 0.0004491806
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -2851,7 +2855,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8051625634442135199}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3438,8 +3442,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 182.8617
-      value: 0.0023260117
+      time: 183.36774
+      value: -0.0004968643
       inSlope: 0
       outSlope: 0
       tangentMode: 136

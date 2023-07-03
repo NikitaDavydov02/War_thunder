@@ -96,7 +96,7 @@ public class ModuleController : MonoBehaviour {
                 SumTimeOfRepair+=t;
             if (SumTimeOfRepair>0)
             {
-                Debug.Log("repair");
+                //Debug.Log("repair");
                 //canMove = false;
                 TimeUntilRepairingFinished = SumTimeOfRepair;
                 //StartCoroutine(Repair(mustBeRepaired, timeOfRepairing, SumTimeOfRepair));
@@ -129,7 +129,7 @@ public class ModuleController : MonoBehaviour {
     protected void Die()
     {
 
-        Debug.Log("Die is called in module controller alive" + alive) ;
+        //Debug.Log("Die is called in module controller alive" + alive) ;
         if (!alive)
             return;
         MainManager.buttleManager.PlayerDied(this.gameObject, Killer);

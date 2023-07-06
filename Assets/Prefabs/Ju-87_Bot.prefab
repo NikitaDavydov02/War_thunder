@@ -857,7 +857,7 @@ GameObject:
   - component: {fileID: 5682125546677675183}
   - component: {fileID: 2552696855203418580}
   - component: {fileID: 2278682675982592446}
-  - component: {fileID: 4442838826902459038}
+  - component: {fileID: 3473376476975051826}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Gun
@@ -993,7 +993,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4442838826902459038
+--- !u!114 &3473376476975051826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5521811324770807088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6948e86ad6f43e44f9b543f9720acd46, type: 3}
+  m_Script: {fileID: 11500000, guid: a58b4536eba9ff947b647cf8eec8385b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 2552696855203418580}
@@ -1350,8 +1350,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d3a953530e13548afce52901ba00e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treshholdPitch: 5
+  treshholdRoll: 0.1
+  treshholdEleronVSWheelCorrection: 10
+  treshholdPitch: 0.1
   planeController: {fileID: 3090189995440795119}
+  acceptableCourseError: 0.1
+  acceptableAltitudeError: 50
+  fireDistance: 400
+  maxUp: 0.1
+  neutralHeightWheel: 0
+  maxDown: -0.5
+  maxRoll: 30
+  maxHorizontalInput: -0.1
+  gun: {fileID: 3473376476975051826}
 --- !u!114 &3090189995440795119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,9 +1403,10 @@ MonoBehaviour:
   centerOfMassLocal: {x: 0, y: 0.35, z: 1.9}
   inertiaTensor: {x: 15000, y: 3000, z: 2000}
   maxHeightAngle: 15
-  maxHorizontalAngle: 15
+  maxHorizontalAngle: 5
   VelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
   AngularVelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
+  eleronPosition: 0
 --- !u!1 &6023366223185060507
 GameObject:
   m_ObjectHideFlags: 0

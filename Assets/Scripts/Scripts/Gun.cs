@@ -57,11 +57,6 @@ public class Gun : MonoBehaviour {
                 curb.GetComponent<Curb>().Release(controller.gameObject.name);
                 MainManager.PlayerFired(controller.gameObject, curb);
             }
-            else
-            {
-                curb.name = "playerBlue0_curb";
-                curb.GetComponent<Curb>().Release("playerBlue0");
-            }
                 
             
             OnFired();

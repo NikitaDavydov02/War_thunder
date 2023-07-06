@@ -127,7 +127,7 @@ public class PlaneController : ForceCalculationManager
             heightAngle -= input;
         }
     }
-    private EleronPosition eleronPosition = EleronPosition.Neutral;
+    public EleronPosition eleronPosition = EleronPosition.Neutral;
     public void Eleron(EleronPosition targetEleronPosition)
     {
         int act = targetEleronPosition - eleronPosition;

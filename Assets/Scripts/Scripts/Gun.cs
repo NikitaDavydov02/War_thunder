@@ -8,11 +8,11 @@ public class Gun : MonoBehaviour {
     //REFACTORED_1
     [SerializeField]
     private GunAudioManager audioManager;
-    
-   
+
+
     [SerializeField]
-    private List<GameObject> curbPrefabs;
-    private int curbTypeIndex = 0;
+    public List<GameObject> curbPrefabs;
+    public int curbTypeIndex { get; private set; } = 0;
     public float timeOfRecharging=5f;
     private float TimeSinseFire=10f;
     

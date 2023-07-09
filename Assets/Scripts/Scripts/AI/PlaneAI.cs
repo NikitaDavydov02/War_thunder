@@ -28,25 +28,30 @@ public class PlaneAI : MonoBehaviour
     public float neutralHeightWheel = -0.3f;
     public float maxDown = 1f;
     public float maxRoll = 30f;
+    public float maxPitch = 20f;
     public float maxHorizontalInput = 1f;
+    public float targetAndCourseAtackTreshhold = 0.95f;
 
     [SerializeField]
     private Gun gun;
 
     private Rigidbody rb;
+
+    public PlaneStates planeState = PlaneStates.Landed;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         //base.Start();
     }
-    bool tookOf = false;
+    private Transform target = null;
+    private ModuleController targetController = null;
 
     // Update is called once per frame
     void Update()
     {
         //base.Update();
-        planeController.generalLevel = 0.8f;
+        //planeController.generalLevel = 0.8f;
 
         currentRoll = transform.localEulerAngles.z;
         if (currentRoll > 180f)
@@ -65,7 +70,59 @@ public class PlaneAI : MonoBehaviour
             currentCourse = -currentCourse;
         //Debug.Log("Course: " + currentCourse);
 
-        if (currentAltitude < 300f && !tookOf)
+
+        if (planeState == PlaneStates.Landed)
+            planeState = PlaneStates.TakingOff;
+        if (planeState == PlaneStates.TakingOff)
+        {
+            planeController.generalLevel = 1f;
+            StabalizePitch(10f);
+            StabilazeRoll(0f);
+            if(currentAltitude >= 300f)
+            {
+                planeState = PlaneStates.FolowingTarget;
+                target = MainManager.buttleManager.GetTargetForBlue();
+                if (target == null)
+                {
+                    planeState = PlaneStates.GoingToTheField;
+                    return;
+                }
+                targetController = target.gameObject.GetComponent<ModuleController>();
+            }
+        }
+        if (planeState == PlaneStates.FolowingTarget)
+        {
+            Vector3 targetSpeed = target.gameObject.GetComponent<Rigidbody>().velocity;
+            Vector3 course = target.position - transform.position;
+            Vector3 upr = targetSpeed * course.magnitude / 750f;
+            course += upr;
+            FolowPosition(target.position + upr);
+            Vector3 currentSpeed = rb.velocity;
+            float dot = Vector3.Dot(currentSpeed.normalized, course.normalized);
+
+            if (course.magnitude < fireDistance && dot>targetAndCourseAtackTreshhold)
+                gun.Fire();
+            if (!targetController.alive)
+            {
+                target = MainManager.buttleManager.GetTargetForBlue();
+                if (target == null)
+                {
+                    planeState = PlaneStates.GoingToTheField;
+                    return;
+                }
+                targetController = target.gameObject.GetComponent<ModuleController>();
+            }
+            if (transform.position.y < 50f)
+            {
+                planeState = PlaneStates.TakingOff;
+            }
+        }
+        if (planeState == PlaneStates.GoingToTheField)
+        {
+            FolowPosition(MainManager.buttleManager.GetBlueAirport());
+        }
+        
+       /* if (currentAltitude < 300f && !tookOf)
         {
             StabalizePitch(10f);
             StabilazeRoll(0f);
@@ -83,11 +140,17 @@ public class PlaneAI : MonoBehaviour
                 gun.Fire();
             StabalizeCourse(course);
             //StabalizePitch(0f);
-        }
+        }*/
     }
+    private void FolowPosition(Vector3 position)
+    {
+        Vector3 course = position - transform.position;
+        StabalizeCourse(course);
+    }
+   
     private void StabilazeRoll(float roll = 0)
     {
-        Debug.Log("Stabilize roll");
+        //Debug.Log("Stabilize roll");
         //Debug.Log("Roll: " + currentRoll);
         
         if (currentRoll > roll + treshholdRoll)
@@ -125,40 +188,41 @@ public class PlaneAI : MonoBehaviour
         //    planeController.Eleron(true);
         //if(currentRoll>5f)
     }
-    private void StabalizeCourse(float targerCourse)
+    private void StabalizeCourseHorizontal(Vector3 targerCourse)
     {
-        float delta = currentCourse - targerCourse;
-        Debug.Log("Course delta: " + delta);
-        if (Mathf.Abs(delta) > treshholdEleronVSWheelCorrection)
+        Vector3 currentHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        float angle = Mathf.Abs(Vector3.Angle(currentHorizontalVelocity, targerCourse));
+        //Debug.Log("Course delta: " + angle);
+        Vector3 cross = Vector3.Cross(targerCourse, currentHorizontalVelocity);
+        if (angle > treshholdEleronVSWheelCorrection)
         {
-            Debug.Log("Eleron");
-            if (delta > 0)
+           // Debug.Log("Eleron");
+            if (cross.y > 0)
                 TurnToTheLeft();
-            else if (delta < 0)
+            else if (cross.y < 0)
                 TurnToTheRight();
         }
-        else if(Mathf.Abs(delta)!=0)
+        else if(angle != 0)
         {
             //planeController.Eleron(EleronPosition.Neutral);
             StabilazeRoll(0f);
-            float fraction = Mathf.Abs(delta / treshholdEleronVSWheelCorrection);
+            float fraction = Mathf.Abs(angle / treshholdEleronVSWheelCorrection);
             fraction = 1f;
-            if (delta > acceptableCourseError)
+            if (angle < acceptableCourseError)
             {
-                Debug.Log("Wheel left");
-                planeController.HorizontalController(-maxHorizontalInput*fraction);
+                planeController.HorizontalController(0);
+                //Debug.Log("Wheel neutral");
             }
-            else if (delta < -acceptableCourseError)
+            else if(cross.y > 0)
             {
-                Debug.Log("Wheel right");
-                planeController.HorizontalController(maxHorizontalInput*fraction);
+                //Debug.Log("Wheel left");
+                planeController.HorizontalController(-maxHorizontalInput * fraction);
             }
             else
             {
-                planeController.HorizontalController(0);
-                Debug.Log("Wheel neutral");
+                //Debug.Log("Wheel right");
+                planeController.HorizontalController(maxHorizontalInput * fraction);
             }
-               
         }
         else
             StabilazeRoll(0f);
@@ -174,28 +238,17 @@ public class PlaneAI : MonoBehaviour
         float targetAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
         if (targetCourseHorizontal.x < 0)
             targetAzimut = -targetAzimut;
-        StabalizeCourse(targetAzimut);
-        //Debug.Log("Course delta: " + deltaAzimut);
-        //if (deltaAzimut > acceptableCourseError)
-        //    TurnToTheLeft();
-        //else if (deltaAzimut < -acceptableCourseError)
-        //    TurnToTheRight();
-        //else
-        //    StabilazeRoll(0f);
+        StabalizeCourseHorizontal(targetCourseHorizontal);
+        //Stabilize course
+
+
+        //Stabilize pitch
 
         float targetPitch = Vector3.Angle(targetCourseHorizontal, targerCourse);
         if (targerCourse.y < 0)
             targetPitch = -targetPitch;
         
         StabalizePitch(targetPitch);
-        //float deltaPitch = currentPitch - targetPitch;
-
-        //if (deltaPitch > acceptableCourseError)
-        //    GoDown();
-        //else if (deltaPitch < -acceptableCourseError)
-        //    GoUp();
-        //else
-        //    StabalizePitch(0f);
     }
     private void TurnToTheLeft()
     {
@@ -213,31 +266,39 @@ public class PlaneAI : MonoBehaviour
         else
             planeController.Eleron(EleronPosition.Right);
     }
-    //private void StabalizeAltitude(float targetAltitude)
-    //{
-    //    float delta = targetAltitude-currentAltitude;
-    //    //Debug.Log("Course delta: " + delta);
-    //    if (delta > acceptableAltitudeError)
-    //        GoUp();
-    //    else if (delta < -acceptableAltitudeError)
-    //        GoDown();
-    //    else
-    //        StabalizePitch();
-    //}
-    //private void GoUp()
-    //{
-    //    Debug.Log("Go up. Current pitch:" + currentPitch);
-    //    if (currentPitch > 20f)
-    //        planeController.HeightController(-1f);
-    //    else
-    //        planeController.HeightController(1f);
-    //}
-    //private void GoDown()
-    //{
-    //    Debug.Log("Go down. Current pitch:" + currentPitch);
-    //    if (currentPitch < -20f)
-    //        planeController.HeightController(1f);
-    //    else
-    //        planeController.HeightController(-1f);
-    //}
+    private void StabalizeAltitude(float targetAltitude)
+    {
+        float delta = targetAltitude-currentAltitude;
+        //Debug.Log("Course delta: " + delta);
+        if (delta > acceptableAltitudeError)
+            GoUp();
+        else if (delta < -acceptableAltitudeError)
+            GoDown();
+        else
+            StabalizePitch();
+    }
+    private void GoUp()
+    {
+       // Debug.Log("Go up. Current pitch:" + currentPitch);
+        if (currentPitch > maxPitch)
+            planeController.HeightController(maxDown);
+        else
+            planeController.HeightController(maxUp);
+    }
+    private void GoDown()
+    {
+        //Debug.Log("Go down. Current pitch:" + currentPitch);
+        if (currentPitch < -maxPitch)
+            planeController.HeightController(maxUp);
+        else
+            planeController.HeightController(maxDown);
+    }
+}
+public enum PlaneStates
+{
+    Landed,
+    TakingOff,
+    FolowingTarget,
+    GoingToTheField,
+    //AtackTarget,
 }

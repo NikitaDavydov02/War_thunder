@@ -1903,6 +1903,7 @@ GameObject:
   - component: {fileID: 237909582340005149}
   - component: {fileID: 237909582340005151}
   - component: {fileID: 3220054542573789247}
+  - component: {fileID: 6390052544400041758}
   m_Layer: 8
   m_Name: "\u0422-34"
   m_TagString: Tank
@@ -2035,6 +2036,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 2.2, z: 6}
   m_Center: {x: 0, y: 1.5, z: -0.6}
+--- !u!114 &6390052544400041758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237909582340005141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb43760371c749b46a958259fe588121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankPhysics: {fileID: 237909582340005151}
+  moduleController: {fileID: 237909582340005139}
+  tower: {fileID: 2619300764561112851}
+  tankGun: {fileID: 237909582520410410}
+  verticalRotationSensetivity: 1
+  horizontalRotationSensetivity: 1
 --- !u!1 &237909582371546572
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,8 +2063,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 237909582371546573}
-  - component: {fileID: 237909582371546571}
   - component: {fileID: 237909582371546570}
+  - component: {fileID: 2619300764561112851}
   m_Layer: 0
   m_Name: "\u041F\u0443\u0441\u0442\u043E\u0439 \u043E\u0431\u044A\u0435\u043A\u0442
     \u0434\u043B\u044F \u043F\u043E\u0432\u043E\u0440\u043E\u0442\u0430 \u0431\u0430\u0448\u043D\u0438"
@@ -2071,21 +2090,6 @@ Transform:
   m_Father: {fileID: 237909582340005138}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &237909582371546571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237909582371546572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4623c68944991fe49878d747256a39c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioManager: {fileID: 237909582371546570}
-  rotSpeed: 5
-  controller: {fileID: 237909582340005139}
 --- !u!114 &237909582371546570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2100,6 +2104,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerAudioSource: {fileID: 237909583502217917}
   rotateClip: {fileID: 8300000, guid: 532f95e91188702449ee644780e3141d, type: 3}
+--- !u!114 &2619300764561112851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237909582371546572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d39768a5efa7d1439ff0913429468bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioManager: {fileID: 237909582371546570}
+  rotSpeed: 5
+  controller: {fileID: 237909582340005139}
 --- !u!1 &237909582470271416
 GameObject:
   m_ObjectHideFlags: 0

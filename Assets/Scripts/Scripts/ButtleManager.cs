@@ -103,6 +103,24 @@ public class ButtleManager : MonoBehaviour {
     {
         
     }
+    public Transform GetTargetForBlue()
+    {
+        foreach (GameObject g in allred)
+            if (g.GetComponent<ModuleController>().alive)
+                return g.transform;
+        return null;
+    }
+    public GameObject GetGroundTagretFotBlue()
+    {
+        foreach (GameObject g in allred)
+            if (g.GetComponent<ModuleController>().alive && g.GetComponent<Technic>().Type!=TechnicsType.Plane)
+                return g;
+        return null;
+    }
+    public Vector3 GetBlueAirport()
+    {
+        return blueSpawnsForPlanes[0];
+    }
     // Update is called once per frame
     protected virtual void Update () {
         if (MainManager.GameStatus!=GameStatus.Playing)

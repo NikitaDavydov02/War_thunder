@@ -9,6 +9,7 @@ public class MainManager : MonoBehaviour {
     public static ButtleManager buttleManager;
     public static TechnicsLibrary technicsLibrary;
     public static SceneCamera Camera;
+    public static MapAIManager mapAIManager;
     public static GameStatus GameStatus { get; private set; } = GameStatus.Loading;
 
     void Awake () {
@@ -20,6 +21,7 @@ public class MainManager : MonoBehaviour {
         musicManager = GetComponent<MusicManager>();
         //buttleResult = GetComponent<ButtleResult>();
         buttleManager = GetComponent<ButtleManager>();
+        mapAIManager = GetComponent<MapAIManager>();
         Camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<SceneCamera>();
         //roadManager = GetComponent<RoadManager>();
         

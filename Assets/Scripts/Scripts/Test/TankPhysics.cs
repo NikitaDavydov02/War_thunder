@@ -28,7 +28,6 @@ public class TankPhysics : MonoBehaviour
     [SerializeField]
     CorpuseAudioManager audioManager;
     TankModuleController controller;
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -54,13 +53,14 @@ public class TankPhysics : MonoBehaviour
         Vector3 point = transform.position + transform.TransformDirection(0, 2, 0);
         rb.AddForceAtPosition(force, point, ForceMode.Impulse);
     }
-
-    // Update is called once per frame
     void FixedUpdate()
     {
-        generalLevel = Input.GetAxis("Vertical");
+        //generalLevel = Input.GetAxis("Vertical");
+        //rotLevel = Input.GetAxis("Horizontal");
+
+
         audioManager.ChangePitch(generalLevel);
-        rotLevel = Input.GetAxis("Horizontal");
+        
         for (int i=0;i<SpringConnectionPoints.Count;i++)
         {
             float trackLevel = generalLevel;
@@ -78,10 +78,6 @@ public class TankPhysics : MonoBehaviour
                 else
                     trackLevel = (rotLevel) * rotationPower;
             }
-            //if (trackLevel > 1)
-             //   trackLevel = 1;
-            //if (trackLevel < -1)
-            //    trackLevel = -1;
             levels[i] = trackLevel;
 
             RaycastHit hit;
@@ -90,50 +86,33 @@ public class TankPhysics : MonoBehaviour
             Ray downRay = new Ray(origin, dir);
             if (Physics.Raycast(downRay, out hit))
             {
-                //Debug.Log(hit.collider.gameObject);
-                Debug.DrawLine(origin, hit.point, Color.cyan);
+                //Debug.DrawLine(origin, hit.point, Color.cyan);
                 float currentDistance = hit.distance;
-                //if (currentDistance > 2)
-                //    currentDistance = 2;
-                //if (currentDistance < 0)
-                //    currentDistance = 0;
                 float deltaSpring = currentDistance - initialLengthsToGround;
                 float springVelocity = (currentDistance - lastLength[i]) / Time.fixedDeltaTime;
-                //if (springVelocity > 10)
-                //    springVelocity = 10;
-                //if (springVelocity < -10)
-                //   springVelocity = -10;
                 Vector3 springForce = new Vector3(0, (-deltaSpring * springK) - (springVelocity * damping), 0);
-                //springForce = new Vector3(0, (-deltaSpring * springK), 0);
-                //Vector3 springForce = new Vector3(0, (-deltaSpring * springK), 0);
                 lastLength[i] = currentDistance;
                 Vector3 force = transform.TransformDirection(springForce);
-                //Debug.Log(force);
-                Debug.DrawLine(origin, origin + force, Color.red);
+                //Debug.DrawLine(origin, origin + force, Color.red);
                 rb.AddForceAtPosition(force, origin);
-                //Debug.Log(force);
-                //Debug.Log("Spring " + i + " force is " + force);
 
-                //Slip force
                 Vector3 velocity = rb.velocity - Vector3.Cross(origin - rb.transform.position, rb.angularVelocity);
-                //Debug.DrawLine(origin, origin + velocity, Color.black);
-
+                
                 float paralelMovment = Vector3.Dot(transform.TransformDirection(Vector3.forward), velocity);
                 Vector3 perpendicularSlip = velocity;
                 if (levels[i] !=0 && rotLevel==0)
                     perpendicularSlip = velocity - (paralelMovment * transform.TransformDirection(Vector3.forward));
                 perpendicularSlip.y = 0;
-                //float slipAceleration = (perpendicularSlip - lastSlipVelocity).magnitude / Time.deltaTime;
-                //lastSlipVelocity = perpendicularSlip;
+                
 
-                Debug.DrawLine(origin, origin + velocity * 5, Color.black);
-                Debug.DrawLine(origin, origin + perpendicularSlip * 5, Color.black);
+                //Debug.DrawLine(origin, origin + velocity * 5, Color.black);
+                //Debug.DrawLine(origin, origin + perpendicularSlip * 5, Color.black);
 
                 if (perpendicularSlip.magnitude < slipTreshhold)
                     perpendicularSlip = Vector3.zero;
                 Vector3 slipForce = -perpendicularSlip.normalized * slipCoeffitient;
-                Debug.DrawLine(origin, origin + slipForce, Color.red);
-                //slipForce += transform.TransformDirection(Vector3.forward) * engineForce;
+                //Debug.DrawLine(origin, origin + slipForce, Color.red);
+                
 
                 rb.AddForceAtPosition(slipForce, origin);
 
@@ -141,20 +120,12 @@ public class TankPhysics : MonoBehaviour
                 if(controller.CheckIfCanMove())
                     rb.AddForceAtPosition(engineForce, origin);
                 Debug.DrawLine(origin, origin + engineForce, Color.red);
-                //CurrentForceVectors.Add(slipForce, origin);
-                //AbsolutePointsOfForceApplying.Add(transform.position);
+                
                 Vector3 airDragForce = -velocity * airDragCoeffitient * velocity.magnitude;
                 rb.AddForceAtPosition(airDragForce, rb.worldCenterOfMass);
-                Debug.DrawLine(origin, origin + airDragForce, Color.red);
+                //Debug.DrawLine(origin, origin + airDragForce, Color.red);
             }
         }
-           
-        
-        //Vector3 applicationPointInAbsoluteCoordinates = platformRb.transform.position + platformRb.transform.TransformDirection(basePointRelativeToPlatform);
-        //AbsolutePointsOfForceApplying = new List<Vector3>() { applicationPointInAbsoluteCoordinates };
-
-        //Spring force
-        
     }
    
 }

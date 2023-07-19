@@ -84,9 +84,9 @@ MonoBehaviour:
   ProbDecendingSpeed: 60
   ExplosionDistance: 0.5
   type: 1
-  explosionRadius: 4
-  directDamage: 300
-  impliciDamage: 10000
+  explosionRadius: 2
+  directDamage: 100
+  impliciDamage: 100
   vzvodTime: 0.05
   characteristicDamageLength: 1
   OwnerName: 
@@ -246,7 +246,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

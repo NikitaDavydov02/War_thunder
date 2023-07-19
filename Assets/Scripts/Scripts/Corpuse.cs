@@ -5,7 +5,7 @@ using UnityEngine;
 public class Corpuse : MonoBehaviour {
     //REFACTORED_1
     [SerializeField]
-    private CorpuseAudioManager audioManager;
+    private EngineAudioManager audioManager;
     [SerializeField]
     private Rigidbody rigidbody;
     public float maxForce;

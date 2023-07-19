@@ -26,7 +26,7 @@ public class TankPhysics : MonoBehaviour
     public float recoilImpuls = 100;
     public float airDragCoeffitient = 100f;
     [SerializeField]
-    CorpuseAudioManager audioManager;
+    EngineAudioManager audioManager;
     TankModuleController controller;
     void Start()
     {

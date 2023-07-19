@@ -909,7 +909,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.521
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -918,7 +918,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 14000
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1351,7 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   treshholdRoll: 0.1
-  treshholdEleronVSWheelCorrection: 10
+  treshholdEleronVSWheelCorrection: 15
   treshholdPitch: 0.1
   planeController: {fileID: 3090189995440795119}
   acceptableCourseError: 0.1
@@ -1360,9 +1360,12 @@ MonoBehaviour:
   maxUp: 0.1
   neutralHeightWheel: 0
   maxDown: -0.5
-  maxRoll: 30
+  maxRoll: 35
+  maxPitch: 20
   maxHorizontalInput: -0.1
+  targetAndCourseAtackTreshhold: 0.95
   gun: {fileID: 3473376476975051826}
+  planeState: 0
 --- !u!114 &3090189995440795119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2418,6 +2421,7 @@ GameObject:
   - component: {fileID: 8051625634329765399}
   - component: {fileID: 8051625634329765398}
   - component: {fileID: 5192753832625062809}
+  - component: {fileID: 7784858896873924118}
   m_Layer: 0
   m_Name: Engine
   m_TagString: Untagged
@@ -2523,6 +2527,8 @@ MonoBehaviour:
   RotationCoeffitient: 1
   jet: 1
   engineModule: {fileID: 5192753832625062809}
+  audioManager: {fileID: 7784858896873924118}
+  propeller: {fileID: 6387968948281844946}
   clockwiseRotation: 0
 --- !u!82 &8051625634329765398
 AudioSource:
@@ -2536,18 +2542,18 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.521
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 3000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -2580,7 +2586,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2636,6 +2642,24 @@ MonoBehaviour:
   flameable: 1
   explosive: 0
   controller: {fileID: 0}
+--- !u!114 &7784858896873924118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8051625634329765392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe19ba6dea92da44bf0df50b91b2d96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  engineAudioSource: {fileID: 8051625634329765398}
+  stopClip: {fileID: 0}
+  gazClip: {fileID: 8300000, guid: 5a21ab19ac7aa854dbc4c9979565e39c, type: 3}
+  k: 0.0001
+  maxPitch: 1
+  minPitch: 0.7
 --- !u!1 &8051625634391617652
 GameObject:
   m_ObjectHideFlags: 0

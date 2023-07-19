@@ -80,13 +80,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
-  probitie: 250
-  ProbDecendingSpeed: 60
+  probitie: 100
+  ProbDecendingSpeed: 5
   ExplosionDistance: 1
   type: 1
   explosionRadius: 2
-  directDamage: 300
-  impliciDamage: 1000
+  directDamage: 500
+  impliciDamage: 200
   vzvodTime: 0.05
   characteristicDamageLength: 1
   OwnerName: 
@@ -246,7 +246,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -402,7 +402,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.0001
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2

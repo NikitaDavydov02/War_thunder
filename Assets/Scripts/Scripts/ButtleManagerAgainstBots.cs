@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class ButtleManagerAgainstBots : ButtleManager
 {
+    [SerializeField]
+    private CommandAI redAI;
+    [SerializeField]
+    private CommandAI blueAI;
 
     protected override void Awake()
     {
         base.Awake();
-        
+        /*redAI = new CommandAI();
+        blueAI = new CommandAI();
+        Debug.Log("Comands AI crated");*/
     }
     // Start is called before the first frame update
     protected override void Start()
@@ -42,6 +48,7 @@ public class ButtleManagerAgainstBots : ButtleManager
                  //   technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
                 //else
                     technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
+                technic.GetComponent<TankAI>().IsRed = true;
             }
 
             if (redSpawnsForTanks.Count <= i)
@@ -71,7 +78,11 @@ public class ButtleManagerAgainstBots : ButtleManager
             if (i == 0)
                 technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
             else
+            {
                 technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
+                technic.GetComponent<TankAI>().IsRed = false;
+            }
+                
 
             switch (technic.GetComponent<Technic>().Type)
             {

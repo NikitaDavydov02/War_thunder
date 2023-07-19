@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CorpuseAudioManager : MonoBehaviour {
+public class EngineAudioManager : MonoBehaviour {
     //REFACTORED_1
     public AudioSource engineAudioSource;
     [SerializeField]

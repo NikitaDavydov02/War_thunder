@@ -19,6 +19,11 @@ public class EngineForce : MonoBehaviour, IForce
 
     [SerializeField]
     private Module engineModule;
+    [SerializeField]
+    private EngineAudioManager audioManager;
+    [SerializeField]
+    private Transform propeller;
+    private float andularSpeed = 1000f;
 
     public bool clockwiseRotation;
     // Start is called before the first frame update
@@ -32,7 +37,11 @@ public class EngineForce : MonoBehaviour, IForce
     // Update is called once per frame
     void Update()
     {
-
+        audioManager.ChangePitch(Level);
+        if (propeller != null)
+        {
+            propeller.Rotate(Vector3.forward, andularSpeed * Time.deltaTime * Level, Space.Self);
+        }
     }
 
     public void CountForce(out List<Vector3> CurrentForceVectors, out List<Vector3> AbsolutePointsOfForceApplying)

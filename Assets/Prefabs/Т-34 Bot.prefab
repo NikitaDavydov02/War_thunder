@@ -2065,10 +2065,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39b074fc3f8144049842b1e363d1acf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankState: 0
+  appropriatePositionDelta: 5
   fireDistance: 2000
-  currentTarget: {fileID: 0}
   gun: {fileID: 237909582520410410}
+  gunDir: 1
+  IsRed: 1
+  tankState: 0
+  IsActive: 0
+  currentTarget: {fileID: 0}
+  folowingTarget: {fileID: 0}
 --- !u!1 &237909582371546572
 GameObject:
   m_ObjectHideFlags: 0
@@ -3597,12 +3602,12 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20000
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -3617,6 +3622,15 @@ AudioSource:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.06417552
+      value: 0.12647754
+      inSlope: -0.30758992
+      outSlope: -0.30758992
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
@@ -3635,7 +3649,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

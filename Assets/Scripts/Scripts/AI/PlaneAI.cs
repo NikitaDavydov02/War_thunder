@@ -99,8 +99,12 @@ public class PlaneAI : MonoBehaviour
             FolowPosition(target.position + upr);
             Vector3 currentSpeed = rb.velocity;
             float dot = Vector3.Dot(currentSpeed.normalized, course.normalized);
-
-            if (course.magnitude < fireDistance && dot>targetAndCourseAtackTreshhold)
+            float angle = Vector3.Angle(currentSpeed.normalized, course.normalized);
+            float maxAngle = maxAngleCount(course.magnitude);
+            Debug.Log("Max angle: " + maxAngle);
+            float minDot = Mathf.Cos(maxAngle * Mathf.Deg2Rad);
+            Debug.Log("Angle: " + angle);
+            if (course.magnitude < fireDistance && angle<10 * maxAngle)
                 gun.Fire();
             if (!targetController.alive)
             {
@@ -142,6 +146,10 @@ public class PlaneAI : MonoBehaviour
             //StabalizePitch(0f);
         }*/
     }
+    private float maxAngleCount(float distance)
+    {
+        return Mathf.Atan2(20, distance);
+    }
     private void FolowPosition(Vector3 position)
     {
         Vector3 course = position - transform.position;
@@ -160,21 +168,27 @@ public class PlaneAI : MonoBehaviour
         else
             planeController.Eleron(EleronPosition.Neutral);
     }
-    private void StabalizePitch(float pitch=0f)
+    private void StabalizePitch(float pitch=0f, float maxError=0)
     {
         //Debug.Log("Stabilize pitch");
         //Debug.Log("Input" + Input.GetAxis("Mouse Y"));
         //Debug.Log("Pitch: " + currentPitch);
-       // Debug.Log("Targe pitch:" + pitch);
+        // Debug.Log("Targe pitch:" + pitch);
+        float delta = Mathf.Abs(currentPitch - pitch);
+        Debug.Log("Pitch delta: " + delta);
+        Debug.Log("Max error: " + maxError);
+        float fraction = delta / 15;
+        if (maxError == 0)
+            maxError = treshholdPitch;
 
-        if (currentPitch > pitch + treshholdPitch)
+        if (currentPitch > pitch + maxError)
         {
-            planeController.HeightController(maxDown);
+            planeController.HeightController((maxDown)*fraction);
             //Debug.Log("Down");
         }
-        else if (currentPitch < pitch - treshholdPitch)
+        else if (currentPitch < pitch - maxError)
         {
-            planeController.HeightController(maxUp);
+            planeController.HeightController((maxUp ) * fraction);
             //Debug.Log("Up");
         }
         else
@@ -188,11 +202,11 @@ public class PlaneAI : MonoBehaviour
         //    planeController.Eleron(true);
         //if(currentRoll>5f)
     }
-    private void StabalizeCourseHorizontal(Vector3 targerCourse)
+    private void StabalizeCourseHorizontal(Vector3 targerCourse, float maxError=0)
     {
         Vector3 currentHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         float angle = Mathf.Abs(Vector3.Angle(currentHorizontalVelocity, targerCourse));
-        //Debug.Log("Course delta: " + angle);
+        Debug.Log("Horizontal delta: " + angle);
         Vector3 cross = Vector3.Cross(targerCourse, currentHorizontalVelocity);
         if (angle > treshholdEleronVSWheelCorrection)
         {
@@ -208,7 +222,9 @@ public class PlaneAI : MonoBehaviour
             StabilazeRoll(0f);
             float fraction = Mathf.Abs(angle / treshholdEleronVSWheelCorrection);
             fraction = 1f;
-            if (angle < acceptableCourseError)
+            if (maxError == 0)
+                maxError = acceptableCourseError;
+            if (angle < maxError)
             {
                 planeController.HorizontalController(0);
                 //Debug.Log("Wheel neutral");
@@ -229,6 +245,8 @@ public class PlaneAI : MonoBehaviour
     }
     private void StabalizeCourse(Vector3 targerCourse)
     {
+        float maxAngleError = maxAngleCount(targerCourse.magnitude);
+
         Vector3 targetCourseHorizontal = new Vector3(targerCourse.x, 0, targerCourse.z);
         Vector3 horizontalVelocuty = new Vector3(currentVelocity.x, 0, currentVelocity.z);
         float deltaAzimut = Vector3.Angle(targetCourseHorizontal, horizontalVelocuty);
@@ -238,7 +256,7 @@ public class PlaneAI : MonoBehaviour
         float targetAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
         if (targetCourseHorizontal.x < 0)
             targetAzimut = -targetAzimut;
-        StabalizeCourseHorizontal(targetCourseHorizontal);
+        StabalizeCourseHorizontal(targetCourseHorizontal, maxAngleError);
         //Stabilize course
 
 
@@ -248,15 +266,23 @@ public class PlaneAI : MonoBehaviour
         if (targerCourse.y < 0)
             targetPitch = -targetPitch;
         
-        StabalizePitch(targetPitch);
+        
+        StabalizePitch(targetPitch, maxAngleError);
     }
     private void TurnToTheLeft()
     {
         //Debug.Log("Turn to the left");
         if (currentRoll > maxRoll)
+        {
+            //planeController.HorizontalController(maxHorizontalInput);
             planeController.Eleron(EleronPosition.Right);
+        }
         else
+        {
+            planeController.HorizontalController(-maxHorizontalInput);
             planeController.Eleron(EleronPosition.Left);
+        }
+            
     }
     private void TurnToTheRight()
     {
@@ -264,7 +290,11 @@ public class PlaneAI : MonoBehaviour
         if (currentRoll < -maxRoll)
             planeController.Eleron(EleronPosition.Left);
         else
+        {
+            planeController.HorizontalController(maxHorizontalInput);
             planeController.Eleron(EleronPosition.Right);
+        }
+            
     }
     private void StabalizeAltitude(float targetAltitude)
     {

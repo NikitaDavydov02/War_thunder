@@ -31,6 +31,8 @@ public class PlaneAI : MonoBehaviour
     public float maxPitch = 20f;
     public float maxHorizontalInput = 1f;
     public float targetAndCourseAtackTreshhold = 0.95f;
+    public float fireErrorMultiplyer = 10f;
+    public float GunErrorVert = 2f;
 
     [SerializeField]
     private Gun gun;
@@ -78,7 +80,7 @@ public class PlaneAI : MonoBehaviour
             planeController.generalLevel = 1f;
             StabalizePitch(10f);
             StabilazeRoll(0f);
-            if(currentAltitude >= 300f)
+            if(currentAltitude >= 500f)
             {
                 planeState = PlaneStates.FolowingTarget;
                 target = MainManager.buttleManager.GetTargetForBlue();
@@ -93,18 +95,23 @@ public class PlaneAI : MonoBehaviour
         if (planeState == PlaneStates.FolowingTarget)
         {
             Vector3 targetSpeed = target.gameObject.GetComponent<Rigidbody>().velocity;
-            Vector3 course = target.position - transform.position;
-            Vector3 upr = targetSpeed * course.magnitude / 750f;
-            course += upr;
-            FolowPosition(target.position + upr);
+            //Vector3 course = target.position - gun.transform.position;
+            float distance = (target.position - gun.transform.position).magnitude;
+            Vector3 course = MainManager.mapAIManager.CalculateGunDirectionOnTarget(target.position - gun.transform.position + Vector3.up * GunErrorVert, 750, targetSpeed) * distance;
+            //float delta = (9.81f / 2) * (course.magnitude / 750) * (course.magnitude / 750);
+            //Vector3 upr = targetSpeed * course.magnitude / 750f + Vector3.up*delta;
+            Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
+            //course += upr;
+            //Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
+            FolowPosition(gun.transform.position + course);
             Vector3 currentSpeed = rb.velocity;
             float dot = Vector3.Dot(currentSpeed.normalized, course.normalized);
-            float angle = Vector3.Angle(currentSpeed.normalized, course.normalized);
+            float angle = Vector3.Angle(transform.TransformDirection(Vector3.forward), course.normalized);
             float maxAngle = maxAngleCount(course.magnitude);
             Debug.Log("Max angle: " + maxAngle);
             float minDot = Mathf.Cos(maxAngle * Mathf.Deg2Rad);
             Debug.Log("Angle: " + angle);
-            if (course.magnitude < fireDistance && angle<10 * maxAngle)
+            if (course.magnitude < fireDistance && angle< fireErrorMultiplyer * maxAngle)
                 gun.Fire();
             if (!targetController.alive)
             {
@@ -116,7 +123,7 @@ public class PlaneAI : MonoBehaviour
                 }
                 targetController = target.gameObject.GetComponent<ModuleController>();
             }
-            if (transform.position.y < 50f)
+            if (transform.position.y < 75f)
             {
                 planeState = PlaneStates.TakingOff;
             }
@@ -148,11 +155,11 @@ public class PlaneAI : MonoBehaviour
     }
     private float maxAngleCount(float distance)
     {
-        return Mathf.Atan2(20, distance);
+        return Mathf.Atan2(5, distance)*Mathf.Rad2Deg;
     }
     private void FolowPosition(Vector3 position)
     {
-        Vector3 course = position - transform.position;
+        Vector3 course = position - gun.transform.position;
         StabalizeCourse(course);
     }
    
@@ -173,7 +180,7 @@ public class PlaneAI : MonoBehaviour
         //Debug.Log("Stabilize pitch");
         //Debug.Log("Input" + Input.GetAxis("Mouse Y"));
         //Debug.Log("Pitch: " + currentPitch);
-        // Debug.Log("Targe pitch:" + pitch);
+        Debug.Log("Targe pitch:" + pitch);
         float delta = Mathf.Abs(currentPitch - pitch);
         Debug.Log("Pitch delta: " + delta);
         Debug.Log("Max error: " + maxError);
@@ -202,18 +209,21 @@ public class PlaneAI : MonoBehaviour
         //    planeController.Eleron(true);
         //if(currentRoll>5f)
     }
-    private void StabalizeCourseHorizontal(Vector3 targerCourse, float maxError=0)
+    private void StabalizeCourseHorizontal(Vector3 targerCourseInPlaneCoordinates, float maxError=0)
     {
+
+
         Vector3 currentHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        float angle = Mathf.Abs(Vector3.Angle(currentHorizontalVelocity, targerCourse));
+        //float angle = Mathf.Abs(Vector3.Angle(currentHorizontalVelocity, targerCourse));
+        float angle = Mathf.Abs(Vector3.Angle(Vector3.forward, targerCourseInPlaneCoordinates));
         Debug.Log("Horizontal delta: " + angle);
-        Vector3 cross = Vector3.Cross(targerCourse, currentHorizontalVelocity);
+        Vector3 cross = Vector3.Cross(Vector3.forward, currentHorizontalVelocity);
         if (angle > treshholdEleronVSWheelCorrection)
         {
            // Debug.Log("Eleron");
-            if (cross.y > 0)
+            if (targerCourseInPlaneCoordinates.x < 0)
                 TurnToTheLeft();
-            else if (cross.y < 0)
+            else if (targerCourseInPlaneCoordinates.x > 0)
                 TurnToTheRight();
         }
         else if(angle != 0)
@@ -229,7 +239,7 @@ public class PlaneAI : MonoBehaviour
                 planeController.HorizontalController(0);
                 //Debug.Log("Wheel neutral");
             }
-            else if(cross.y > 0)
+            else if(targerCourseInPlaneCoordinates.x < 0)
             {
                 //Debug.Log("Wheel left");
                 planeController.HorizontalController(-maxHorizontalInput * fraction);
@@ -247,7 +257,21 @@ public class PlaneAI : MonoBehaviour
     {
         float maxAngleError = maxAngleCount(targerCourse.magnitude);
 
-        Vector3 targetCourseHorizontal = new Vector3(targerCourse.x, 0, targerCourse.z);
+        Vector3 targetCourseInPlaneCoordinates = gun.transform.InverseTransformDirection(targerCourse);
+        Debug.Log("Target course in world coordinates: " + targerCourse);
+        Debug.Log("Target course in plane coordinates: " + targetCourseInPlaneCoordinates);
+        Vector3 targetCourseHorizontal = new Vector3(targetCourseInPlaneCoordinates.x, 0, targetCourseInPlaneCoordinates.z);
+        float deltaAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
+        Debug.Log("Delta azimut: " + deltaAzimut);
+        //if (Vector3.Cross(targetCourseHorizontal, Vector3.forward).y < 0)
+            //deltaAzimut = -deltaAzimut;
+
+       // float targetAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
+        if (targetCourseHorizontal.x < 0)
+            deltaAzimut = -deltaAzimut;
+        StabalizeCourseHorizontal(targetCourseHorizontal, maxAngleError);
+
+        /*Vector3 targetCourseHorizontal = new Vector3(targerCourse.x, 0, targerCourse.z);
         Vector3 horizontalVelocuty = new Vector3(currentVelocity.x, 0, currentVelocity.z);
         float deltaAzimut = Vector3.Angle(targetCourseHorizontal, horizontalVelocuty);
         //Vector3 deltaAzimutVector = horizontalVelocuty - targetCourseHorizontal;
@@ -256,13 +280,14 @@ public class PlaneAI : MonoBehaviour
         float targetAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
         if (targetCourseHorizontal.x < 0)
             targetAzimut = -targetAzimut;
-        StabalizeCourseHorizontal(targetCourseHorizontal, maxAngleError);
+        StabalizeCourseHorizontal(targetCourseHorizontal, maxAngleError);*/
         //Stabilize course
 
 
         //Stabilize pitch
 
-        float targetPitch = Vector3.Angle(targetCourseHorizontal, targerCourse);
+        Vector3 targetCourseHorizontalInWorldCoordinates = new Vector3(targerCourse.x, 0, targerCourse.z);
+        float targetPitch = Vector3.Angle(targetCourseHorizontalInWorldCoordinates, targerCourse);
         if (targerCourse.y < 0)
             targetPitch = -targetPitch;
         

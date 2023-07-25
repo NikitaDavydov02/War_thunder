@@ -186,14 +186,25 @@ public class ButtleManager : MonoBehaviour {
     }
     public void PlayerDied(GameObject player, string killerName)
     {
+        if (!player.GetComponent<ModuleController>().alive)
+            return;
         Debug.Log("Buttle manager player died: " + player.name + " killer " + killerName);
         GameObject killerTechnics = null;
+        
         if (TechnicsOfPlayers.ContainsKey(killerName))
             killerTechnics = TechnicsOfPlayers[killerName];
         Debug.Log("Killer technics: " + killerTechnics);
-        if ((allred.Contains(killerTechnics) && allred.Contains(player)) || (allblue.Contains(killerTechnics) && allblue.Contains(player)))
-            return;
-        if (allred.Contains(player))
+        if((allred.Contains(killerTechnics) && allred.Contains(player)))
+        {
+            redCurrentCount--;
+            MainManager.userInterfaseManager.RemoveTank(player);
+        }
+        else if ((allblue.Contains(killerTechnics) && allblue.Contains(player)))
+        {
+            blueCurrentCount--;
+            MainManager.userInterfaseManager.RemoveTank(player);
+        }
+        else if (allred.Contains(player))
         {
             foreach (string s in TechnicsOfPlayers.Keys)
                 Debug.Log("Technics of " + s + "is " + TechnicsOfPlayers[s]);
@@ -208,7 +219,7 @@ public class ButtleManager : MonoBehaviour {
             
             MainManager.userInterfaseManager.UpdateFrag(killerTechnics, blueFrags[killerTechnics]);
         }
-        if (allblue.Contains(player))
+        else if (allblue.Contains(player))
         {
             //Victim
             blueCurrentCount--;

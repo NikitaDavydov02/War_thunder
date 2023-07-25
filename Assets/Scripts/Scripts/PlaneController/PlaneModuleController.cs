@@ -27,6 +27,12 @@ public class PlaneModuleController : ModuleController
                     //canReloadGun = false;
                 }
             }
+            
         }
+        foreach(Module m in modules)
+            if (m.nameOfModule == ModuleType.Крыло && m.state == ModuleStates.Destroed)
+            {
+                //Die();
+            }
     }
 }

@@ -74,7 +74,8 @@ public class Module : MonoBehaviour {
     {
         //Debug.Log("Module " + nameOfModule + " damaged by " + killerName);
         //OnModuleDamaged(killerName);
-        controller.Killer = killerName;
+        if(String.IsNullOrEmpty(controller.Killer))
+            controller.Killer = killerName;
         currentHP -= damage;
         if (currentHP < 0)
             currentHP = 0;

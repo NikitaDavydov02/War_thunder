@@ -92,10 +92,10 @@ public class Detonator : MonoBehaviour
                 //Debug.Log("Hit distance " + hit.distance);
                 //Debug.Log("transform.position - lastPosition " + (transform.position - lastPosition).magnitude);
                 // (hit.point - lastPosition).magnitude <= (transform.position -lastPosition).magnitude
-                GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                /*GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                 sph.GetComponent<Collider>().isTrigger = true;
-                sph.transform.position = hit.point;
+                sph.transform.position = hit.point;*/
 
                 
 
@@ -152,11 +152,11 @@ public class Detonator : MonoBehaviour
             Collider[] hits;
             Vector3 detonationCenter = transform.position+add;
 
-            GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            /*GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sph.transform.position = detonationCenter;
             sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             sph.GetComponent<Collider>().isTrigger = true;
-
+            */
 
             hits = Physics.OverlapSphere(detonationCenter, explosionRadius);
             foreach (Collider hited in hits)

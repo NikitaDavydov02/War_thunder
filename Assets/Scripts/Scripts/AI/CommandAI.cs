@@ -6,6 +6,7 @@ public class CommandAI : MonoBehaviour
 {
     public bool IsRed;
     private List<TankAI> tanks;
+    //float HeightTargetCorrection = 2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,4 +84,5 @@ public class CommandAI : MonoBehaviour
             }
         }*/
     }
+    
 }

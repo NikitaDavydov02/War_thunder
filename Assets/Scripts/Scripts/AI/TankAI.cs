@@ -6,6 +6,7 @@ public class TankAI : MonoBehaviour
 {
     public float appropriatePositionDelta = 20f;
     public float fireDistance = 2000f;
+    public float targetStopDistance = 20f;
     [SerializeField]
     Gun gun;
     public float gunDir = 1f;
@@ -120,7 +121,7 @@ public class TankAI : MonoBehaviour
             return;
         }
         Vector3 nextPoint = currentRoute.Peek();
-        if (FolowPosition(nextPoint))
+        if (FolowPosition(nextPoint)||(currentRoute.Count==1 && (transform.position - nextPoint).magnitude<=targetStopDistance))
         {
             currentRoute.Dequeue();
             if (currentRoute.Count == 0)
@@ -167,8 +168,8 @@ public class TankAI : MonoBehaviour
         List<Vector3> path = new List<Vector3>();
         foreach (Vector3 p in output)
             path.Add(p);
-        for (int i = 0; i < path.Count - 1; i++)
-            Debug.DrawLine(path[i], path[i + 1], Color.green, 10);
+        //for (int i = 0; i < path.Count - 1; i++)
+            //Debug.DrawLine(path[i], path[i + 1], Color.green, 10);
         return output;
     }
     private bool TargetIsSeen(GameObject target)
@@ -180,7 +181,7 @@ public class TankAI : MonoBehaviour
         
         if(Physics.Raycast(t,out hit))
         {
-            Debug.DrawLine(t.origin, hit.point, Color.cyan);
+            //Debug.DrawLine(t.origin, hit.point, Color.cyan);
             //Debug.Log("Hit seen ray: " + hit.collider.gameObject.name);
             GameObject root = hit.collider.transform.root.gameObject;
             if (root.name == target.name)
@@ -196,10 +197,17 @@ public class TankAI : MonoBehaviour
     {
         if (target == null)
             return false;
+        Vector3 targetVelocity = target.GetComponent<Rigidbody>().velocity;
+        //targetVelocity = Vector3.zero;
+        Vector3 targetDirection = MainManager.mapAIManager.CalculateGunDirectionOnTarget(target.transform.position - transform.position, gun.curbPrefabs[gun.curbTypeIndex].GetComponent<Curb>().speedScalyar, targetVelocity);
 
-        //Vector3 currentGunDirection = gun.transform.TransformDirection(Vector3.forward);
+        float distance = (target.transform.position - gun.transform.position).magnitude;
         Vector3 currentGunDirection = gun.transform.InverseTransformDirection(gun.transform.TransformDirection(Vector3.forward));
-        //Debug.Log("Current gun direction: " + currentGunDirection.normalized);
+        Vector3 targetGunDirection = gun.transform.InverseTransformDirection(targetDirection);
+        Debug.DrawLine(gun.transform.position, gun.transform.position + targetDirection * distance, Color.black);
+        Debug.DrawLine(gun.transform.position, gun.transform.position + gun.transform.TransformDirection(Vector3.forward * distance), Color.yellow);
+        Debug.DrawLine(gun.transform.position, gun.transform.position + gun.transform.TransformDirection(targetGunDirection) * distance*0.99f, Color.green);
+        /*Vector3 currentGunDirection = gun.transform.InverseTransformDirection(gun.transform.TransformDirection(Vector3.forward));
         Debug.DrawLine(gun.transform.position, gun.transform.position + gun.transform.TransformDirection(Vector3.forward*6), Color.green);
         Vector3 targetGunDirection = gun.transform.InverseTransformDirection(target.transform.position - gun.transform.position);
         Debug.DrawLine(gun.transform.position, gun.transform.position + (target.transform.position - gun.transform.position), Color.cyan);
@@ -207,16 +215,13 @@ public class TankAI : MonoBehaviour
         Vector3 targetVelocity = target.GetComponent<Rigidbody>().velocity;
         Vector3 delta = new Vector3(0,-2-9.81f * timeOfFlying * timeOfFlying / 2, 0)-targetVelocity*timeOfFlying;
         targetGunDirection = gun.transform.InverseTransformDirection(-delta+target.transform.position - gun.transform.position);
-        Debug.DrawLine(gun.transform.position, gun.transform.position + (-delta + target.transform.position - gun.transform.position), Color.cyan);
-       // Debug.Log("Target direction: " + targetGunDirection.normalized);
-        
-        //Vector3 delta = new Vector3(0, -9.81f * timeOfFlying * timeOfFlying / 2, 0);
-        //targetGunDirection = targetGunDirection + delta;
+        Debug.DrawLine(gun.transform.position, gun.transform.position + (-delta + target.transform.position - gun.transform.position), Color.cyan);*/
+
 
 
         Vector3 crossCourse = Vector3.Cross(targetGunDirection.normalized, currentGunDirection.normalized);
-        //Debug.Log("Cross gun: " + crossCourse);
-        if (crossCourse.magnitude > maxAppropriateCrossProduc(targetGunDirection.magnitude,2f))
+        Debug.Log("Cross gun: " + crossCourse);
+        if (crossCourse.magnitude > maxAppropriateCrossProduc(distance,2f))
         {           
             float fraction = 1f;
             float angle = Vector3.Angle(targetGunDirection.normalized, currentGunDirection.normalized);

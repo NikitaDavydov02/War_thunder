@@ -13,6 +13,7 @@ public class MapAIManager : MonoBehaviour
     [SerializeField]
     List<int> indexesOfBluePositionsInControlPoints;
     System.Random r;
+    public float HeightTargetCorrection = 1f;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -68,5 +69,24 @@ public class MapAIManager : MonoBehaviour
         foreach (Vector3 v in path.corners)
             output.Enqueue(v);
         return output;
+    }
+    public Vector3 CalculateGunDirectionOnTarget(Vector3 targetPosition, float curbSpeed, Vector3 targetVelocity)
+    {
+        targetPosition += Vector3.up * HeightTargetCorrection;
+        float v0 = curbSpeed;
+        float z0t = targetPosition.y;
+        float d = targetPosition.magnitude;
+        float g = 9.81f;
+        float time = Mathf.Sqrt(2 * ((curbSpeed * curbSpeed - z0t * g - Mathf.Sqrt((z0t * g - v0 * v0) * (z0t * g - v0 * v0) - (g * g * d * d))) / g));
+        time = d / curbSpeed;
+        Debug.Log("Time of flying: " + time);
+        targetPosition += targetVelocity * time;
+        /**float ex = targetPosition.x / (curbSpeed * time);
+        float ey = targetPosition.y / (curbSpeed * time);
+        float ez = (targetPosition.z + g * time * time / 2) / (curbSpeed * time);*/
+        float ex = targetPosition.x / (curbSpeed * time);
+        float ez = targetPosition.z / (curbSpeed * time);
+        float ey = (targetPosition.y + g * time * time / 2) / (curbSpeed * time);
+        return new Vector3(ex, ey, ez);
     }
 }

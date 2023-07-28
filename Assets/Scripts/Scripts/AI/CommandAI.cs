@@ -44,6 +44,29 @@ public class CommandAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        List<TankAI> tanksToRemove = new List<TankAI>();
+        foreach (TankAI tank in tanks)
+            if (!tank.gameObject.GetComponent<ModuleController>().alive)
+                tanksToRemove.Add(tank);
+        foreach (TankAI tank in tanksToRemove)
+            tanks.Remove(tank);
+
+        int n = tanks.Count;
+        int active = n / 2;
+        List<TankAI> activeTanks = new List<TankAI>();
+        if (active < 1)
+            active = 1;
+        foreach (TankAI g in tanks)
+        {
+            if (active > 0)
+            {
+                g.IsActive = true;
+                active--;
+            }
+            else
+                g.IsActive = false;
+
+        }
         /*if (!activeOrNotDictionary.ContainsValue(true))
         {
             //No one active but must be one

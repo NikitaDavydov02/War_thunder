@@ -40,10 +40,18 @@ public class TankModuleController : ModuleController
             if (m.nameOfModule == ModuleType.Боеукладка)
                 m.InstantiateFire();
         }
-        GameObject explosion = Instantiate(Resources.Load("Prefabs/Explosion") as GameObject);
-        explosion.transform.position = transform.position;
+        StartCoroutine(ExplodeEffect());
 
         //Debug.Log("Tank controller call die after explosion");
         Die();
+    }
+    private IEnumerator ExplodeEffect()
+    {
+
+        GameObject explosion = Instantiate(Resources.Load("Prefabs/Explosion") as GameObject);
+        explosion.transform.position = transform.position;
+        yield return new WaitForSeconds(1.5f);
+        Destroy(explosion);
+        yield return null;
     }
 }

@@ -2019,7 +2019,7 @@ MonoBehaviour:
   rotationPower: 4
   centerOfMass: {x: 0, y: 1.5, z: 0}
   inertiaTensor: {x: 40000, y: 100000, z: 100000}
-  gun: {fileID: 237909582520410410}
+  gun: {fileID: 0}
   recoilImpuls: 10000
   airDragCoeffitient: 50
   audioManager: {fileID: 237909582734784028}
@@ -2051,7 +2051,7 @@ MonoBehaviour:
   tankPhysics: {fileID: 237909582340005151}
   moduleController: {fileID: 237909582340005139}
   tower: {fileID: 2619300764561112851}
-  tankGun: {fileID: 237909582520410410}
+  tankGun: {fileID: 4339907230460260645}
   verticalRotationSensetivity: 1
   horizontalRotationSensetivity: 1
 --- !u!1 &237909582371546572
@@ -2335,8 +2335,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 237909582520410411}
-  - component: {fileID: 237909582520410410}
   - component: {fileID: 237909582520410413}
+  - component: {fileID: 4339907230460260645}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Gun
@@ -2362,32 +2362,6 @@ Transform:
   m_Father: {fileID: 237909583574778514}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &237909582520410410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237909582520410412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d919ed361bc0be4cbb7aaa6586f2b72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioManager: {fileID: 237909582520410413}
-  curbPrefabs:
-  - {fileID: 4511423729857660096, guid: 4ad6b15ffb8dd464aa92f916767c8471, type: 3}
-  timeOfRecharging: 5
-  smokeDistanceFromCenter: 3.5
-  controller: {fileID: 237909582340005139}
-  recoilDistance: 1
-  recoilTime: 1
-  recoilingPart: {fileID: 237909583315283602}
-  gunType: 0
-  sensetivityvert: 4
-  maxRot: 20
-  minRot: -20
-  verticalRotationSpeed: 1
 --- !u!114 &237909582520410413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2404,6 +2378,32 @@ MonoBehaviour:
   shootClip: {fileID: 8300000, guid: 36ee9e4166de5d24ba909773dc8bdef4, type: 3}
   zatvorClip: {fileID: 8300000, guid: 1961e269f59f9f144a6cd9e5b4642941, type: 3}
   volume: 0.5
+--- !u!114 &4339907230460260645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237909582520410412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0c9fe4f71110414a8f8b554372dc18d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioManager: {fileID: 237909582520410413}
+  curbPrefabs:
+  - {fileID: 4511423729857660096, guid: 4ad6b15ffb8dd464aa92f916767c8471, type: 3}
+  timeOfRecharging: 5
+  smokeDistanceFromCenter: 3.5
+  controller: {fileID: 237909582340005139}
+  recoilDistance: 0.5
+  recoilTime: 1
+  recoilingPart: {fileID: 237909583315283602}
+  gunType: 0
+  sensetivityvert: 9
+  maxRot: 20
+  minRot: -20
+  verticalRotationSpeed: 5
 --- !u!1 &237909582582555550
 GameObject:
   m_ObjectHideFlags: 0

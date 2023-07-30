@@ -27,11 +27,22 @@ public class Bronya : MonoBehaviour {
 	void Update () {
         if (MainManager.buttleManager != null)
             return;
-        if (Input.GetKeyDown(KeyCode.B))
+        /*if (Input.GetKeyDown(KeyCode.B))
         {
             GetComponent<Renderer>().material = bronyaTexture;
         }
         if (Input.GetKeyUp(KeyCode.B))
+        {
+            GetComponent<Renderer>().material = usualTexture;
+        }*/
+    }
+    public void ShowThickness(bool show)
+    {
+        if (show)
+        {
+            GetComponent<Renderer>().material = bronyaTexture;
+        }
+        else
         {
             GetComponent<Renderer>().material = usualTexture;
         }

@@ -10,6 +10,7 @@ public class TechnicsLibrary : MonoBehaviour {
     private List<Technic> humanTechnics;
     [SerializeField]
     private List<Technic> botsTechnics;
+    //
     private List<Technic> humanTanks;
     private List<Technic> humanPlanes;
     private List<Technic> botsTanks;

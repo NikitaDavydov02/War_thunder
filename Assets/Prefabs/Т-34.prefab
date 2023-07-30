@@ -2019,7 +2019,7 @@ MonoBehaviour:
   rotationPower: 4
   centerOfMass: {x: 0, y: 1.5, z: 0}
   inertiaTensor: {x: 40000, y: 100000, z: 100000}
-  gun: {fileID: 0}
+  gun: {fileID: 4339907230460260645}
   recoilImpuls: 10000
   airDragCoeffitient: 50
   audioManager: {fileID: 237909582734784028}

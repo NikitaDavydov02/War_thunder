@@ -1411,9 +1411,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 20
-  zoomSpeed: 200
+  zoomSpeed: 500
   minDistance: 5
-  maxRotX: 50
+  maxRotX: 20
   minRotX: -50
   yRotSpeed: 15
   xRotSpeed: 15

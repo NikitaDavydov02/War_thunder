@@ -2067,6 +2067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appropriatePositionDelta: 5
   fireDistance: 2000
+  targetStopDistance: 20
   gun: {fileID: 237909582520410410}
   gunDir: 1
   IsRed: 1
@@ -2391,7 +2392,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 237909582520410412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d919ed361bc0be4cbb7aaa6586f2b72, type: 3}
+  m_Script: {fileID: 11500000, guid: b0c9fe4f71110414a8f8b554372dc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 237909582520410413}
@@ -2400,14 +2401,14 @@ MonoBehaviour:
   timeOfRecharging: 5
   smokeDistanceFromCenter: 3.5
   controller: {fileID: 237909582340005139}
-  recoilDistance: 1
+  recoilDistance: 0.5
   recoilTime: 1
   recoilingPart: {fileID: 237909583315283602}
   gunType: 0
-  sensetivityvert: 4
+  sensetivityvert: 9
   maxRot: 20
   minRot: -20
-  verticalRotationSpeed: 1
+  verticalRotationSpeed: 5
 --- !u!114 &237909582520410413
 MonoBehaviour:
   m_ObjectHideFlags: 0

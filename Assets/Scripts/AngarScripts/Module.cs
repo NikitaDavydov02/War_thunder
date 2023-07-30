@@ -74,7 +74,7 @@ public class Module : MonoBehaviour {
     {
         //Debug.Log("Module " + nameOfModule + " damaged by " + killerName);
         //OnModuleDamaged(killerName);
-        if(String.IsNullOrEmpty(controller.Killer))
+        //if(String.IsNullOrEmpty(controller.Killer))
             controller.Killer = killerName;
         currentHP -= damage;
         if (currentHP < 0)
@@ -91,7 +91,7 @@ public class Module : MonoBehaviour {
                 state = ModuleStates.Destroed;
         }
         UpdateColor();
-        if (flameable)
+        if (flameable && currentHP<maxHp/2)
         {
             int random = UnityEngine.Random.RandomRange(0, 10);
             if (random == 1)
@@ -164,7 +164,7 @@ public class Module : MonoBehaviour {
         }
     }
 }
-public class ModuleDamagedEventArgs:EventArgs
+/*public class ModuleDamagedEventArgs:EventArgs
 {
   public string Killer { get; private set; }
 //    public ModuleStates moduleState { get; private set; }
@@ -172,4 +172,4 @@ public class ModuleDamagedEventArgs:EventArgs
     {
         Killer = killer;
     }
-}
+}*/

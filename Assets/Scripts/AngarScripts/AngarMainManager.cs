@@ -13,7 +13,7 @@ public class AngarMainManager : MonoBehaviour
     private static AngarCamera angarCamera;
 
     private static ButtleStartSettings buttleStartSettings;
-    private GameObject buttleMainManager;
+    private GameObject buttleMainManager;//This manager is received after buttle
 
     //public static ButtleManager buttleManager;
     // Use this for initialization

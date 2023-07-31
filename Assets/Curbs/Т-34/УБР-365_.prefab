@@ -87,7 +87,7 @@ MonoBehaviour:
   directDamage: 500
   impliciDamage: 300
   vzvodTime: 0.05
-  characteristicDamageLength: 1.5
+  characteristicDamageLength: 2
   OwnerName: 
 --- !u!114 &6429324496316279757
 MonoBehaviour:

@@ -45,6 +45,8 @@ public class Module : MonoBehaviour {
             maxHp = 75;
         else if (nameOfModule == ModuleType.Трансмиссия)
             maxHp = 250;
+        else if (nameOfModule == ModuleType.Крыло)
+            maxHp = 50;
         else maxHp = 100;
         currentHP = maxHp;
     }

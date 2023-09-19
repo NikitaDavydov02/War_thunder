@@ -136,7 +136,7 @@ public class TankAI : MonoBehaviour
     public void GoToRandomPosition()
     {
         tankState = TankState.GoingToPosition;
-        Debug.Log("Go to random position");
+        //Debug.Log("Go to random position");
         currentRoute = MainManager.mapAIManager.GetRoadToRandomPosotion(transform.position, IsRed);
         //Debug
         //Debug.Log("Route is choosen");
@@ -288,7 +288,7 @@ public class TankAI : MonoBehaviour
         tankState = TankState.FolowTarget;
         folowingTarget = target;
         currentRoute = null;
-        Debug.Log("Folow target comand received");
+        //Debug.Log("Folow target comand received");
         //s
     }
     private bool FolowPosition(Vector3 pos)

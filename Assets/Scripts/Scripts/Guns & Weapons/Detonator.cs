@@ -126,7 +126,7 @@ public class Detonator : MonoBehaviour
            
         if(timeSinceFire>=0)
             timeSinceFire += Time.deltaTime;
-        if (timeSinceFire > 30)
+        if (timeSinceFire > 10)
         {
             Destroy(this.gameObject);
             return;

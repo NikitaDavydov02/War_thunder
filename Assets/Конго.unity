@@ -4295,13 +4295,19 @@ MonoBehaviour:
   - {x: 0, y: 180, z: 0}
   redSpawnsForPlanes:
   - {x: 700, y: 5, z: -4642}
-  - {x: 700, y: 2000, z: -4442}
+  - {x: 500, y: 5, z: -4642}
+  - {x: 300, y: 5, z: -4642}
   blueSpawnsForPlanes:
   - {x: 700, y: 5, z: 4642}
+  - {x: 500, y: 5, z: 4642}
+  - {x: 300, y: 5, z: 4642}
   redSpawnsForPlanesOrientation:
   - {x: 0, y: 90, z: 0}
-  - {x: 0, y: 180, z: 0}
+  - {x: 0, y: 90, z: 0}
+  - {x: 0, y: 90, z: 0}
   blueSpawnsForPlanesOrientation:
+  - {x: 0, y: 90, z: 0}
+  - {x: 0, y: 90, z: 0}
   - {x: 0, y: 90, z: 0}
   redCurrentCount: 5
   blueCurrentCount: 5

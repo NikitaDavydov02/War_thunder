@@ -44,11 +44,17 @@ public class ButtleManagerAgainstBots : ButtleManager
             }
             else
             {
-                //if(i==1)
-                 //   technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
-                //else
+                if (i == 1 || i == 2)
+                {
+                    technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
+                    technic.GetComponent<PlaneAI>().IsRed = true;
+                }
+                else
+                {
                     technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsTank()) as GameObject;
-                technic.GetComponent<TankAI>().IsRed = true;
+                    technic.GetComponent<TankAI>().IsRed = true;
+                }
+                     
             }
 
             if (redSpawnsForTanks.Count <= i)
@@ -75,7 +81,7 @@ public class ButtleManagerAgainstBots : ButtleManager
         for (int i = 0; i < blueCurrentCount; i++)
         {
             GameObject technic;
-            if (i == 0)
+            if (i == 0||i==1||i==2)
                 technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
             else
             {

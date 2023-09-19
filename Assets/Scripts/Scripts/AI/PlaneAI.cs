@@ -40,12 +40,14 @@ public class PlaneAI : MonoBehaviour
     private Rigidbody rb;
 
     public PlaneStates planeState = PlaneStates.Landed;
+    public bool IsRed = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         //base.Start();
     }
+    [SerializeField]
     private Transform target = null;
     private ModuleController targetController = null;
 
@@ -83,7 +85,10 @@ public class PlaneAI : MonoBehaviour
             if(currentAltitude >= 500f)
             {
                 planeState = PlaneStates.FolowingTarget;
-                target = MainManager.buttleManager.GetTargetForBlue();
+                if(IsRed)
+                    target = MainManager.buttleManager.GetTargetForRed();
+                else
+                    target = MainManager.buttleManager.GetTargetForBlue();
                 if (target == null)
                 {
                     planeState = PlaneStates.GoingToTheField;
@@ -180,10 +185,10 @@ public class PlaneAI : MonoBehaviour
         //Debug.Log("Stabilize pitch");
         //Debug.Log("Input" + Input.GetAxis("Mouse Y"));
         //Debug.Log("Pitch: " + currentPitch);
-        Debug.Log("Targe pitch:" + pitch);
+        //Debug.Log("Targe pitch:" + pitch);
         float delta = Mathf.Abs(currentPitch - pitch);
-        Debug.Log("Pitch delta: " + delta);
-        Debug.Log("Max error: " + maxError);
+        //Debug.Log("Pitch delta: " + delta);
+        //Debug.Log("Max error: " + maxError);
         float fraction = delta / 15;
         if (maxError == 0)
             maxError = treshholdPitch;

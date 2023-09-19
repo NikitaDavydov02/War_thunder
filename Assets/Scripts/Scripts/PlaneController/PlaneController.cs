@@ -9,7 +9,7 @@ public class PlaneController : ForceCalculationManager
     List<float> engineLevels = new List<float>();
     public float maxEleronAngle = 2;
     [SerializeField]
-    private float destoingImpuls = 1000f;
+    private float destoingImpuls = 50f;
 
     [SerializeField]
     List<EngineForce> engines;

@@ -57,6 +57,8 @@ public class UIManager : MonoBehaviour {
     private Button redComandButtonPrefab;
     [SerializeField]
     private Button blueComandButtonPrefab;
+    [SerializeField]
+    private GameObject deadPanel;
     //public List<int> redFrags;
     //public List<int> blueFrags;
     public int currentCurbIndex = 0;
@@ -74,18 +76,20 @@ public class UIManager : MonoBehaviour {
         angar.gameObject.SetActive(false);
         humanDestroy.gameObject.SetActive(false);
         RepairTimeText.gameObject.SetActive(false);
+        deadPanel.gameObject.SetActive(false);
     }
 	
 	// Update is called once per frame
 	void Update () {
         redScoreComand.value = (MainManager.buttleManager.redScore / 100) * redScoreComand.maxValue;
         blueScoreComand.value = (MainManager.buttleManager.blueScore / 100) * blueScoreComand.maxValue;
+      
     }
     public void ThisPlayerIsDestroied()
     {
         StartCoroutine(SomeoneDestroied("Танк уничтожен!"));
         MainManager.Camera.ZoomOut();
-        
+        deadPanel.gameObject.SetActive(true);
 
     }
     private IEnumerator SomeoneDestroied(string messenge)
@@ -114,8 +118,9 @@ public class UIManager : MonoBehaviour {
     public IEnumerator HumanDestroy()
     {
         humanDestroy.gameObject.SetActive(true);
+        //deadPanel.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
-        humanDestroy.gameObject.SetActive(false);
+        
     }
     public void ModuleDamaged(string name)
     {

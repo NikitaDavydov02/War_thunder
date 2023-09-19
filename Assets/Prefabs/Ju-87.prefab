@@ -1310,7 +1310,7 @@ MonoBehaviour:
   heightAngle: 0
   horizontAngle: 0
   centerOfMassLocal: {x: 0, y: 0.35, z: 1.9}
-  inertiaTensor: {x: 15000, y: 3000, z: 2000}
+  inertiaTensor: {x: 15000, y: 3000, z: 5000}
   maxHeightAngle: 15
   maxHorizontalAngle: 15
   VelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
@@ -2498,7 +2498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AxisDirection: {x: 0, y: 1, z: 0}
-  MaxForce: 17000
+  MaxForce: 30000
   Level: 0
   AxisRadius: 0.1
   RotationCoeffitient: 1

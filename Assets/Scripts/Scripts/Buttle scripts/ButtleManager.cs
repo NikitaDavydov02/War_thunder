@@ -110,6 +110,13 @@ public class ButtleManager : MonoBehaviour {
                 return g.transform;
         return null;
     }
+    public Transform GetTargetForRed()
+    {
+        foreach (GameObject g in allblue)
+            if (g.GetComponent<ModuleController>().alive)
+                return g.transform;
+        return null;
+    }
     public GameObject GetGroundTagretFotBlue()
     {
         foreach (GameObject g in allred)

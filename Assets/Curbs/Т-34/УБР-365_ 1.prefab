@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8724746964692305077}
   - component: {fileID: 6429324496316279757}
   m_Layer: 0
-  m_Name: "\u0423\u0411\u0420-365_"
+  m_Name: "\u0423\u0411\u0420-365_ 1"
   m_TagString: Curb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,8 +84,8 @@ MonoBehaviour:
   ExplosionDistance: 1
   type: 1
   explosionRadius: 2
-  directDamage: 500
-  impliciDamage: 300
+  directDamage: 50
+  impliciDamage: 30
   vzvodTime: 0.05
   characteristicDamageLength: 2
   OwnerName: 

@@ -79,7 +79,7 @@ public class MapAIManager : MonoBehaviour
         float g = 9.81f;
         float time = Mathf.Sqrt(2 * ((curbSpeed * curbSpeed - z0t * g - Mathf.Sqrt((z0t * g - v0 * v0) * (z0t * g - v0 * v0) - (g * g * d * d))) / g));
         time = d / curbSpeed;
-        Debug.Log("Time of flying: " + time);
+        //Debug.Log("Time of flying: " + time);
         targetPosition += targetVelocity * time;
         /**float ex = targetPosition.x / (curbSpeed * time);
         float ey = targetPosition.y / (curbSpeed * time);

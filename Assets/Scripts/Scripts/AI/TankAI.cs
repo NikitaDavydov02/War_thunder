@@ -220,7 +220,7 @@ public class TankAI : MonoBehaviour
 
 
         Vector3 crossCourse = Vector3.Cross(targetGunDirection.normalized, currentGunDirection.normalized);
-        Debug.Log("Cross gun: " + crossCourse);
+       // Debug.Log("Cross gun: " + crossCourse);
         if (crossCourse.magnitude > maxAppropriateCrossProduc(distance,2f))
         {           
             float fraction = 1f;

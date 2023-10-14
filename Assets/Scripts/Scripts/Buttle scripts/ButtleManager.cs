@@ -105,17 +105,26 @@ public class ButtleManager : MonoBehaviour {
     }
     public Transform GetTargetForBlue()
     {
+        
+        List<Transform> aliveRed = new List<Transform>();
         foreach (GameObject g in allred)
             if (g.GetComponent<ModuleController>().alive)
-                return g.transform;
-        return null;
+                aliveRed.Add(g.transform);
+        if (aliveRed.Count == 0)
+            return null;
+        int index = Random.Range(0, aliveRed.Count - 1);
+        return aliveRed[index];
     }
     public Transform GetTargetForRed()
     {
+        List<Transform> aliveBlue = new List<Transform>();
         foreach (GameObject g in allblue)
             if (g.GetComponent<ModuleController>().alive)
-                return g.transform;
-        return null;
+                aliveBlue.Add(g.transform);
+        if (aliveBlue.Count == 0)
+            return null;
+        int index = Random.Range(0, aliveBlue.Count - 1);
+        return aliveBlue[index];
     }
     public GameObject GetGroundTagretFotBlue()
     {

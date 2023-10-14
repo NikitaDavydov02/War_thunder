@@ -73,6 +73,8 @@ public class PlaneController : ForceCalculationManager
     // Update is called once per frame
     protected override void Update()
     {
+        if (inertiaTensor != rb.inertiaTensor)
+            rb.inertiaTensor = inertiaTensor;
         base.Update();
         CountState();
         
@@ -207,7 +209,7 @@ public class PlaneController : ForceCalculationManager
     //}
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision");
+        //Debug.Log("Collision");
         if (collision.impulse.magnitude > destoingImpuls)
         {
             Debug.Log("Destroy");

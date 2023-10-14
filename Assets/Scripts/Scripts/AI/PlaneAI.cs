@@ -48,6 +48,7 @@ public class PlaneAI : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //base.Start();
     }
+    [SerializeField]
     private Transform target = null;
     private ModuleController targetController = null;
 
@@ -120,7 +121,10 @@ public class PlaneAI : MonoBehaviour
                 gun.Fire();
             if (!targetController.alive)
             {
-                target = MainManager.buttleManager.GetTargetForBlue();
+                if (!IsRed)
+                    target = MainManager.buttleManager.GetTargetForBlue();
+                else
+                    target = MainManager.buttleManager.GetTargetForRed();
                 if (target == null)
                 {
                     planeState = PlaneStates.GoingToTheField;

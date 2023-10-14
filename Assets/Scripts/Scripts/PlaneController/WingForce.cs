@@ -75,6 +75,7 @@ public class WingForce : MonoBehaviour, IForce
     void Update()
     {
         velocity = rb.velocity;
+        area = length * chord;
 
         //Debug.Log("V:" + velocity);
         lastPosition = rb.centerOfMass;

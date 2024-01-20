@@ -1133,7 +1133,7 @@ GameObject:
   - component: {fileID: 1197396363726441219}
   - component: {fileID: 7026051808818542343}
   m_Layer: 0
-  m_Name: Ju-87
+  m_Name: Ju-87 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1528,8 +1528,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -74.2563
-      value: 0.19756126
+      time: -66.6971
+      value: 0.43163872
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1538,7 +1538,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: -0.7661678
-      value: 0.024407536
+      value: 0.1399776
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1546,8 +1546,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 64.57204
-      value: 0.20317864
+      time: 65.57991
+      value: 0.44614434
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -3209,8 +3209,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -74.2563
-      value: 0.19756126
+      time: -66.6971
+      value: 0.43163872
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -3219,7 +3219,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: -0.7661678
-      value: 0.024407536
+      value: 0.1399776
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -3227,8 +3227,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 64.57204
-      value: 0.20317864
+      time: 65.57991
+      value: 0.44614434
       inSlope: 0
       outSlope: 0
       tangentMode: 136

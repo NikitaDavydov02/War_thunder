@@ -176,8 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 3
-  flameable: 0
-  explosive: 0
+  flameable: 1
+  explosive: 1
   controller: {fileID: 0}
 --- !u!1 &1674520130846467346
 GameObject:
@@ -953,7 +953,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1132,6 +1132,7 @@ GameObject:
   - component: {fileID: 1197396363726441219}
   - component: {fileID: 994235656746516121}
   - component: {fileID: 3090189995440795119}
+  - component: {fileID: 4690176292293150102}
   m_Layer: 0
   m_Name: Ju-87_Bot
   m_TagString: Untagged
@@ -1368,6 +1369,8 @@ MonoBehaviour:
   GunErrorVert: 0
   gun: {fileID: 3473376476975051826}
   planeState: 0
+  IsRed: 0
+  target: {fileID: 0}
 --- !u!114 &3090189995440795119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,12 +1409,25 @@ MonoBehaviour:
   heightAngle: 0
   horizontAngle: 0
   centerOfMassLocal: {x: 0, y: 0.35, z: 1.9}
-  inertiaTensor: {x: 15000, y: 3000, z: 2000}
+  inertiaTensor: {x: 15000, y: 3000, z: 5000}
   maxHeightAngle: 15
   maxHorizontalAngle: 5
   VelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
   AngularVelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
   eleronPosition: 0
+--- !u!114 &4690176292293150102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5954800216293249834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5c8a20bbb98fe049b96b7cf2a72fb9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bronyaThickness: 0
 --- !u!1 &6023366223185060507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,8 +1555,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -66.6971
-      value: 0.43163872
+      time: -74.2563
+      value: 0.19756126
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1549,7 +1565,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: -0.7661678
-      value: 0.1399776
+      value: 0.024407536
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1557,8 +1573,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 65.57991
-      value: 0.44614434
+      time: 64.57204
+      value: 0.20317864
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1678,7 +1694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 14
-  flameable: 0
+  flameable: 1
   explosive: 0
   controller: {fileID: 0}
 --- !u!1 &8051625632968391105
@@ -1911,7 +1927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 18
-  flameable: 0
+  flameable: 1
   explosive: 0
   controller: {fileID: 0}
 --- !u!1 &8051625633273593969
@@ -2405,7 +2421,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 19
-  flameable: 0
+  flameable: 1
   explosive: 0
   controller: {fileID: 0}
 --- !u!1 &8051625634329765392
@@ -2523,7 +2539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AxisDirection: {x: 0, y: 1, z: 0}
-  MaxForce: 30000
+  MaxForce: 10000
   Level: 0
   AxisRadius: 0.1
   RotationCoeffitient: 1
@@ -3090,7 +3106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 19
-  flameable: 0
+  flameable: 1
   explosive: 0
   controller: {fileID: 0}
 --- !u!1 &8051625634443307775
@@ -3220,8 +3236,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -66.6971
-      value: 0.43163872
+      time: -74.2563
+      value: 0.19756126
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -3230,7 +3246,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: -0.7661678
-      value: 0.1399776
+      value: 0.024407536
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -3238,8 +3254,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 65.57991
-      value: 0.44614434
+      time: 64.57204
+      value: 0.20317864
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -3359,7 +3375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 14
-  flameable: 0
+  flameable: 1
   explosive: 0
   controller: {fileID: 0}
 --- !u!1 &8051625634619763071
@@ -3565,7 +3581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameOfModule: 17
-  flameable: 0
+  flameable: 1
   explosive: 0
   controller: {fileID: 0}
 --- !u!1 &8285529974599969798

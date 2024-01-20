@@ -7,7 +7,7 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.DA949528" = "asset store"
+	"last_search.DA949528" = "Nav"
 	"OpenInspectorPreview.DA949528" = "0"
 	"currentGroup.DA949528" = "all"
 	"last_search.EAB0C2BA" = ""
@@ -59,6 +59,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"N"
 	"c"
 	"a"
 ]

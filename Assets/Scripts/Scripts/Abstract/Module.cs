@@ -93,9 +93,9 @@ public class Module : MonoBehaviour {
                 state = ModuleStates.Destroed;
         }
         UpdateColor();
-        if (flameable && currentHP<maxHp/2)
+        if (flameable)
         {
-            int random = UnityEngine.Random.RandomRange(0, 10);
+            int random = UnityEngine.Random.RandomRange(0, 5);
             if (random == 1)
             {
                 if (!IsFiring)

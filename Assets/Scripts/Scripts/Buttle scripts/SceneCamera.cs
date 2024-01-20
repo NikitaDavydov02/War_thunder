@@ -125,7 +125,7 @@ public class SceneCamera : MonoBehaviour {
         if (target == null)
         {
             if (playerAndHisFiredCurbs.Count != 0)
-                target = playerAndHisFiredCurbs[0];
+                target = playerAndHisFiredCurbs[playerAndHisFiredCurbs.Count-1];
             else
                 return;
         }
@@ -142,7 +142,11 @@ public class SceneCamera : MonoBehaviour {
                 indexOfTarget = 0;
             else
                 indexOfTarget++;
-            target = playerAndHisFiredCurbs[indexOfTarget];
+            //target = playerAndHisFiredCurbs[indexOfTarget];
+            if(indexOfTarget==0)
+                target = playerAndHisFiredCurbs[playerAndHisFiredCurbs.Count - 1];
+            else
+                target = playerAndHisFiredCurbs[0];
         }
 
         List<Transform> transformToRemove = new List<Transform>();
@@ -182,7 +186,7 @@ public class SceneCamera : MonoBehaviour {
     }
     public void ZoomIn()
     {
-        cam.fieldOfView = 3;
+        cam.fieldOfView = 8;
         inZoom = true;
         MainManager.userInterfaseManager.Pricel(true);
     }

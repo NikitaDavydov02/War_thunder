@@ -53,6 +53,8 @@ public class TechnicsLibrary : MonoBehaviour {
             }
         }
         Debug.Log("Technics library inicialized");
+        Debug.Log("Bots tanks: " + botsTanks.Count);
+
     }
 	
 	// Update is called once per frame
@@ -68,11 +70,11 @@ public class TechnicsLibrary : MonoBehaviour {
      }
     public GameObject GetRandomBotsTank()
     {
-        return botsTanks[Random.Range(0, botsTanks.Count-1)].gameObject;
+        return botsTanks[Random.Range(0, botsTanks.Count)].gameObject;
     }
     public GameObject GetRandomBotsPlane()
     {
-        return botsPlanes[Random.Range(0, botsPlanes.Count - 1)].gameObject;
+        return botsPlanes[Random.Range(0, botsPlanes.Count)].gameObject;
     }
     public GameObject GetHumanTechnicByName(string name)
     {

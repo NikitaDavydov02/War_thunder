@@ -113,14 +113,17 @@ public class PlaneAI : MonoBehaviour
             float dot = Vector3.Dot(currentSpeed.normalized, course.normalized);
             float angle = Vector3.Angle(transform.TransformDirection(Vector3.forward), course.normalized);
             float maxAngle = maxAngleCount(course.magnitude);
-            Debug.Log("Max angle: " + maxAngle);
+           // Debug.Log("Max angle: " + maxAngle);
             float minDot = Mathf.Cos(maxAngle * Mathf.Deg2Rad);
-            Debug.Log("Angle: " + angle);
+            //Debug.Log("Angle: " + angle);
             if (course.magnitude < fireDistance && angle< fireErrorMultiplyer * maxAngle)
                 gun.Fire();
             if (!targetController.alive)
             {
-                target = MainManager.buttleManager.GetTargetForBlue();
+                if (IsRed)
+                    target = MainManager.buttleManager.GetTargetForRed();
+                else
+                    target = MainManager.buttleManager.GetTargetForBlue();
                 if (target == null)
                 {
                     planeState = PlaneStates.GoingToTheField;
@@ -221,7 +224,7 @@ public class PlaneAI : MonoBehaviour
         Vector3 currentHorizontalVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         //float angle = Mathf.Abs(Vector3.Angle(currentHorizontalVelocity, targerCourse));
         float angle = Mathf.Abs(Vector3.Angle(Vector3.forward, targerCourseInPlaneCoordinates));
-        Debug.Log("Horizontal delta: " + angle);
+        //Debug.Log("Horizontal delta: " + angle);
         Vector3 cross = Vector3.Cross(Vector3.forward, currentHorizontalVelocity);
         if (angle > treshholdEleronVSWheelCorrection)
         {

@@ -20,6 +20,7 @@ public class Curb : MonoBehaviour {
 
     private void Detonator_Detonate(object sender, System.EventArgs e)
     {
+        Debug.Log("Stop");
         Stop();
     }
 

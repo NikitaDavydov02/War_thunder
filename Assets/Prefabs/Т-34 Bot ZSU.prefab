@@ -1906,7 +1906,7 @@ GameObject:
   - component: {fileID: -1061837881587885922}
   - component: {fileID: 2256972458639190507}
   m_Layer: 8
-  m_Name: "\u0422-34 Bot"
+  m_Name: "\u0422-34 Bot ZSU"
   m_TagString: Tank
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2016,12 +2016,12 @@ MonoBehaviour:
   slipTreshhold: 0.1
   generalLevel: 0
   rotLevel: 0
-  enginePower: 5000
+  enginePower: 17000
   rotationPower: 4
   centerOfMass: {x: 0, y: 1.5, z: 0}
   inertiaTensor: {x: 40000, y: 100000, z: 100000}
   gun: {fileID: 237909582520410410}
-  recoilImpuls: 10000
+  recoilImpuls: 0
   airDragCoeffitient: 50
   audioManager: {fileID: 237909582734784028}
 --- !u!65 &3220054542573789247
@@ -2066,7 +2066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appropriatePositionDelta: 5
-  fireDistance: 2000
+  fireDistance: 6000
   targetStopDistance: 20
   gun: {fileID: 237909582520410410}
   gunDir: 1
@@ -2138,7 +2138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioManager: {fileID: 237909582371546570}
-  rotSpeed: 5
+  rotSpeed: 40
   controller: {fileID: 237909582340005139}
 --- !u!1 &237909582470271416
 GameObject:
@@ -2397,18 +2397,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 237909582520410413}
   curbPrefabs:
-  - {fileID: 4511423729857660096, guid: 4ad6b15ffb8dd464aa92f916767c8471, type: 3}
-  timeOfRecharging: 5
+  - {fileID: 4511423729857660096, guid: 25751105c59a4004e86481448455fe61, type: 3}
+  timeOfRecharging: 0.5
   smokeDistanceFromCenter: 3.5
   controller: {fileID: 237909582340005139}
-  recoilDistance: 0.5
-  recoilTime: 1
+  recoilDistance: 0.2
+  recoilTime: 0.2
   recoilingPart: {fileID: 237909583315283602}
   gunType: 0
   sensetivityvert: 9
-  maxRot: 20
-  minRot: -20
-  verticalRotationSpeed: 5
+  maxRot: 90
+  minRot: -90
+  verticalRotationSpeed: 25
 --- !u!114 &237909582520410413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2953,7 +2953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c8a20bbb98fe049b96b7cf2a72fb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bronyaThickness: 45
+  bronyaThickness: 30
 --- !u!1 &237909582738998681
 GameObject:
   m_ObjectHideFlags: 0
@@ -4123,8 +4123,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237909583315283605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.084999, z: -1.17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.48, z: -0.46}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 237909583044652054}
@@ -5065,7 +5065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c8a20bbb98fe049b96b7cf2a72fb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bronyaThickness: 90
+  bronyaThickness: 30
 --- !u!114 &237909583574778512
 MonoBehaviour:
   m_ObjectHideFlags: 0

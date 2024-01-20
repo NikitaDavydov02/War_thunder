@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtleManager : MonoBehaviour {
+    System.Random r = new System.Random();
 
     public List<GameObject> allblue;
 
@@ -105,23 +106,33 @@ public class ButtleManager : MonoBehaviour {
     }
     public Transform GetTargetForBlue()
     {
+        List<GameObject> aliveRed = new List<GameObject>();
         foreach (GameObject g in allred)
             if (g.GetComponent<ModuleController>().alive)
-                return g.transform;
-        return null;
+                    aliveRed.Add(g);
+        if (aliveRed.Count == 0)
+            return null;
+        int index = r.Next(aliveRed.Count);
+        return aliveRed[index].transform;
     }
     public Transform GetTargetForRed()
     {
+        List<GameObject> aliveBlue = new List<GameObject>();
         foreach (GameObject g in allblue)
             if (g.GetComponent<ModuleController>().alive)
-                return g.transform;
-        return null;
+                aliveBlue.Add(g);
+        if (aliveBlue.Count == 0)
+            return null;
+        int index = r.Next(aliveBlue.Count);
+        return aliveBlue[index].transform;
     }
     public GameObject GetGroundTagretFotBlue()
     {
+
         foreach (GameObject g in allred)
-            if (g.GetComponent<ModuleController>().alive && g.GetComponent<Technic>().Type!=TechnicsType.Plane)
+            if (g.GetComponent<ModuleController>().alive && g.GetComponent<Technic>().Type != TechnicsType.Plane)
                 return g;
+        
         return null;
     }
     public Vector3 GetBlueAirport()

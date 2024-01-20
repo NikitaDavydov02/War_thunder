@@ -4330,9 +4330,11 @@ MonoBehaviour:
   humanTechnics:
   - {fileID: 237909582340005136, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
   - {fileID: 7561544977941177404, guid: 3dc18fd0516f2e64c82c2b985dffc6b3, type: 3}
+  - {fileID: 1283250108165353205, guid: fb488efaf875e9740a40ed848ea68d7f, type: 3}
   botsTechnics:
   - {fileID: 237909582340005136, guid: c0a820e87a2ec1e4d95168171878db43, type: 3}
   - {fileID: 7561544977941177404, guid: 64af56e446646424cb333f4127e316db, type: 3}
+  - {fileID: 237909582340005136, guid: 359b6d1eb82ae1e44890dacf99118d66, type: 3}
 --- !u!114 &1529577770
 MonoBehaviour:
   m_ObjectHideFlags: 0

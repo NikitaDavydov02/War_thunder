@@ -69,7 +69,8 @@ public class AngarMainManager : MonoBehaviour
     public static void Buttle()
     {
         saveManager.SaveGame();
-        SceneManager.LoadScene("Конго");
+        //SceneManager.LoadScene("Конго");
+        SceneManager.LoadScene("SPb");
     }
     public static void ChangeTechnic(string nameOfTechnic)
     {

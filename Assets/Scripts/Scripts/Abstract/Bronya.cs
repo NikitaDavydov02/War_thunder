@@ -12,6 +12,8 @@ public class Bronya : MonoBehaviour {
     private Material bronyaTexture;
     // Use this for initialization
     void Start () {
+        if (gameObject.GetComponent<MeshRenderer>() == null)
+            return;
         usualTexture = gameObject.GetComponent<MeshRenderer>().material;
         if (bronyaThickness < 50)
             bronyaTexture = Resources.Load("Materials/ThickArmor") as Material;
@@ -38,6 +40,8 @@ public class Bronya : MonoBehaviour {
     }
     public void ShowThickness(bool show)
     {
+        if (gameObject.GetComponent<MeshRenderer>() == null)
+            return;
         if (show)
         {
             GetComponent<Renderer>().material = bronyaTexture;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8724746964692305077}
   - component: {fileID: 6429324496316279757}
   m_Layer: 0
-  m_Name: "\u0423\u0411\u0420-365_ 1"
+  m_Name: "\u0411-160-37\u043C\u043C"
   m_TagString: Curb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,13 +79,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
-  probitie: 150
+  probitie: 43
   ProbDecendingSpeed: 5
   ExplosionDistance: 1
   type: 1
   explosionRadius: 2
-  directDamage: 50
-  impliciDamage: 30
+  directDamage: 200
+  impliciDamage: 200
   vzvodTime: 0.05
   characteristicDamageLength: 2
   OwnerName: 
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 792
+  speedScalyar: 1820
   speedVector: {x: 0, y: 0, z: 0}
   stop: 0
   detonator: {fileID: 8724746964692305077}
@@ -245,7 +245,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

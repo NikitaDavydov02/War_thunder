@@ -1507,7 +1507,7 @@ MonoBehaviour:
   centerOfMass: {x: 0, y: 1.5, z: 0}
   inertiaTensor: {x: 40000, y: 100000, z: 100000}
   gun: {fileID: 2093730711932771220}
-  recoilImpuls: 10000
+  recoilImpuls: 100
   airDragCoeffitient: 50
   audioManager: {fileID: 2093730711971245066}
 --- !u!65 &1283250108165353209
@@ -3429,7 +3429,7 @@ MonoBehaviour:
   audioManager: {fileID: 2093730711932771222}
   curbPrefabs:
   - {fileID: 4511423729857660096, guid: de86fb039b39ec64cbe0abc1a7b6e1f7, type: 3}
-  timeOfRecharging: 2
+  timeOfRecharging: 0.1
   smokeDistanceFromCenter: 1.5
   controller: {fileID: 1283250108165353204}
   recoilDistance: 0.25

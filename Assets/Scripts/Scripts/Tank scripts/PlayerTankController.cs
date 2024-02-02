@@ -19,7 +19,7 @@ public class PlayerTankController : TankController
         Gas(Input.GetAxis("Vertical"));
         Rotate(Input.GetAxis("Horizontal"));
         RotateTower(Input.GetAxis("Mouse X"));
-        RotateGun(Input.GetAxis("Mouse Y"));
+        RotateGun(-Input.GetAxis("Mouse Y"));
         if (Input.GetKey(KeyCode.Space))
             Fire();
     }

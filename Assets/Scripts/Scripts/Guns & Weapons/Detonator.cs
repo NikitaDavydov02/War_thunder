@@ -25,6 +25,7 @@ public class Detonator : MonoBehaviour
 
     public float directDamage = 300f;
     public float impliciDamage = 10f;
+    [SerializeField]
     public float vzvodTime = 0.05f;
     
     private Vector3 lastPosition;
@@ -51,7 +52,7 @@ public class Detonator : MonoBehaviour
 
         Collider[] searchForBronya = Physics.OverlapSphere(point, 0.5f);
         Bronya b = null;
-        Debug.Log("Searching for armor");
+        //Debug.Log("Searching for armor");
         foreach (Collider collider in searchForBronya)
         {
             b = collider.gameObject.GetComponent<Bronya>();
@@ -60,27 +61,27 @@ public class Detonator : MonoBehaviour
         }
         if (b != null)
         {
-            Debug.Log("Bronya is found!!" + b.gameObject.name);
-            Debug.Log("Bronya is not null");
+            //Debug.Log("Bronya is found!!" + b.gameObject.name);
+            //Debug.Log("Bronya is not null");
             if (b.bronyaThickness >= probitie)
             {
                 
                 source.clip = Resources.Load("Music/Rikochet") as AudioClip;
                 //source.volume = 0.2f;
                 source.Play();
-                Debug.Log("No penetration" + b.gameObject.name);
+                //Debug.Log("No penetration" + b.gameObject.name);
                 return false;
             }
             else
             {
-                Debug.Log("Probitie b!" + b.gameObject.name);
+                //Debug.Log("Probitie b!" + b.gameObject.name);
 
                 source.clip = Resources.Load("Music/Probitie") as AudioClip;
                 source.Play();
                 return true;
             }
         }
-        Debug.Log("Bronya is not found!!");
+        //Debug.Log("Bronya is not found!!");
         return false;
         
     }
@@ -93,17 +94,17 @@ public class Detonator : MonoBehaviour
         if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit))
         {
             GameObject hitObject = hit.transform.gameObject;
-            Debug.Log("Hit raycasted " + hitObject.name);
-            //Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
-            //Debug.Log("Hit distance " + hit.distance);
+            //Debug.Log("Hit raycasted " + hitObject.name);
+            ////Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
+            ////Debug.Log("Hit distance " + hit.distance);
             if (!hitObject.gameObject.name.ToString().Contains(OwnerName) & hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
             //if (hitObject.tag != "Curb"&& hitObject.tag!="Terrain")
             {
-                Debug.Log("Hit detected " + hitObject.name);
+                //Debug.Log("Hit detected " + hitObject.name);
                 
-                // Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
-                //Debug.Log("Hit distance " + hit.distance);
-                //Debug.Log("transform.position - lastPosition " + (transform.position - lastPosition).magnitude);
+                // //Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
+                ////Debug.Log("Hit distance " + hit.distance);
+                ////Debug.Log("transform.position - lastPosition " + (transform.position - lastPosition).magnitude);
                 // (hit.point - lastPosition).magnitude <= (transform.position -lastPosition).magnitude
                 /*GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 sph.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
@@ -115,12 +116,12 @@ public class Detonator : MonoBehaviour
                 if (TryToProbit(hit.point, hitObject)|| type == TypeOfCurp.Bomb)
                 {
                     transform.position = hit.point;
-                    Debug.Log("Probitie!");
+                    //Debug.Log("Probitie!");
                     Damage();
                     
                 }
                 //else
-                    //Debug.Log("No Probitie:(");
+                    ////Debug.Log("No Probitie:(");
 
                 destroyed = true;
                 StartCoroutine(Die());
@@ -134,7 +135,7 @@ public class Detonator : MonoBehaviour
         if (timeSinceFire >= vzvodTime && !vzveden)
         {
             vzveden = true;
-            //Debug.Log("Ready");
+            ////Debug.Log("Ready");
         }
            
         if(timeSinceFire>=0)
@@ -153,11 +154,11 @@ public class Detonator : MonoBehaviour
     }
     private void Damage()
     {
-        Debug.Log("Detonator: damage");
+        //Debug.Log("Detonator: damage");
         Vector3 add = transform.TransformDirection(Vector3.forward * ExplosionDistance);
-        //Debug.Log("Add: " + add.magnitude);
-        //Debug.Log("Enter point: " + transform.position);
-        //Debug.Log("Detonation center: " + add);
+        ////Debug.Log("Add: " + add.magnitude);
+        ////Debug.Log("Enter point: " + transform.position);
+        ////Debug.Log("Detonation center: " + add);
 
         List<Module> damagedModels = new List<Module>();
         if (type == TypeOfCurp.Фугасный||type==TypeOfCurp.Bomb)
@@ -180,7 +181,7 @@ public class Detonator : MonoBehaviour
                     float distance = Vector3.Magnitude(m.transform.position - detonationCenter);
                     float realDamage = impliciDamage * Mathf.Exp(-distance/characteristicDamageLength);
                     m.Damage(realDamage, OwnerName);
-                    //Debug.Log("Damage module: " + m.nameOfModule + " " + realDamage);
+                    ////Debug.Log("Damage module: " + m.nameOfModule + " " + realDamage);
                     
                     damagedModels.Add(m);
                 }
@@ -198,14 +199,14 @@ public class Detonator : MonoBehaviour
                 {
                     m.Damage(directDamage, OwnerName);
                     //m.controller.Killer = OwnerName;
-                    //Debug.Log("Damage module: " + m.nameOfModule + " " + directDamage);
+                    ////Debug.Log("Damage module: " + m.nameOfModule + " " + directDamage);
                     damagedModels.Add(m);
                 }
             }
         }
         if (MainManager.buttleManager.clientTank!=null && OwnerName == MainManager.buttleManager.clientTank.name)
         {
-            //Debug.Log("Display damaged modules");
+            ////Debug.Log("Display damaged modules");
             foreach (Module m in damagedModels)
             {
                 if (m.state == ModuleStates.Damaged)

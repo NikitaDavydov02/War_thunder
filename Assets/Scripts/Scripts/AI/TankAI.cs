@@ -53,7 +53,7 @@ public class TankAI : MonoBehaviour
             if (TargetIsSeen(enemy))
             {
                 currentTarget = enemy;
-                //Debug.Log("Atack");
+                ////Debug.Log("Atack");
             }
         }
         
@@ -119,7 +119,7 @@ public class TankAI : MonoBehaviour
         if (currentRoute == null||currentRoute.Count==0)
         {
             tankState = TankState.Waiting;
-            //Debug.Log("Wait");
+            ////Debug.Log("Wait");
             return;
         }
         Vector3 nextPoint = currentRoute.Peek();
@@ -130,7 +130,7 @@ public class TankAI : MonoBehaviour
             {
                 tankController.Gas(0);
                 tankState = TankState.Waiting;
-                //Debug.Log("Wait");
+                ////Debug.Log("Wait");
                 return;
             }
         }
@@ -138,10 +138,10 @@ public class TankAI : MonoBehaviour
     public void GoToRandomPosition()
     {
         tankState = TankState.GoingToPosition;
-        Debug.Log("Go to random position");
+        //Debug.Log("Go to random position");
         currentRoute = MainManager.mapAIManager.GetRoadToRandomPosotion(transform.position, IsRed);
         //Debug
-        //Debug.Log("Route is choosen");
+        ////Debug.Log("Route is choosen");
         List<Vector3> path = new List<Vector3>();
         foreach (Vector3 p in currentRoute)
             path.Add(p);
@@ -184,11 +184,11 @@ public class TankAI : MonoBehaviour
         if(Physics.Raycast(t,out hit))
         {
             //Debug.DrawLine(t.origin, hit.point, Color.cyan);
-            //Debug.Log("Hit seen ray: " + hit.collider.gameObject.name);
+            ////Debug.Log("Hit seen ray: " + hit.collider.gameObject.name);
             GameObject root = hit.collider.transform.root.gameObject;
             if (root.name == target.name)
             {
-                //Debug.Log("Seen");
+                ////Debug.Log("Seen");
                 return true;
             }
                 
@@ -222,7 +222,7 @@ public class TankAI : MonoBehaviour
 
 
         Vector3 crossCourse = Vector3.Cross(targetGunDirection.normalized, currentGunDirection.normalized);
-        Debug.Log("Cross gun: " + crossCourse);
+        //Debug.Log("Cross gun: " + crossCourse);
         if (crossCourse.magnitude > maxAppropriateCrossProduc(distance,2f))
         {           
             float fraction = 1f;
@@ -231,8 +231,8 @@ public class TankAI : MonoBehaviour
             {
                 fraction = Mathf.Abs(angle / 5);
             }
-            //Debug.Log("Not fire");
-            //Debug.Log("Fraction: "+fraction);
+            ////Debug.Log("Not fire");
+            ////Debug.Log("Fraction: "+fraction);
             if (crossCourse.y > 0)
                 tankController.RotateTower(-1*fraction);
             else
@@ -241,12 +241,12 @@ public class TankAI : MonoBehaviour
             if (crossCourse.x > 0)
             {
                 //Up
-                //Debug.Log("Rotate up");
+                ////Debug.Log("Rotate up");
                 tankController.RotateGun(-gunDir * fraction);
             }
             else
             {
-                //Debug.Log("Rotate down");
+                ////Debug.Log("Rotate down");
                 tankController.RotateGun(gunDir * fraction);
             }
                 
@@ -254,7 +254,7 @@ public class TankAI : MonoBehaviour
         }
         else
         {
-            //Debug.Log("fire");
+            ////Debug.Log("fire");
             return true;
         }
     }
@@ -290,7 +290,7 @@ public class TankAI : MonoBehaviour
         tankState = TankState.FolowTarget;
         folowingTarget = target;
         currentRoute = null;
-        Debug.Log("Folow target comand received");
+        //Debug.Log("Folow target comand received");
         //s
     }
     private bool FolowPosition(Vector3 pos)
@@ -300,8 +300,8 @@ public class TankAI : MonoBehaviour
         Vector3 currentCourse = transform.TransformDirection(Vector3.forward);
         Vector3 targetCourse = pos - transform.position;
         Vector3 courseCross = Vector3.Cross(targetCourse.normalized, currentCourse.normalized);
-        //Debug.Log("Cross: " + courseCross);
-        //Debug.Log("Max cross: " + maxAppropriateCrossProduc(targetCourse.magnitude, appropriatePositionDelta));
+        ////Debug.Log("Cross: " + courseCross);
+        ////Debug.Log("Max cross: " + maxAppropriateCrossProduc(targetCourse.magnitude, appropriatePositionDelta));
         if(Mathf.Abs(courseCross.y) > maxAppropriateCrossProduc(targetCourse.magnitude,appropriatePositionDelta))
         {
             //Rotate corpuse
@@ -317,7 +317,7 @@ public class TankAI : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Gas");
+            ////Debug.Log("Gas");
             //Gas
             tankController.Rotate(0);
             tankController.Gas(1);

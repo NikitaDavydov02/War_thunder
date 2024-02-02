@@ -165,6 +165,7 @@ public class ButtleManager : MonoBehaviour {
 
         if (redScore==100 || blueCurrentCount==0)
         {
+            Debug.Log("Finish the game");
             MainManager.FinishTheGame(true);
             foreach (GameObject go in allred)
                 results[go.name].Win = true;
@@ -173,6 +174,7 @@ public class ButtleManager : MonoBehaviour {
         }
         if (blueScore == 100 || redCurrentCount==0)
         {
+            Debug.Log("Finish the game");
             MainManager.FinishTheGame(false);
             foreach (GameObject go in allred)
                 results[go.name].Win = false;
@@ -228,6 +230,7 @@ public class ButtleManager : MonoBehaviour {
                 Debug.Log("Technics of " + s + "is " + TechnicsOfPlayers[s]);
             //Victim
             redCurrentCount--;
+            Debug.Log("Removing red");
             blueScoreDelta += 1;
             MainManager.userInterfaseManager.RemoveTank(player);
             //Killer
@@ -241,6 +244,7 @@ public class ButtleManager : MonoBehaviour {
         {
             //Victim
             blueCurrentCount--;
+            Debug.Log("Removing blue");
             redScoreDelta += 1;
             MainManager.userInterfaseManager.RemoveTank(player);
             //Killer

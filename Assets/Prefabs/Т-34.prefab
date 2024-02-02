@@ -2915,8 +2915,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   engineAudioSource: {fileID: 237909583028546684}
-  stopClip: {fileID: 8300000, guid: 9405e8290d43db141b7e16377ce7b799, type: 3}
-  gazClip: {fileID: 8300000, guid: 5e19a47977b78b345a3847f377594db6, type: 3}
+  stopClip: {fileID: 8300000, guid: 2ce8f68d5a8907e41838a15c502489fc, type: 3}
+  gazClip: {fileID: 8300000, guid: 6db29af924f0c0f43952d8ba6393b361, type: 3}
   k: 0.0001
   maxPitch: 0.9
   minPitch: 0.7

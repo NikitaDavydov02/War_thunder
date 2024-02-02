@@ -43,7 +43,7 @@ public class HumanPlaneController : PlaneController
             generalLevel += generalLevelChangingSpeed * Time.deltaTime;
         if (Input.GetKey(KeyCode.S))
             generalLevel -= generalLevelChangingSpeed * Time.deltaTime;
-        float verticalInput = -Input.GetAxis("Mouse Y") * Time.deltaTime * heigtSensitivity;
+        float verticalInput = Input.GetAxis("Mouse Y") * Time.deltaTime * heigtSensitivity;
         HeightController(verticalInput);
         float horInput = -Input.GetAxis("Mouse X") * Time.deltaTime * horizontalSensitivity;
         HorizontalController(horInput);

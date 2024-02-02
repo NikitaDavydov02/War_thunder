@@ -52,17 +52,17 @@ public class MapAIManager : MonoBehaviour
     }
     public Queue<Vector3> FindPath(Vector3 start, Vector3 end)
     {
-        //Debug.Log("Finding path...");
-        //Debug.Log("Start " + start);
-        //Debug.Log("End " + end);
+        ////Debug.Log("Finding path...");
+        ////Debug.Log("Start " + start);
+        ////Debug.Log("End " + end);
         NavMeshPath path = new NavMeshPath();
         bool result = NavMesh.CalculatePath(start, end, NavMesh.AllAreas, path);
         if (result)
-            //Debug.Log("Pathis find");
+            ////Debug.Log("Pathis find");
         for (int i = 0; i < path.corners.Length - 1; i++)
         {
             //Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red, 1000);
-           // Debug.Log("Point");
+           // //Debug.Log("Point");
         }
            
         Queue<Vector3> output = new Queue<Vector3>();
@@ -79,7 +79,7 @@ public class MapAIManager : MonoBehaviour
         float g = 9.81f;
         float time = Mathf.Sqrt(2 * ((curbSpeed * curbSpeed - z0t * g - Mathf.Sqrt((z0t * g - v0 * v0) * (z0t * g - v0 * v0) - (g * g * d * d))) / g));
         time = d / curbSpeed;
-        Debug.Log("Time of flying: " + time);
+        //Debug.Log("Time of flying: " + time);
         targetPosition += targetVelocity * time;
         /**float ex = targetPosition.x / (curbSpeed * time);
         float ey = targetPosition.y / (curbSpeed * time);

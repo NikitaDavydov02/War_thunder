@@ -2953,7 +2953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c8a20bbb98fe049b96b7cf2a72fb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bronyaThickness: 30
+  bronyaThickness: 10
 --- !u!1 &237909582738998681
 GameObject:
   m_ObjectHideFlags: 0
@@ -5065,7 +5065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c8a20bbb98fe049b96b7cf2a72fb9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bronyaThickness: 30
+  bronyaThickness: 10
 --- !u!114 &237909583574778512
 MonoBehaviour:
   m_ObjectHideFlags: 0

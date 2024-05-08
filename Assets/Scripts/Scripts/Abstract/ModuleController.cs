@@ -60,7 +60,9 @@ public class ModuleController : MonoBehaviour {
                 if (module.TimeOfFiring > 10)
                 {
                     Debug.Log("Die from fire");
+                    
                     Die();
+                    Explode();
                 }
                     
             }
@@ -190,5 +192,9 @@ public class ModuleController : MonoBehaviour {
         }
 
         return true;
+    }
+    public virtual void Explode()
+    {
+        
     }
 }

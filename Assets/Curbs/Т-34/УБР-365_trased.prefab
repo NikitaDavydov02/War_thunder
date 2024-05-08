@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -169,7 +169,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 700
+      scalar: -500
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4892,6 +4892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
+  flyingSound: {fileID: 0}
   probitie: 20
   ProbDecendingSpeed: 5
   ExplosionDistance: 1
@@ -4914,7 +4915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 800
+  speedScalyar: 900
   speedVector: {x: 0, y: 0, z: 0}
   stop: 0
   detonator: {fileID: 8724746964692305077}

@@ -43,11 +43,23 @@ public class TankController : MonoBehaviour
             return;
         tower.Rotate(input);
     }
+    public void RotateTowerToAnAngle(float angle)
+    {
+        if (!moduleController.alive)
+            return;
+        tower.RotateToAnAngle(angle);
+    }
     public void RotateGun(float input)
     {
         if (!moduleController.alive)
             return;
         tankGun.Rotate(input);
+    }
+    public void RotateGunToAnAngle(float angle)
+    {
+        if (!moduleController.alive)
+            return;
+        tankGun.RotateToAnAngle(angle);
     }
     public void Fire()
     {

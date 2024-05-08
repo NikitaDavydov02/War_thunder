@@ -47,6 +47,7 @@ public class Gun : MonoBehaviour {
         
         if (TimeSinseFire >= timeOfRecharging)
         {
+            Debug.Log("Fired: " + TimeSinseFire + "   " + timeOfRecharging);
             TimeSinseFire = 0;
             GameObject curb = Instantiate(curbPrefabs[curbTypeIndex]) as GameObject;
             curb.transform.position = transform.TransformPoint(Vector3.forward * 5f);

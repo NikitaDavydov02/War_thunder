@@ -80,13 +80,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
-  probitie: 100
-  ProbDecendingSpeed: 60
+  probitie: 3
+  ProbDecendingSpeed: 0.1
   ExplosionDistance: 0.5
   type: 1
   explosionRadius: 3
-  directDamage: 400
-  impliciDamage: 100
+  directDamage: 100
+  impliciDamage: 50
   vzvodTime: 0.05
   characteristicDamageLength: 1
   OwnerName: 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankAI : MonoBehaviour
 {
     public float appropriatePositionDelta = 20f;
+    public float maxAimingDelta = 1f;
     public float fireDistance = 2000f;
     public float targetStopDistance = 20f;
     [SerializeField]
@@ -206,7 +207,10 @@ public class TankAI : MonoBehaviour
         float distance = (target.transform.position - gun.transform.position).magnitude;
         Vector3 currentGunDirection = gun.transform.InverseTransformDirection(gun.transform.TransformDirection(Vector3.forward));
         Vector3 targetGunDirection = gun.transform.InverseTransformDirection(targetDirection);
-        Debug.DrawLine(gun.transform.position, gun.transform.position + targetDirection * distance, Color.black);
+        Vector3 currentGunDirection_Horizontal = new Vector3(currentGunDirection.x, 0, currentGunDirection.z);
+        Vector3 targetGunDirection_Horizontal = new Vector3(targetGunDirection.x, 0, targetGunDirection.z);
+
+        // Debug.DrawLine(gun.transform.position, gun.transform.position + targetDirection * distance, Color.black);
         Debug.DrawLine(gun.transform.position, gun.transform.position + gun.transform.TransformDirection(Vector3.forward * distance), Color.yellow);
         Debug.DrawLine(gun.transform.position, gun.transform.position + gun.transform.TransformDirection(targetGunDirection) * distance*0.99f, Color.green);
         /*Vector3 currentGunDirection = gun.transform.InverseTransformDirection(gun.transform.TransformDirection(Vector3.forward));
@@ -219,38 +223,50 @@ public class TankAI : MonoBehaviour
         targetGunDirection = gun.transform.InverseTransformDirection(-delta+target.transform.position - gun.transform.position);
         Debug.DrawLine(gun.transform.position, gun.transform.position + (-delta + target.transform.position - gun.transform.position), Color.cyan);*/
 
-
-
+        double maxAngleDelta = (maxAimingDelta / distance) * Mathf.Rad2Deg;
+        float angle = Mathf.Abs(Vector3.Angle(targetGunDirection.normalized, currentGunDirection.normalized));
+        float angle_horizontal = Mathf.Abs(Vector3.Angle(targetGunDirection_Horizontal.normalized, currentGunDirection_Horizontal.normalized));
+        float angle_vertical = Mathf.Abs(Vector3.Angle(targetGunDirection_Horizontal.normalized,targetGunDirection.normalized) - Vector3.Angle(currentGunDirection_Horizontal.normalized,currentGunDirection.normalized));
+        
         Vector3 crossCourse = Vector3.Cross(targetGunDirection.normalized, currentGunDirection.normalized);
         //Debug.Log("Cross gun: " + crossCourse);
-        if (crossCourse.magnitude > maxAppropriateCrossProduc(distance,2f))
+        //if (crossCourse.magnitude > maxAppropriateCrossProduc(distance,2f))
+        if (angle > maxAngleDelta)
         {           
             float fraction = 1f;
-            float angle = Vector3.Angle(targetGunDirection.normalized, currentGunDirection.normalized);
             if (angle < 5)
             {
                 fraction = Mathf.Abs(angle / 5);
             }
-            ////Debug.Log("Not fire");
-            ////Debug.Log("Fraction: "+fraction);
+            /* if (crossCourse.y > 0)
+                 tankController.RotateTower(-1*fraction);
+             else
+                 tankController.RotateTower(1 * fraction);*/
             if (crossCourse.y > 0)
-                tankController.RotateTower(-1*fraction);
+                tankController.RotateTowerToAnAngle(-angle_horizontal);
             else
-                tankController.RotateTower(1 * fraction);
+                tankController.RotateTowerToAnAngle(angle_horizontal);
+
             //Vertial rotation
             if (crossCourse.x > 0)
             {
                 //Up
                 ////Debug.Log("Rotate up");
-                tankController.RotateGun(-gunDir * fraction);
+                tankController.RotateGunToAnAngle(-gunDir * angle_vertical);
+                //tankController.RotateGun(-gunDir * fraction);
             }
             else
             {
                 ////Debug.Log("Rotate down");
-                tankController.RotateGun(gunDir * fraction);
+                //tankController.RotateGun(gunDir * fraction);
+                tankController.RotateGunToAnAngle(gunDir * angle_vertical);
             }
-                
-            return false;
+            currentGunDirection = gun.transform.InverseTransformDirection(gun.transform.TransformDirection(Vector3.forward));
+            angle = Mathf.Abs(Vector3.Angle(targetGunDirection.normalized, currentGunDirection.normalized));
+            if (angle > maxAngleDelta)
+                return false;
+            else
+                return true;
         }
         else
         {

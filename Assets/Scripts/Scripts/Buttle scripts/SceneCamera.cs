@@ -31,7 +31,13 @@ public class SceneCamera : MonoBehaviour {
     public float rotXYSpeed = 10f;
     private float lastDeathRotXY = 0;
     private Camera cam;
+    [SerializeField]
     private Transform target;
+
+    [SerializeField]
+    private float zoomIn = 14f;
+    [SerializeField]
+    private float zoomOut = 60f;
 
 
     //private bool  bulletCam =false;
@@ -180,13 +186,13 @@ public class SceneCamera : MonoBehaviour {
     }
     public void ZoomOut()
     {
-        cam.fieldOfView = 60;
+        cam.fieldOfView = zoomOut;
         inZoom = false;
         MainManager.userInterfaseManager.Pricel(false);
     }
     public void ZoomIn()
     {
-        cam.fieldOfView = 8;
+        cam.fieldOfView = zoomIn;
         inZoom = true;
         MainManager.userInterfaseManager.Pricel(true);
     }

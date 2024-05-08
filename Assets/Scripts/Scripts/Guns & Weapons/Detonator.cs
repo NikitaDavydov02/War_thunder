@@ -7,6 +7,8 @@ public class Detonator : MonoBehaviour
     //REFACTORED_1
     [SerializeField]
     AudioSource source;
+    [SerializeField]
+    AudioClip flyingSound;
 
     [SerializeField]
     private float probitie = 100;
@@ -41,6 +43,12 @@ public class Detonator : MonoBehaviour
     public void Vzvesti()
     {
         timeSinceFire = 0;
+        if (type == TypeOfCurp.Bomb)
+        {
+            source.clip = flyingSound;
+            source.Play();
+            source.loop = true;
+        }
     }
     private bool TryToProbit(Vector3 point, GameObject hitObject)
     {
@@ -68,6 +76,7 @@ public class Detonator : MonoBehaviour
                 
                 source.clip = Resources.Load("Music/Rikochet") as AudioClip;
                 //source.volume = 0.2f;
+                source.loop = false;
                 source.Play();
                 //Debug.Log("No penetration" + b.gameObject.name);
                 return false;

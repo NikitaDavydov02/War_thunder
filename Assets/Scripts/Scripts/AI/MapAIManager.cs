@@ -72,21 +72,29 @@ public class MapAIManager : MonoBehaviour
     }
     public Vector3 CalculateGunDirectionOnTarget(Vector3 targetPosition, float curbSpeed, Vector3 targetVelocity)
     {
-        targetPosition += Vector3.up * HeightTargetCorrection;
+        Vector3 aimPosition = targetPosition + Vector3.up * HeightTargetCorrection;
         float v0 = curbSpeed;
-        float z0t = targetPosition.y;
-        float d = targetPosition.magnitude;
+        float z0t = aimPosition.y;
+        float d = aimPosition.magnitude;
         float g = 9.81f;
         float time = Mathf.Sqrt(2 * ((curbSpeed * curbSpeed - z0t * g - Mathf.Sqrt((z0t * g - v0 * v0) * (z0t * g - v0 * v0) - (g * g * d * d))) / g));
         time = d / curbSpeed;
         //Debug.Log("Time of flying: " + time);
-        targetPosition += targetVelocity * time;
+        aimPosition += targetVelocity * time;
+
+        d = aimPosition.magnitude;
+        z0t = aimPosition.y;
+        //time = Mathf.Sqrt(2 * ((curbSpeed * curbSpeed - z0t * g - Mathf.Sqrt((z0t * g - v0 * v0) * (z0t * g - v0 * v0) - (g * g * d * d))) / g));
+        time = d / curbSpeed;
+        aimPosition = targetPosition + Vector3.up * HeightTargetCorrection;
+        aimPosition += targetVelocity * time;
+
         /**float ex = targetPosition.x / (curbSpeed * time);
         float ey = targetPosition.y / (curbSpeed * time);
         float ez = (targetPosition.z + g * time * time / 2) / (curbSpeed * time);*/
-        float ex = targetPosition.x / (curbSpeed * time);
-        float ez = targetPosition.z / (curbSpeed * time);
-        float ey = (targetPosition.y + g * time * time / 2) / (curbSpeed * time);
+        float ex = aimPosition.x / (curbSpeed * time);
+        float ez = aimPosition.z / (curbSpeed * time);
+        float ey = (aimPosition.y + g * time * time / 2) / (curbSpeed * time);
         return new Vector3(ex, ey, ez);
     }
 }

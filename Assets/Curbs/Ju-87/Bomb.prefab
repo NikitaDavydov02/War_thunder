@@ -4945,6 +4945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 1125985888928301641}
+  flyingSound: {fileID: 8300000, guid: ff7e8cdb2e99e264abd8f90f936e88a6, type: 3}
   probitie: 300
   ProbDecendingSpeed: 60
   ExplosionDistance: 0
@@ -4980,14 +4981,14 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.44
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 20
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -5025,7 +5026,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -5077,7 +5078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 100
+  speedScalyar: 0
   speedVector: {x: 0, y: 0, z: 0}
   stop: 1
   detonator: {fileID: 1041751087099366736}

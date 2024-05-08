@@ -26,7 +26,7 @@ public class TechnicsManager : MonoBehaviour {
         if (modelPrefab == null)
             return null;
         currentModel = Instantiate(modelPrefab) as GameObject;
-        currentModel.transform.position = new Vector3(0, 0.5f, 0);
+        currentModel.transform.position = new Vector3(0, 1f, 0);
         return currentModel;
     }
 }

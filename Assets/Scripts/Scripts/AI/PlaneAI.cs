@@ -16,6 +16,8 @@ public class PlaneAI : MonoBehaviour
     private float acceptableCourseError = 5f;
     [SerializeField]
     private float acceptableAltitudeError = 50f;
+    [SerializeField]
+    private float criticalAngle = 5f;
 
     private float currentRoll = 0f;
     private float currentPitch= 0f;
@@ -35,10 +37,11 @@ public class PlaneAI : MonoBehaviour
     public float GunErrorVert = 2f;
 
     [SerializeField]
-    private Gun gun;
+    private List<Gun> gun;
 
     private Rigidbody rb;
 
+    [SerializeField]
     public PlaneStates planeState = PlaneStates.Landed;
     public bool IsRed = false;
     // Start is called before the first frame update
@@ -73,7 +76,11 @@ public class PlaneAI : MonoBehaviour
         if (planeVelocuty.x < 0)
             currentCourse = -currentCourse;
         ////Debug.Log("Course: " + currentCourse);
-
+        if (transform.position.y < 75f)
+        {
+            planeState = PlaneStates.TakingOff;
+            Debug.Log("Take off!");
+        }
 
         if (planeState == PlaneStates.Landed)
             planeState = PlaneStates.TakingOff;
@@ -84,31 +91,68 @@ public class PlaneAI : MonoBehaviour
             StabilazeRoll(0f);
             if(currentAltitude >= 500f)
             {
-                planeState = PlaneStates.FolowingTarget;
-                if(IsRed)
-                    target = MainManager.buttleManager.GetTargetForRed();
-                else
-                    target = MainManager.buttleManager.GetTargetForBlue();
-                if (target == null)
+                
+                
+                if (target == null || !targetController.alive)
                 {
-                    planeState = PlaneStates.GoingToTheField;
-                    return;
+                    if (IsRed)
+                        target = MainManager.buttleManager.GetTargetForRed();
+                    else
+                        target = MainManager.buttleManager.GetTargetForBlue();
+                    if(target==null)
+                        planeState = PlaneStates.GoingToTheField;
+                    else
+                        targetController = target.gameObject.GetComponent<ModuleController>();
+                    planeState = PlaneStates.FolowingTarget;
+                    if (planeController.ReleaseableBombs && target!=null && target.GetComponent<TankController>() != null)
+                        planeState = PlaneStates.BombingTarget;
                 }
-                targetController = target.gameObject.GetComponent<ModuleController>();
+
             }
+        }
+        if (planeState == PlaneStates.BombingTarget)
+        {
+            Vector3 targetSpeed = target.gameObject.GetComponent<Rigidbody>().velocity;
+            float distance = (target.position - gun[0].transform.position).magnitude;
+            float planeFlightTime = distance / currentVelocity.magnitude;
+           
+
+            float relativeAltitude = transform.position.y - target.position.y;
+            float bombFlightTime = Mathf.Sqrt(2 * relativeAltitude / 9.81f);
+
+            Vector3 targetDelta = targetSpeed * bombFlightTime;
+            Vector3 followingPosition = target.position + targetDelta + Vector3.up * 1000;
+            FolowPosition(followingPosition);
+
+            Vector3 targetPlaneDelta = target.position - transform.position;
+            targetPlaneDelta.y = 0;
+            Vector3 horVelocity = currentVelocity;
+            horVelocity.y = 0;
+
+            float criticalHorizontalDistance = horVelocity.magnitude * bombFlightTime;
+
+            Debug.Log("Bombing: relativeAltitude = " + relativeAltitude);
+            Debug.Log("Bombing: bombFlighTime = " + bombFlightTime);
+            Debug.Log("Bombing: criticalDistance = " + criticalHorizontalDistance);
+            Debug.DrawLine(transform.position, followingPosition, Color.cyan);
+            Debug.Log("Bombing: distance ahead = " + targetPlaneDelta.magnitude);
+            if (targetPlaneDelta.magnitude <= criticalHorizontalDistance)
+                planeController.ReleaseBombs();
+                //Release
+
         }
         if (planeState == PlaneStates.FolowingTarget)
         {
             Vector3 targetSpeed = target.gameObject.GetComponent<Rigidbody>().velocity;
             //Vector3 course = target.position - gun.transform.position;
-            float distance = (target.position - gun.transform.position).magnitude;
-            Vector3 course = MainManager.mapAIManager.CalculateGunDirectionOnTarget(target.position - gun.transform.position + Vector3.up * GunErrorVert, 750, targetSpeed) * distance;
+            float distance = (target.position - gun[0].transform.position).magnitude;
+            Vector3 course = MainManager.mapAIManager.CalculateGunDirectionOnTarget(target.position - gun[0].transform.position + Vector3.up * GunErrorVert, 750, targetSpeed) * distance;
             //float delta = (9.81f / 2) * (course.magnitude / 750) * (course.magnitude / 750);
             //Vector3 upr = targetSpeed * course.magnitude / 750f + Vector3.up*delta;
-            Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
+           // Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
             //course += upr;
             //Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
-            FolowPosition(gun.transform.position + course);
+            FolowPosition(gun[0].transform.position + course);
             Vector3 currentSpeed = rb.velocity;
             float dot = Vector3.Dot(currentSpeed.normalized, course.normalized);
             float angle = Vector3.Angle(transform.TransformDirection(Vector3.forward), course.normalized);
@@ -117,7 +161,8 @@ public class PlaneAI : MonoBehaviour
             float minDot = Mathf.Cos(maxAngle * Mathf.Deg2Rad);
             ////Debug.Log("Angle: " + angle);
             if (course.magnitude < fireDistance && angle< fireErrorMultiplyer * maxAngle)
-                gun.Fire();
+                foreach(Gun g in gun)
+                    g.Fire();
             if (!targetController.alive)
             {
                 if (IsRed)
@@ -127,6 +172,7 @@ public class PlaneAI : MonoBehaviour
                 if (target == null)
                 {
                     planeState = PlaneStates.GoingToTheField;
+
                     return;
                 }
                 targetController = target.gameObject.GetComponent<ModuleController>();
@@ -134,6 +180,7 @@ public class PlaneAI : MonoBehaviour
             if (transform.position.y < 75f)
             {
                 planeState = PlaneStates.TakingOff;
+                Debug.Log("Take off!");
             }
         }
         if (planeState == PlaneStates.GoingToTheField)
@@ -167,7 +214,7 @@ public class PlaneAI : MonoBehaviour
     }
     private void FolowPosition(Vector3 position)
     {
-        Vector3 course = position - gun.transform.position;
+        Vector3 course = position - gun[0].transform.position;
         StabalizeCourse(course);
     }
    
@@ -177,11 +224,11 @@ public class PlaneAI : MonoBehaviour
         ////Debug.Log("Roll: " + currentRoll);
         
         if (currentRoll > roll + treshholdRoll)
-            planeController.Eleron(EleronPosition.Right);
+            planeController.Eleron(-1);
         else if (currentRoll < roll - treshholdRoll)
-            planeController.Eleron(EleronPosition.Left);
+            planeController.Eleron(1);
         else
-            planeController.Eleron(EleronPosition.Neutral);
+            planeController.Eleron(0);
     }
     private void StabalizePitch(float pitch=0f, float maxError=0)
     {
@@ -230,9 +277,9 @@ public class PlaneAI : MonoBehaviour
         {
            // //Debug.Log("Eleron");
             if (targerCourseInPlaneCoordinates.x < 0)
-                TurnToTheLeft();
+                TurnToTheLeft(1);
             else if (targerCourseInPlaneCoordinates.x > 0)
-                TurnToTheRight();
+                TurnToTheRight(1);
         }
         else if(angle != 0)
         {
@@ -265,18 +312,30 @@ public class PlaneAI : MonoBehaviour
     {
         float maxAngleError = maxAngleCount(targerCourse.magnitude);
 
-        Vector3 targetCourseInPlaneCoordinates = gun.transform.InverseTransformDirection(targerCourse);
+        Vector3 targetCourseInPlaneCoordinates = gun[0].transform.InverseTransformDirection(targerCourse);
         ////Debug.Log("Target course in world coordinates: " + targerCourse);
         ////Debug.Log("Target course in plane coordinates: " + targetCourseInPlaneCoordinates);
         Vector3 targetCourseHorizontal = new Vector3(targetCourseInPlaneCoordinates.x, 0, targetCourseInPlaneCoordinates.z);
         float deltaAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
-        ////Debug.Log("Delta azimut: " + deltaAzimut);
+        ////Debug.Log"Delta azimut: " + deltaAzimut);
         //if (Vector3.Cross(targetCourseHorizontal, Vector3.forward).y < 0)
             //deltaAzimut = -deltaAzimut;
 
        // float targetAzimut = Vector3.Angle(Vector3.forward, targetCourseHorizontal);
         if (targetCourseHorizontal.x < 0)
             deltaAzimut = -deltaAzimut;
+
+        Vector3 targetCourseHorizontalInWorldCoordinates = new Vector3(targerCourse.x, 0, targerCourse.z);
+        float targetPitch = Vector3.Angle(targetCourseHorizontalInWorldCoordinates, targerCourse);
+        if (targerCourse.y < 0)
+            targetPitch = -targetPitch;
+        if (Mathf.Abs(deltaAzimut) < criticalAngle && Mathf.Abs(targetPitch)< criticalAngle)
+        {
+            transform.LookAt(gun[0].transform.position + targerCourse);
+            Debug.Log("Stabalize");
+            return;
+        }
+         
         StabalizeCourseHorizontal(targetCourseHorizontal, maxAngleError);
 
         /*Vector3 targetCourseHorizontal = new Vector3(targerCourse.x, 0, targerCourse.z);
@@ -294,38 +353,35 @@ public class PlaneAI : MonoBehaviour
 
         //Stabilize pitch
 
-        Vector3 targetCourseHorizontalInWorldCoordinates = new Vector3(targerCourse.x, 0, targerCourse.z);
-        float targetPitch = Vector3.Angle(targetCourseHorizontalInWorldCoordinates, targerCourse);
-        if (targerCourse.y < 0)
-            targetPitch = -targetPitch;
+        
         
         
         StabalizePitch(targetPitch, maxAngleError);
     }
-    private void TurnToTheLeft()
+    private void TurnToTheLeft(float degree)
     {
         ////Debug.Log("Turn to the left");
         if (currentRoll > maxRoll)
         {
             //planeController.HorizontalController(maxHorizontalInput);
-            planeController.Eleron(EleronPosition.Right);
+            planeController.Eleron(-1);
         }
         else
         {
             planeController.HorizontalController(-maxHorizontalInput);
-            planeController.Eleron(EleronPosition.Left);
+            planeController.Eleron(1);
         }
             
     }
-    private void TurnToTheRight()
+    private void TurnToTheRight(float degree)
     {
         ////Debug.Log("Turn to the right");
         if (currentRoll < -maxRoll)
-            planeController.Eleron(EleronPosition.Left);
+            planeController.Eleron(1);
         else
         {
             planeController.HorizontalController(maxHorizontalInput);
-            planeController.Eleron(EleronPosition.Right);
+            planeController.Eleron(-1);
         }
             
     }
@@ -363,5 +419,6 @@ public enum PlaneStates
     TakingOff,
     FolowingTarget,
     GoingToTheField,
+    BombingTarget,
     //AtackTarget,
 }

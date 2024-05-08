@@ -1357,6 +1357,7 @@ MonoBehaviour:
   planeController: {fileID: 3090189995440795119}
   acceptableCourseError: 0.1
   acceptableAltitudeError: 50
+  criticalAngle: 5
   fireDistance: 2000
   maxUp: 0.3
   neutralHeightWheel: -8
@@ -1365,9 +1366,10 @@ MonoBehaviour:
   maxPitch: 20
   maxHorizontalInput: -0.1
   targetAndCourseAtackTreshhold: 0.95
-  fireErrorMultiplyer: 3
-  GunErrorVert: 0
-  gun: {fileID: 3473376476975051826}
+  fireErrorMultiplyer: 1
+  GunErrorVert: 2
+  gun:
+  - {fileID: 3473376476975051826}
   planeState: 0
   IsRed: 0
   target: {fileID: 0}
@@ -1385,7 +1387,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generalLevel: 0
   maxEleronAngle: 2
-  destoingImpuls: 20000
   engines:
   - {fileID: 8051625634329765399}
   gravityForce: {fileID: 0}
@@ -1404,7 +1405,8 @@ MonoBehaviour:
   horizontalController: {fileID: 8051625634619763068}
   leftElleron: {fileID: 8051625634442135196}
   rightElleron: {fileID: 8051625634143517345}
-  eleronAngle: 0
+  bombController: {fileID: 1197396363726441219}
+  currentEleronAngle: 0
   RotationPowerMultiplyer: 0
   heightAngle: 0
   horizontAngle: 0
@@ -2560,13 +2562,13 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.521
+  m_Volume: 0.208
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 142
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 3000
@@ -2828,8 +2830,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -14.352121
-      value: -0.05059731
+      time: -20.097116
+      value: -0.49807572
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -2839,15 +2841,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.057808876
       value: -0.000834316
-      inSlope: 0.0033744285
-      outSlope: 0.0033744285
+      inSlope: 0.02494942
+      outSlope: 0.02494942
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 15.053329
-      value: 0.048629284
+      time: 19.991379
+      value: 0.50210905
       inSlope: 0
       outSlope: 0
       tangentMode: 136

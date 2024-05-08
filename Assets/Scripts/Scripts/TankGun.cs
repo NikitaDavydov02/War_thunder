@@ -46,6 +46,21 @@ public class TankGun : Gun, IVerticalRotatable {
         rot.x = _rot;
         transform.localEulerAngles = rot;
     }
+    public void RotateToAnAngle(float angle)
+    {
+        if (!controller.alive || MainManager.GameStatus != GameStatus.Playing)
+            return;
+        if(Mathf.Abs(angle)> verticalRotationSpeed * Time.deltaTime)
+        {
+            Rotate(angle / Mathf.Abs(angle));
+            return;
+        }
+        _rot += angle;
+        _rot = Mathf.Clamp(_rot, minRot, maxRot);
+        Vector3 rot = transform.localEulerAngles;
+        rot.x = _rot;
+        transform.localEulerAngles = rot;
+    }
 }
 public interface IVerticalRotatable
 {

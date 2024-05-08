@@ -31,13 +31,13 @@ public class HumanPlaneController : PlaneController
         if (Input.GetKeyUp(KeyCode.D))
             Eleron(true);*/
         if (Input.GetKeyDown(KeyCode.A))
-           Eleron(EleronPosition.Left);
+           Eleron(1);
        if (Input.GetKeyUp(KeyCode.A))
-           Eleron(EleronPosition.Neutral);
+           Eleron(0);
        if (Input.GetKeyDown(KeyCode.D))
-           Eleron(EleronPosition.Right);
+           Eleron(-1);
        if (Input.GetKeyUp(KeyCode.D))
-           Eleron(EleronPosition.Neutral);
+           Eleron(0);
 
         if (Input.GetKey(KeyCode.W))
             generalLevel += generalLevelChangingSpeed * Time.deltaTime;
@@ -47,5 +47,8 @@ public class HumanPlaneController : PlaneController
         HeightController(verticalInput);
         float horInput = -Input.GetAxis("Mouse X") * Time.deltaTime * horizontalSensitivity;
         HorizontalController(horInput);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            ReleaseBombs();
     }
 }

@@ -32,4 +32,23 @@ public class Tower : MonoBehaviour {
         }
         transform.Rotate(0, input*rotSpeed*Time.deltaTime, 0, Space.Self);
     }
+    public void RotateToAnAngle(float angle)
+    {
+        if (!controller.alive || MainManager.GameStatus != GameStatus.Playing)
+            return;
+        if (Mathf.Abs(angle) > rotSpeed * Time.deltaTime)
+        {
+            Rotate(angle / Mathf.Abs(angle));
+            return;
+        }
+            
+        if (audioManager != null)
+        {
+            if (angle == 0)
+                audioManager.PlayRotationSound(false);
+            else
+                audioManager.PlayRotationSound(true);
+        }
+        transform.Rotate(0, angle, 0, Space.Self);
+    }
 }

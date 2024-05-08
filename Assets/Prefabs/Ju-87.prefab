@@ -1287,7 +1287,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generalLevel: 1
   maxEleronAngle: 2
-  destoingImpuls: 20000
   engines:
   - {fileID: 8051625634329765399}
   gravityForce: {fileID: 0}
@@ -1306,13 +1305,14 @@ MonoBehaviour:
   horizontalController: {fileID: 8051625634619763068}
   leftElleron: {fileID: 8051625634442135196}
   rightElleron: {fileID: 8051625634143517345}
-  eleronAngle: 0
+  bombController: {fileID: 1197396363726441219}
+  currentEleronAngle: 0
   RotationPowerMultiplyer: 0
   heightAngle: 0
   horizontAngle: 0
   centerOfMassLocal: {x: 0, y: 0.35, z: 1.9}
   inertiaTensor: {x: 15000, y: 3000, z: 5000}
-  maxHeightAngle: 15
+  maxHeightAngle: 20
   maxHorizontalAngle: 15
   VelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
   AngularVelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
@@ -1848,8 +1848,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -9.8762
-      value: -0.5163566
+      time: -22.164347
+      value: -1.0277091
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1859,15 +1859,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: -0.006398678
       value: -0.006967187
-      inSlope: 0.049801506
-      outSlope: 0.049801506
+      inSlope: 0.049851738
+      outSlope: 0.049851738
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 10.4734955
-      value: 0.4970889
+      time: 18.153585
+      value: 0.98220986
       inSlope: 0
       outSlope: 0
       tangentMode: 136

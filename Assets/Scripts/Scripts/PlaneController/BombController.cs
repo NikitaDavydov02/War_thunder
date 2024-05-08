@@ -15,17 +15,18 @@ public class BombController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        
+    }
+    public void Release()
+    {
+        if (bombs.Count != 0)
         {
-            if (bombs.Count != 0)
-            {
-                bombs[bombs.Count - 1].Release(gameObject.name, GetComponent<Rigidbody>().velocity);
-                bombs[bombs.Count - 1].name = gameObject.name + "_curb";
-                bombs[bombs.Count - 1].transform.parent = null;
-                Debug.Log("Initial velocity" + GetComponent<Rigidbody>().velocity);
-                MainManager.PlayerFired(gameObject, bombs[bombs.Count - 1].gameObject);
-                bombs.RemoveAt(bombs.Count - 1);
-            }
+            bombs[bombs.Count - 1].Release(gameObject.name, GetComponent<Rigidbody>().velocity);
+            bombs[bombs.Count - 1].name = gameObject.name + "_curb";
+            bombs[bombs.Count - 1].transform.parent = null;
+            Debug.Log("Initial velocity" + GetComponent<Rigidbody>().velocity);
+            MainManager.PlayerFired(gameObject, bombs[bombs.Count - 1].gameObject);
+            bombs.RemoveAt(bombs.Count - 1);
         }
     }
 }

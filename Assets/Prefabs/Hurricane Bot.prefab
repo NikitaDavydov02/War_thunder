@@ -245,7 +245,7 @@ MonoBehaviour:
   audioManager: {fileID: 8227834638431302265}
   curbPrefabs:
   - {fileID: 4511423729857660096, guid: 4c295bac0c6c4c14585110e5865d5233, type: 3}
-  timeOfRecharging: 0.1
+  timeOfRecharging: 0.3
   smokeDistanceFromCenter: 0.5
   controller: {fileID: 2063801917698778357}
   recoilDistance: 0
@@ -4482,8 +4482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8611e93a529d84f8df32671217796b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Primitive: 2
-  length: 4
+  Primitive: 3
+  length: 10
   diameter: 1
   velocity: {x: 0, y: 0, z: 0}
   rb: {fileID: 2063801917698778358}
@@ -4546,17 +4546,17 @@ MonoBehaviour:
   planeController: {fileID: 7838853543181464685}
   acceptableCourseError: 0.1
   acceptableAltitudeError: 50
-  criticalAngle: 5
+  criticalAngle: 10
   fireDistance: 2000
   maxUp: 0.3
   neutralHeightWheel: -8
   maxDown: -10
-  maxRoll: 80
+  maxRoll: 50
   maxPitch: 20
   maxHorizontalInput: -0.1
   targetAndCourseAtackTreshhold: 0.95
   fireErrorMultiplyer: 1
-  GunErrorVert: 1
+  GunErrorVert: 0
   gun:
   - {fileID: 9216692015010066684}
   - {fileID: 3265874798633065268}
@@ -4603,8 +4603,8 @@ MonoBehaviour:
   heightAngle: 0
   horizontAngle: 0
   centerOfMassLocal: {x: 0, y: 0.35, z: 0}
-  inertiaTensor: {x: 8000, y: 6000, z: 4000}
-  maxHeightAngle: 30
+  inertiaTensor: {x: 8000, y: 8000, z: 8000}
+  maxHeightAngle: 15
   maxHorizontalAngle: 5
   VelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
   AngularVelocityInLocalCoordinates: {x: 0, y: 0, z: 0}
@@ -5377,7 +5377,7 @@ MonoBehaviour:
   audioManager: {fileID: 8227834638431302265}
   curbPrefabs:
   - {fileID: 4511423729857660096, guid: 4c295bac0c6c4c14585110e5865d5233, type: 3}
-  timeOfRecharging: 0.1
+  timeOfRecharging: 0.3
   smokeDistanceFromCenter: 0.5
   controller: {fileID: 2063801917698778357}
   recoilDistance: 0
@@ -6582,7 +6582,7 @@ MonoBehaviour:
   audioManager: {fileID: 8227834638431302265}
   curbPrefabs:
   - {fileID: 4511423729857660096, guid: 4c295bac0c6c4c14585110e5865d5233, type: 3}
-  timeOfRecharging: 0.1
+  timeOfRecharging: 0.3
   smokeDistanceFromCenter: 0.5
   controller: {fileID: 2063801917698778357}
   recoilDistance: 0
@@ -8206,7 +8206,7 @@ MonoBehaviour:
   audioManager: {fileID: 8227834638431302265}
   curbPrefabs:
   - {fileID: 4511423729857660096, guid: 4c295bac0c6c4c14585110e5865d5233, type: 3}
-  timeOfRecharging: 0.1
+  timeOfRecharging: 0.3
   smokeDistanceFromCenter: 0.5
   controller: {fileID: 2063801917698778357}
   recoilDistance: 0
@@ -15237,8 +15237,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: -22.185938
-      value: -0.48657143
+      time: -12.152887
+      value: -0.5220634
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -15248,15 +15248,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.057808876
       value: -0.000834316
-      inSlope: 0.022820419
-      outSlope: 0.022820419
+      inSlope: 0.043722987
+      outSlope: 0.043722987
       tangentMode: 136
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 20.91829
-      value: 0.4970851
+      time: 11.281265
+      value: 0.50254774
       inSlope: 0
       outSlope: 0
       tangentMode: 136

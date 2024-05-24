@@ -107,6 +107,8 @@ public class PlaneAI : MonoBehaviour
                     if (planeController.ReleaseableBombs && target!=null && target.GetComponent<TankController>() != null)
                         planeState = PlaneStates.BombingTarget;
                 }
+                else
+                    planeState = PlaneStates.FolowingTarget;
 
             }
         }

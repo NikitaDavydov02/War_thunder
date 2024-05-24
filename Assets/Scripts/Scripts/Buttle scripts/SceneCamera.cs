@@ -20,7 +20,8 @@ public class SceneCamera : MonoBehaviour {
     private float _rotY;
     private Vector3 _offset;
     //private Vector3 _memoryOffset;
-    private bool inZoom = false;
+    [SerializeField]
+    private CameraState camState;
     public float vertSpeed = 3f;
     public float maxYOffset = 5f;
     public float minYOffset = -15f;
@@ -56,7 +57,7 @@ public class SceneCamera : MonoBehaviour {
 	void LateUpdate () {
         if (target==null)
             return;
-        if (!inZoom)
+        if (camState==CameraState.ZoomOut)
         {
 
             distance -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime;
@@ -112,7 +113,7 @@ public class SceneCamera : MonoBehaviour {
                 transform.LookAt(target);
             }
         }
-        else
+        if(camState==CameraState.ZoomIn)
         {
             if (!controller.alive)
             {
@@ -124,7 +125,26 @@ public class SceneCamera : MonoBehaviour {
             transform.eulerAngles = gunRoot;
             transform.Translate(new Vector3(0, 0, 5f), Space.Self);
         }
+        if (camState == CameraState.BombSight)
+        {
+            transform.position = target.transform.position + Vector3.down * 4f;
+            Vector3 velocity = target.transform.GetComponent<Rigidbody>().velocity;
+            float h = target.transform.position.y;
+            float timeOfFlying = (velocity.y+Mathf.Sqrt(velocity.y* velocity.y+2*9.81f*h)) / (9.81f);
+            Vector3 horVelocity = velocity;
+            horVelocity.y = 0;
+            Vector3 targetPos = target.transform.position + horVelocity * timeOfFlying + Vector3.down * h;
+            transform.LookAt(targetPos);
+        }
 	}
+    public void BombSight()
+    {
+        
+        cam.fieldOfView = zoomIn;
+        camState = CameraState.BombSight;
+        Debug.Log("Zoom bomb!" + camState);
+        MainManager.userInterfaseManager.Pricel(true);
+    }
 
     void Update()
     {
@@ -141,7 +161,7 @@ public class SceneCamera : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.T))
         {
-            if (inZoom)
+            if (camState == CameraState.ZoomIn)
                 ZoomOut();
             int indexOfTarget = playerAndHisFiredCurbs.IndexOf(target);
             if (indexOfTarget == playerAndHisFiredCurbs.Count - 1)
@@ -179,21 +199,39 @@ public class SceneCamera : MonoBehaviour {
     private void SwitchZoom()
     {
 
-        if (inZoom)
+        if (camState != CameraState.ZoomOut)
             ZoomOut();
         else
-            ZoomIn();
+        {
+            ModuleController mc = target.gameObject.GetComponent<ModuleController>();
+            //Debug.Log("Module controller: " + mc.name + "   " + (mc is PlaneModuleController));
+
+            if (mc is PlaneModuleController)
+                BombSight();
+            else
+                ZoomIn();
+        }
     }
     public void ZoomOut()
     {
+        
         cam.fieldOfView = zoomOut;
-        inZoom = false;
+        camState = CameraState.ZoomOut;
+        Debug.Log("Zoom out!" + camState);
         MainManager.userInterfaseManager.Pricel(false);
     }
     public void ZoomIn()
     {
+        
         cam.fieldOfView = zoomIn;
-        inZoom = true;
+        camState = CameraState.ZoomIn;
+        Debug.Log("Zoom in!" + camState);
         MainManager.userInterfaseManager.Pricel(true);
     }
+}
+public enum CameraState
+{
+    ZoomOut,
+    ZoomIn,
+    BombSight,
 }

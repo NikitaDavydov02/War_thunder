@@ -1353,7 +1353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   treshholdRoll: 0.1
   treshholdEleronVSWheelCorrection: 10
-  treshholdPitch: 0.1
+  treshholdPitch: 0.08
   planeController: {fileID: 3090189995440795119}
   acceptableCourseError: 0.1
   acceptableAltitudeError: 50
@@ -1366,8 +1366,8 @@ MonoBehaviour:
   maxPitch: 20
   maxHorizontalInput: -0.1
   targetAndCourseAtackTreshhold: 0.95
-  fireErrorMultiplyer: 1
-  GunErrorVert: 2
+  fireErrorMultiplyer: 0.8
+  GunErrorVert: 1
   gun:
   - {fileID: 3473376476975051826}
   planeState: 0

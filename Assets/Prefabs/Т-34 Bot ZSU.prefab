@@ -2066,7 +2066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appropriatePositionDelta: 5
-  fireDistance: 6000
+  maxAimingDelta: 1
+  fireDistance: 2000
   targetStopDistance: 20
   gun: {fileID: 237909582520410410}
   gunDir: 1

@@ -14,6 +14,7 @@ public class AngarMainManager : MonoBehaviour
 
     private static ButtleStartSettings buttleStartSettings;
     private GameObject buttleMainManager;//This manager is received after buttle
+    
 
     //public static ButtleManager buttleManager;
     // Use this for initialization
@@ -69,8 +70,11 @@ public class AngarMainManager : MonoBehaviour
     public static void Buttle()
     {
         saveManager.SaveGame();
-        //SceneManager.LoadScene("Конго");
-        SceneManager.LoadScene("SPb");
+        int number = Random.RandomRange(0, 2);
+        if(number==0)
+            SceneManager.LoadScene("Конго");
+        if (number ==1)
+            SceneManager.LoadScene("SPb");
     }
     public static void ChangeTechnic(string nameOfTechnic)
     {

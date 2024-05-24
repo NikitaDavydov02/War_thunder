@@ -4331,6 +4331,7 @@ MonoBehaviour:
   - {fileID: 237909582340005136, guid: 0ab2bc3e3e15893458b214eb95d0b69a, type: 3}
   - {fileID: 7561544977941177404, guid: 3dc18fd0516f2e64c82c2b985dffc6b3, type: 3}
   - {fileID: 1283250108165353205, guid: fb488efaf875e9740a40ed848ea68d7f, type: 3}
+  - {fileID: 2063801917698778354, guid: 21597248875054548913dab902c5fcf0, type: 3}
   botsTechnics:
   - {fileID: 237909582340005136, guid: c0a820e87a2ec1e4d95168171878db43, type: 3}
   - {fileID: 7561544977941177404, guid: 64af56e446646424cb333f4127e316db, type: 3}
@@ -5695,6 +5696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotSpeeed: 1.5
   _zoomOffset: {x: 0, y: 0, z: 0}
+  camState: 0
   vertSpeed: 3
   maxYOffset: 5
   minYOffset: -15
@@ -5702,6 +5704,9 @@ MonoBehaviour:
   minDistance: 5
   zoomSpeed: 5
   rotXYSpeed: 10
+  target: {fileID: 0}
+  zoomIn: 14
+  zoomOut: 60
 --- !u!20 &4800176198562477074
 Camera:
   m_ObjectHideFlags: 0

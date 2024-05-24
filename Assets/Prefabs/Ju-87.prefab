@@ -1311,7 +1311,7 @@ MonoBehaviour:
   heightAngle: 0
   horizontAngle: 0
   centerOfMassLocal: {x: 0, y: 0.35, z: 1.9}
-  inertiaTensor: {x: 15000, y: 3000, z: 5000}
+  inertiaTensor: {x: 15000, y: 1000, z: 3000}
   maxHeightAngle: 20
   maxHorizontalAngle: 15
   VelocityInLocalCoordinates: {x: 0, y: 0, z: 0}

@@ -56,7 +56,8 @@ public class Module : MonoBehaviour {
         if (IsFiring)
         {
             TimeOfFiring += Time.deltaTime;
-            fire.transform.position = this.transform.position;
+            if(fire!=null)
+                fire.transform.position = this.transform.position;
         }
 
 	}
@@ -76,7 +77,7 @@ public class Module : MonoBehaviour {
     {
         //Debug.Log("Module " + nameOfModule + " damaged by " + killerName);
         //OnModuleDamaged(killerName);
-        //if(String.IsNullOrEmpty(controller.Killer))
+        if(controller!=null && String.IsNullOrEmpty(controller.Killer))
             controller.Killer = killerName;
         currentHP -= damage;
         if (currentHP < 0)
@@ -115,6 +116,7 @@ public class Module : MonoBehaviour {
     }
     public void InstantiateFire()
     {
+      //  return;
         //Debug.Log("Instatniate fire");
         fire = Instantiate(Resources.Load("Prefabs/Fire") as GameObject);
         fire.transform.position = this.transform.position;

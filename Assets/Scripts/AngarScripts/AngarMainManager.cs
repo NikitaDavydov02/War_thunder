@@ -71,10 +71,11 @@ public class AngarMainManager : MonoBehaviour
     {
         saveManager.SaveGame();
         int number = Random.RandomRange(0, 2);
-        if(number==0)
+        SceneManager.LoadScene("Конго");
+        /*if (number==0)
             SceneManager.LoadScene("Конго");
         if (number ==1)
-            SceneManager.LoadScene("SPb");
+            SceneManager.LoadScene("SPb");*/
     }
     public static void ChangeTechnic(string nameOfTechnic)
     {

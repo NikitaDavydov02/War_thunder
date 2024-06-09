@@ -240,7 +240,11 @@ public class Detonator : MonoBehaviour
     {
         
         OnDetonate();
-        GameObject smoke = Instantiate(Resources.Load("Prefabs/Smoke")as GameObject);
+        GameObject smoke;
+        if(type!=TypeOfCurp.Bomb)
+            smoke = Instantiate(Resources.Load("Prefabs/Smoke")as GameObject);
+        else
+            smoke = Instantiate(Resources.Load("Prefabs/Explosion") as GameObject);
         smoke.transform.position = transform.position;
         yield return new WaitForSeconds(1.5f);
         Destroy(smoke);

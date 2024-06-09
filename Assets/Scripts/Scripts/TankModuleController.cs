@@ -31,7 +31,7 @@ public class TankModuleController : ModuleController
         Rigidbody r = tower.gameObject.GetComponent<Rigidbody>();
         r.mass = 20000;
         r.AddExplosionForce(3000000, tower.transform.position + new Vector3(0, -1, 0), 10);
-        foreach (Module m in modules)
+        /*foreach (Module m in modules)
         {
             if (m.nameOfModule == ModuleType.МеханизмПоворотаБашни)
                 m.InstantiateFire();
@@ -39,7 +39,7 @@ public class TankModuleController : ModuleController
                 m.InstantiateFire();
             if (m.nameOfModule == ModuleType.Боеукладка)
                 m.InstantiateFire();
-        }
+        }*/
         StartCoroutine(ExplodeEffect());
 
         //Debug.Log("Tank controller call die after explosion");

@@ -80,7 +80,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
-  probitie: 3
+  flyingSound: {fileID: 0}
+  probitie: 200
   ProbDecendingSpeed: 0.1
   ExplosionDistance: 0.5
   type: 1

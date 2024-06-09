@@ -23636,6 +23636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotSpeeed: 1.5
   _zoomOffset: {x: 0, y: 0, z: 0}
+  camState: 0
   vertSpeed: 3
   maxYOffset: 5
   minYOffset: -15
@@ -23644,7 +23645,7 @@ MonoBehaviour:
   zoomSpeed: 5
   rotXYSpeed: 10
   target: {fileID: 0}
-  zoomIn: 14
+  zoomIn: 5
   zoomOut: 60
 --- !u!20 &4800176198562477074
 Camera:

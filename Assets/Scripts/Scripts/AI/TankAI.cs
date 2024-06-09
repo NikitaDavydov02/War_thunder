@@ -104,9 +104,12 @@ public class TankAI : MonoBehaviour
         if (folowingTarget.GetComponent<PlaneModuleController>() != null)
             return;
         Queue<Vector3> newPath = BuiltRoad(folowingTarget.transform.position);
-        newPath.Dequeue();
+        //newPath.Dequeue();
         if (newPath != null && newPath.Count != 0)
+        {
+            newPath.Dequeue();
             currentRoute = newPath;
+        }
         /*if (currentRoute == null || currentRoute.Count == 0)
         {
             Queue<Vector3> newPath = BuiltRoad(folowingTarget.transform.position);

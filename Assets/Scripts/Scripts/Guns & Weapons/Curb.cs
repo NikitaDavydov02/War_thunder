@@ -44,7 +44,7 @@ public class Curb : MonoBehaviour {
     }
     public void Release(string owner, Vector3 initialVelocity)
     {
-        speedVector = transform.TransformDirection(Vector3.forward) * 500f;
+        speedVector = Vector3.zero;
         speedVector += initialVelocity;
         //speedVector += initialVelocity.normalized * 500f;
         stop = false; 

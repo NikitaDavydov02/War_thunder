@@ -13,7 +13,9 @@ public class NewModule : MonoBehaviour
     public bool IsFiring { get; private set; }
     public float TimeOfFiring { get; private set; }
     
-    public double flamaProbability = 0;
+    public float flamaProbability = 0;
+    public float flamePropgationVelosity = 0.2f;
+    public float flameRadius = 0;
     public bool explosive = false;
     private List<Material> materials;
     private GameObject fire;
@@ -59,13 +61,26 @@ public class NewModule : MonoBehaviour
     {
         if (IsFiring)
         {
+            currentHP = 0;
+            UpdateColor();
             TimeOfFiring += Time.deltaTime;
+            flameRadius += Time.deltaTime * flamePropgationVelosity;
             if (fire != null)
                 fire.transform.position = this.transform.position;
+            Collider[] capsuleHits = Physics.OverlapSphere(transform.position, flameRadius);
+            foreach(Collider collider in capsuleHits)
+            {
+                NewModule module = collider.gameObject.GetComponent<NewModule>();
+                if (module != null && transform.root==module.gameObject.transform.root)
+                {
+                    if (module.flamaProbability != 0)
+                        module.SetFire();
+                    else
+                        module.Damage(1000);
+                }
+            }
         }
-
     }
-
     public bool IsHuman()
     {
         if (nameOfModule == ModuleType.Мехвод ||
@@ -97,18 +112,22 @@ public class NewModule : MonoBehaviour
         if (flamaProbability!=0)
         {
             float random = UnityEngine.Random.RandomRange(0, 1);
-            if (random <flamaProbability)
-            {
-                if (!IsFiring)
-                    InstantiateFire();
-                IsFiring = true;
-            }
+            if (random < flamaProbability)
+                SetFire();
         }
         if (explosive && state == ModuleStates.Destroed)
         {
             OnModuleExplode();
         }
         //OnModuleDamaged();
+    }
+    public void SetFire()
+    {
+        if (!IsFiring)
+        {
+            InstantiateFire();
+            IsFiring = true;
+        }
     }
     private void InstantiateFire()
     {
@@ -138,6 +157,7 @@ public class NewModule : MonoBehaviour
     {
         IsFiring = false;
         TimeOfFiring = 0;
+        flameRadius = 0;
         Destroy(fire);
     }
     private void UpdateColor()

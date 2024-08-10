@@ -169,6 +169,7 @@ public class Detonator : MonoBehaviour
         ////Debug.Log("Enter point: " + transform.position);
         ////Debug.Log("Detonation center: " + add);
 
+        //  List<NewModule> damagedModels = new List<NewModule>();
         List<Module> damagedModels = new List<Module>();
         if (type == TypeOfCurp.Фугасный||type==TypeOfCurp.Bomb)
         {
@@ -184,13 +185,14 @@ public class Detonator : MonoBehaviour
             hits = Physics.OverlapSphere(detonationCenter, explosionRadius);
             foreach (Collider hited in hits)
             {
+                //NewModule m = hited.gameObject.GetComponent<NewModule>();
                 Module m = hited.gameObject.GetComponent<Module>();
                 if (m != null)
                 {
                     float distance = Vector3.Magnitude(m.transform.position - detonationCenter);
                     float realDamage = impliciDamage * Mathf.Exp(-distance/characteristicDamageLength);
                     m.Damage(realDamage, OwnerName);
-                    ////Debug.Log("Damage module: " + m.nameOfModule + " " + realDamage);
+                    ////Debug.Log("Damage NewModule: " + m.nameOfModule + " " + realDamage);
                     
                     damagedModels.Add(m);
                 }
@@ -203,14 +205,16 @@ public class Detonator : MonoBehaviour
             Collider[] capsuleHits = Physics.OverlapCapsule(transform.position,transform.position + add, 0.2f);
             foreach (Collider hited in capsuleHits)
             {
+                //NewModule m = hited.gameObject.GetComponent<NewModule>();
                 Module m = hited.gameObject.GetComponent<Module>();
                 if (m != null)
                 {
                     m.Damage(directDamage, OwnerName);
-                    //m.controller.Killer = OwnerName;
-                    ////Debug.Log("Damage module: " + m.nameOfModule + " " + directDamage);
+                    m.controller.Killer = OwnerName;
+                    ////Debug.Log("Damage NewModule: " + m.nameOfModule + " " + directDamage);
                     damagedModels.Add(m);
                 }
+         
             }
         }
         if (MainManager.buttleManager.clientTank!=null && OwnerName == MainManager.buttleManager.clientTank.name)

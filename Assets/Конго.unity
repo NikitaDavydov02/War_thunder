@@ -5488,6 +5488,7 @@ MonoBehaviour:
   - {fileID: 237909582340005136, guid: c0a820e87a2ec1e4d95168171878db43, type: 3}
   - {fileID: 7561544977941177404, guid: 64af56e446646424cb333f4127e316db, type: 3}
   - {fileID: 237909582340005136, guid: 359b6d1eb82ae1e44890dacf99118d66, type: 3}
+  - {fileID: 2063801917698778354, guid: 2ea4cf1833c385f4ca033d9c199b38b2, type: 3}
 --- !u!114 &1529577770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8286,7 +8287,7 @@ MonoBehaviour:
   zoomSpeed: 5
   rotXYSpeed: 10
   target: {fileID: 0}
-  zoomIn: 5
+  zoomIn: 10
   zoomOut: 60
 --- !u!20 &4800176198562477074
 Camera:

@@ -18,10 +18,14 @@ public class PlaneAI : MonoBehaviour
     private float acceptableAltitudeError = 50f;
     [SerializeField]
     private float criticalAngle = 5f;
+    [SerializeField]
+    private float turnRadius = 1000f;
+    [SerializeField]
+    private bool output = false;
 
-    private float currentRoll = 0f;
-    private float currentPitch= 0f;
-    private float currentAltitude = 0f;
+    public float currentRoll = 0f;
+    public float currentPitch= 0f;
+    public float currentAltitude = 0f;
     private Vector3 currentVelocity = Vector3.zero;
     private float currentCourse = 0f;
     public float fireDistance = 300f;
@@ -35,6 +39,7 @@ public class PlaneAI : MonoBehaviour
     public float targetAndCourseAtackTreshhold = 0.95f;
     public float fireErrorMultiplyer = 10f;
     public float GunErrorVert = 2f;
+    public bool goingAround = false;
 
     [SerializeField]
     private List<Gun> gun;
@@ -81,7 +86,20 @@ public class PlaneAI : MonoBehaviour
             planeState = PlaneStates.TakingOff;
             Debug.Log("Take off!");
         }
+        if (target!=null&&!target.GetComponent<ModuleController>().alive)
+        {
+            if (IsRed)
+                target = MainManager.buttleManager.GetTargetForRed();
+            else
+                target = MainManager.buttleManager.GetTargetForBlue();
+            if (target == null)
+            {
+                planeState = PlaneStates.GoingToTheField;
 
+                return;
+            }
+            targetController = target.gameObject.GetComponent<ModuleController>();
+        }
         if (planeState == PlaneStates.Landed)
             planeState = PlaneStates.TakingOff;
         if (planeState == PlaneStates.TakingOff)
@@ -93,7 +111,7 @@ public class PlaneAI : MonoBehaviour
             {
                 
                 
-                if (target == null || !targetController.alive)
+                if (target == null || !target.GetComponent<ModuleController>().alive)
                 {
                     if (IsRed)
                         target = MainManager.buttleManager.GetTargetForRed();
@@ -124,6 +142,19 @@ public class PlaneAI : MonoBehaviour
 
             Vector3 targetDelta = targetSpeed * bombFlightTime;
             Vector3 followingPosition = target.position + targetDelta + Vector3.up * 1000;
+            if (CheckIfInRadiusOfTurn(transform.position, followingPosition, currentVelocity, true) || (CheckIfInRadiusOfTurn(transform.position, followingPosition, currentVelocity, false) && goingAround))
+               goingAround = true;
+            else
+                goingAround = false;
+            if (goingAround)
+            {
+                Vector3 currentPositionProjection = new Vector3(transform.position.x, 0, transform.position.z);
+                Vector3 outFromTarget = (transform.position - target.transform.position);
+                outFromTarget.y = 0;
+                outFromTarget = outFromTarget.normalized;
+                followingPosition = currentPositionProjection + outFromTarget * 500f + Vector3.up * 1000f;
+
+            }
             FolowPosition(followingPosition);
 
             Vector3 targetPlaneDelta = target.position - transform.position;
@@ -138,7 +169,7 @@ public class PlaneAI : MonoBehaviour
             Debug.Log("Bombing: criticalDistance = " + criticalHorizontalDistance);
             Debug.DrawLine(transform.position, followingPosition, Color.cyan);
             Debug.Log("Bombing: distance ahead = " + targetPlaneDelta.magnitude);
-            if (targetPlaneDelta.magnitude <= criticalHorizontalDistance)
+            if (targetPlaneDelta.magnitude <= criticalHorizontalDistance && !goingAround)
                 planeController.ReleaseBombs();
                 //Release
 
@@ -149,13 +180,38 @@ public class PlaneAI : MonoBehaviour
             //Vector3 course = target.position - gun.transform.position;
             float distance = (target.position - gun[0].transform.position).magnitude;
             Vector3 course = MainManager.mapAIManager.CalculateGunDirectionOnTarget(target.position - gun[0].transform.position + Vector3.up * GunErrorVert, 750, targetSpeed) * distance;
+            Vector3 currentSpeed = rb.velocity;
             //float delta = (9.81f / 2) * (course.magnitude / 750) * (course.magnitude / 750);
             //Vector3 upr = targetSpeed * course.magnitude / 750f + Vector3.up*delta;
-           // Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
+            // Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
             //course += upr;
             //Debug.DrawLine(gun.transform.position, gun.transform.position + course, Color.cyan);
-            FolowPosition(gun[0].transform.position + course);
-            Vector3 currentSpeed = rb.velocity;
+            if (transform.position.y > 1500f)
+            {
+                StabalizeAltitude(1500f);
+                Debug.Log("Too big altitude differnece! " + transform.name);
+            }
+            else
+            {
+                Vector3 followingPosition = gun[0].transform.position + course;
+                
+                if (CheckIfInRadiusOfTurn(transform.position, followingPosition, currentVelocity, true) || (CheckIfInRadiusOfTurn(transform.position, followingPosition, currentVelocity, false) && goingAround))
+                    goingAround = true;
+                else
+                    goingAround = false;
+                if (goingAround)
+                {
+                    Vector3 currentPositionProjection = new Vector3(transform.position.x, 0, transform.position.z);
+                    Vector3 outFromTarget = (transform.position - target.transform.position);
+                    outFromTarget.y = 0;
+                    outFromTarget = outFromTarget.normalized;
+                    followingPosition = currentPositionProjection + outFromTarget * 3*turnRadius + Vector3.up * 500f;
+
+                }
+                Debug.DrawLine(transform.position, followingPosition, Color.cyan);
+                FolowPosition(followingPosition);
+            }
+            
             float dot = Vector3.Dot(currentSpeed.normalized, course.normalized);
             float angle = Vector3.Angle(transform.TransformDirection(Vector3.forward), course.normalized);
             float maxAngle = maxAngleCount(course.magnitude);
@@ -165,20 +221,7 @@ public class PlaneAI : MonoBehaviour
             if (course.magnitude < fireDistance && angle< fireErrorMultiplyer * maxAngle)
                 foreach(Gun g in gun)
                     g.Fire();
-            if (!targetController.alive)
-            {
-                if (IsRed)
-                    target = MainManager.buttleManager.GetTargetForRed();
-                else
-                    target = MainManager.buttleManager.GetTargetForBlue();
-                if (target == null)
-                {
-                    planeState = PlaneStates.GoingToTheField;
-
-                    return;
-                }
-                targetController = target.gameObject.GetComponent<ModuleController>();
-            }
+            
             if (transform.position.y < 75f)
             {
                 planeState = PlaneStates.TakingOff;
@@ -413,6 +456,62 @@ public class PlaneAI : MonoBehaviour
             planeController.HeightController(maxUp);
         else
             planeController.HeightController(maxDown);
+    }
+    private bool CheckIfInRadiusOfTurn(Vector3 plane, Vector3 target, Vector3 currentCourse, bool innerRadius)
+    {
+        Vector2 planeProjection = new Vector2(plane.x, plane.z);
+        Vector2 targetProjection = new Vector2(target.x,target.z);
+        Vector2 courseProjection = new Vector2(currentCourse.x, currentCourse.z).normalized;
+        Vector2 leftCircleCenterDirection = new Vector2(courseProjection.y, -courseProjection.x).normalized;
+        Vector2 leftCircleCenter;
+        Vector2 rightCircleCenter;
+        if (innerRadius)
+        {
+            leftCircleCenter = planeProjection + leftCircleCenterDirection * turnRadius;
+            rightCircleCenter = planeProjection - leftCircleCenterDirection * turnRadius;
+        }
+        else
+        {
+            leftCircleCenter = planeProjection + leftCircleCenterDirection * 2f*turnRadius;
+            rightCircleCenter = planeProjection - leftCircleCenterDirection * 2f*turnRadius;
+        }
+
+        if (output && innerRadius)
+        {
+            Debug.DrawLine(transform.position, new Vector3(leftCircleCenter.x, 0, leftCircleCenter.y), Color.black);
+            Debug.DrawLine(transform.position, new Vector3(rightCircleCenter.x, 0, rightCircleCenter.y), Color.black);
+            Debug.DrawLine(transform.position, new Vector3(targetProjection.x, 0, targetProjection.y), Color.black);
+
+        }
+        if ((leftCircleCenter - targetProjection).magnitude <= turnRadius && innerRadius)
+        {
+            if(output && innerRadius)
+                Debug.Log("In radius: " + plane);
+            return true;
+        }
+        if ((rightCircleCenter - targetProjection).magnitude <= turnRadius && innerRadius)
+        {
+            if (output && innerRadius)
+                Debug.Log("In radius: " + plane);
+            return true;
+        }
+        if ((leftCircleCenter - targetProjection).magnitude <= 2*turnRadius && !innerRadius)
+        {
+            if (output && innerRadius)
+                Debug.Log("In radius: " + plane);
+            return true;
+        }
+        if ((rightCircleCenter - targetProjection).magnitude <= 2*turnRadius && !innerRadius)
+        {
+            if (output && innerRadius)
+                Debug.Log("In radius: " + plane);
+            return true;
+        }
+       
+
+        if (output && innerRadius)
+            Debug.Log("Out of radius: " + plane);
+        return false;
     }
 }
 public enum PlaneStates

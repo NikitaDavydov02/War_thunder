@@ -47,7 +47,7 @@ public class SceneCamera : MonoBehaviour {
     void Awake () {
         playerAndHisFiredCurbs = new List<Transform>();
         cam = this.GetComponent<Camera>();
-        cam.farClipPlane = 4000;
+        cam.farClipPlane = 10000;
         _rotY = transform.eulerAngles.y;
         _offset = new Vector3(0, -5, 10);
         distance = _offset.magnitude;

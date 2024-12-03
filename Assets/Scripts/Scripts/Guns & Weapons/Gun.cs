@@ -42,7 +42,7 @@ public class Gun : MonoBehaviour {
     
     public Curb Fire()
     {
-        if (!controller.alive ||!controller.CheckIfCanFire()|| MainManager.GameStatus != GameStatus.Playing)
+        if (gunType!=GunType.MissleLaunchSystem && (!controller.alive ||!controller.CheckIfCanFire()|| MainManager.GameStatus != GameStatus.Playing))
             return null;
         
         if (TimeSinseFire >= timeOfRecharging)
@@ -126,4 +126,5 @@ public enum GunType
 {
     Gun,
     AutomaticGun,
+    MissleLaunchSystem,
 }

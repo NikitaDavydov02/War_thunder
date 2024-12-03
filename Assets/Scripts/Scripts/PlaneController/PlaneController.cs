@@ -48,6 +48,7 @@ public class PlaneController : ForceCalculationManager
     public Vector3 AngularVelocityInLocalCoordinates = Vector3.zero;
 
     // Start is called before the first frame update
+    private GameObject marker;
     
     protected override void Start()
     {
@@ -68,6 +69,12 @@ public class PlaneController : ForceCalculationManager
             forceSources.Add(f);
         foreach (WingForce w in wings)
             forceSources.Add(w);
+
+        marker = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Sphere));
+        marker.transform.localScale *= 2f;
+        marker.transform.position = transform.position + Vector3.forward * 10f;
+        marker.GetComponent<MeshRenderer>().material.color = Color.red;
+        marker.GetComponent<Collider>().isTrigger = true;
         //forceSources.Add(gravityForce);
     }
 
@@ -95,6 +102,14 @@ public class PlaneController : ForceCalculationManager
 
         for (int i = 0; i < engineLevels.Count; i++)
             engines[i].Level = engineLevels[i];
+
+        if (MainManager.buttleManager!=null)
+        {
+            Vector3 delta = MainManager.buttleManager.allred[0].transform.position - transform.position;
+            float time = delta.magnitude / 1000f;
+            float drop = 9.81f * time * time / 2f;
+            marker.transform.position = transform.position + rb.velocity * time + drop*Vector3.up;
+        }
     }
     protected override void FixedUpdate()
     {

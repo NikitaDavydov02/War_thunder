@@ -80,14 +80,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
+  flyingSound: {fileID: 0}
   probitie: 300
-  ProbDecendingSpeed: 60
-  ExplosionDistance: 0.5
+  ProbDecendingSpeed: 0
+  vzveden: 0
+  ExplosionDistance: 10
   type: 1
-  explosionRadius: 10
+  explosionRadius: 50
   directDamage: 300
   impliciDamage: 10000
-  vzvodTime: 0.5
+  vzvodTime: 0
   characteristicDamageLength: 1
   OwnerName: 
 --- !u!114 &287387797266193672
@@ -102,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd16b53267ff84d44bd2b4555a97a937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 1000
+  speedScalyar: 400
   speedVector: {x: 0, y: 0, z: 0}
   stop: 0
   detonator: {fileID: 8724746964692305077}

@@ -4893,15 +4893,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
   flyingSound: {fileID: 0}
-  probitie: 20
+  probitie: 200
   ProbDecendingSpeed: 5
   ExplosionDistance: 1
   type: 1
   explosionRadius: 1
-  directDamage: 50
-  impliciDamage: 100
+  directDamage: 500
+  impliciDamage: 1000
   vzvodTime: 0.015
-  characteristicDamageLength: 2
+  characteristicDamageLength: 20
   OwnerName: 
 --- !u!114 &6429324496316279757
 MonoBehaviour:
@@ -4915,7 +4915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 900
+  speedScalyar: 2000
   speedVector: {x: 0, y: 0, z: 0}
   stop: 0
   detonator: {fileID: 8724746964692305077}

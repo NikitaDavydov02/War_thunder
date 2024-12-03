@@ -15,7 +15,7 @@ public class Detonator : MonoBehaviour
     public float ProbDecendingSpeed = 60f;
 
     private float timeSinceFire = -1;
-    private bool vzveden = false;
+    public bool vzveden = false;
     public float ExplosionDistance = 1f;
 
     private bool destroyed = false;

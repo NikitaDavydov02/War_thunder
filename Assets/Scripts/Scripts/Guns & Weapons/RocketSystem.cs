@@ -20,8 +20,10 @@ public class RocketSystem : Gun
         base.Update();
         foreach(GameObject enemy in MainManager.buttleManager.allred)
         {
-            if((enemy.transform.position - transform.position).magnitude <= maxDistance)
+           
+            if ((enemy.transform.position - transform.position).magnitude <= maxDistance && enemy.GetComponent<ModuleController>().alive)
             {
+                Debug.Log("RocketSystem: Rocket releaese initiated");
                 ReleaseRocket(enemy.transform);
                 
             }
@@ -32,9 +34,11 @@ public class RocketSystem : Gun
         Curb curb = Fire();
         if(curb!=null && curb is Rocket)
         {
-            Debug.Log("Rocket releaesd");
+            Debug.Log("RocketSystem: Rocket releaesd");
             Rocket rocket = curb as Rocket;
             rocket.target = target;
+            curb.Release("playerBlue0");
+            //rocket.transform.LookAt(target);
         }
         
 

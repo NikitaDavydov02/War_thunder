@@ -86,11 +86,11 @@ MonoBehaviour:
   vzveden: 0
   ExplosionDistance: 10
   type: 1
-  explosionRadius: 50
+  explosionRadius: 10
   directDamage: 300
-  impliciDamage: 10000
-  vzvodTime: 0
-  characteristicDamageLength: 1
+  impliciDamage: 400
+  vzvodTime: 0.05
+  characteristicDamageLength: 4
   OwnerName: 
 --- !u!114 &287387797266193672
 MonoBehaviour:
@@ -104,12 +104,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd16b53267ff84d44bd2b4555a97a937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 400
+  speedScalyar: 500
   speedVector: {x: 0, y: 0, z: 0}
   stop: 0
   detonator: {fileID: 8724746964692305077}
   target: {fileID: 0}
-  maxRotationalSpeed: 50
+  maxRotationalSpeed: 20
   lastTargetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &4512281110986194030
 GameObject:

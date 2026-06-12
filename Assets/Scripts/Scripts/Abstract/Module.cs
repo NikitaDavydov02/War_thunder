@@ -96,7 +96,7 @@ public class Module : MonoBehaviour {
         UpdateColor();
         if (flameable)
         {
-            int random = UnityEngine.Random.RandomRange(0, 5);
+            int random = UnityEngine.Random.RandomRange(0, 100);
             if (random == 1)
             {
                 if (!IsFiring)

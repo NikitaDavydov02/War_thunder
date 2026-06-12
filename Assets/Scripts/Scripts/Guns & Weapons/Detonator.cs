@@ -100,11 +100,15 @@ public class Detonator : MonoBehaviour
             return;
         RaycastHit hit;
         Debug.DrawRay(lastPosition, transform.position - lastPosition, Color.red, 10f);
+        if (transform.gameObject.GetComponent<Rocket>())
+            Debug.Log("[Rocket]: raycasting");
         if (Physics.Raycast(new Ray(lastPosition, transform.position - lastPosition), out hit))
         {
             GameObject hitObject = hit.transform.gameObject;
             //Debug.Log("Hit raycasted " + hitObject.name);
-            ////Debug.Log("Detonator: Hit " + hitObject.name + "hit point " + hit.point);
+            //if(OwnerName=="playerRed_0")
+            if(transform.gameObject.GetComponent<Rocket>())
+                Debug.Log("[Rocket]: Detonator: Hit " + hitObject.name + "hit point " + hit.point);
             ////Debug.Log("Hit distance " + hit.distance);
             if (!hitObject.gameObject.name.ToString().Contains(OwnerName) & hitObject.tag != "Curb" && hit.distance <= (transform.position - lastPosition).magnitude)
             //if (hitObject.tag != "Curb"&& hitObject.tag!="Terrain")

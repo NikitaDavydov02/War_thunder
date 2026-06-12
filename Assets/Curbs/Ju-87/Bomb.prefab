@@ -4948,6 +4948,7 @@ MonoBehaviour:
   flyingSound: {fileID: 8300000, guid: ff7e8cdb2e99e264abd8f90f936e88a6, type: 3}
   probitie: 300
   ProbDecendingSpeed: 60
+  vzveden: 0
   ExplosionDistance: 0
   type: 3
   explosionRadius: 50
@@ -5078,7 +5079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6fe8bcf17e8c3a4ba88a3f4a2763af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedScalyar: 0
+  speedScalyar: 500
   speedVector: {x: 0, y: 0, z: 0}
   stop: 1
   detonator: {fileID: 1041751087099366736}

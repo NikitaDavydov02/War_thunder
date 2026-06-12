@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PlayerGun : Gun
 {
+    //private GameObject aimingMark;
     // Start is called before the first frame update
+    
     void Start()
     {
+        Debug.Log("Player gun: " + gameObject.name);
         base.Start();
     }
 
@@ -32,5 +35,7 @@ public class PlayerGun : Gun
 
         if (Input.GetKey(KeyCode.Space))
             Fire();
+
+        
     }
 }

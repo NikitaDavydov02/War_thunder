@@ -2404,6 +2404,7 @@ MonoBehaviour:
   maxRot: 20
   minRot: -20
   verticalRotationSpeed: 5
+  createAimingMark: 0
 --- !u!1 &237909582582555550
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class GravityForce : MonoBehaviour, IForce
 {
     public float mass;
     public float g = -9.81f;
-    public Vector3 CenterOfMass;
+    private Vector3 CenterOfMass;
     //public List<Vector3> CurrentForceVector { get; private set; }
 
     //public List<Vector3> AbsolutePointOfForceApplying { get; private set; } 
@@ -22,6 +22,10 @@ public class GravityForce : MonoBehaviour, IForce
     void Update()
     {
 
+    }
+    public void InitForce(Vector3 centerOfMass)
+    {
+        CenterOfMass = centerOfMass;
     }
     public void CountForce(out List<Vector3> CurrentForceVectors, out List<Vector3> AbsolutePointsOfForceApplying)
     {

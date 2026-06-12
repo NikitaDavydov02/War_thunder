@@ -3437,9 +3437,10 @@ MonoBehaviour:
   recoilingPart: {fileID: 7486057584889310729}
   gunType: 0
   sensetivityvert: 9
-  maxRot: 20
-  minRot: -20
+  maxRot: 80
+  minRot: -80
   verticalRotationSpeed: 5
+  createAimingMark: 1
 --- !u!1 &2093730711963442776
 GameObject:
   m_ObjectHideFlags: 0

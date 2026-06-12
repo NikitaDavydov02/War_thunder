@@ -57,6 +57,7 @@ public class ButtleManager : MonoBehaviour {
     //public GameObject humanTank;
     public int redCurrentCount =2;
     public int blueCurrentCount = 2;
+    public int planesSpawnCount = 5;
 
     //For buttles with points
     [SerializeField]

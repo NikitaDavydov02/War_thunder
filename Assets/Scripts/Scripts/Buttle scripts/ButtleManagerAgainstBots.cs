@@ -8,6 +8,7 @@ public class ButtleManagerAgainstBots : ButtleManager
     private CommandAI redAI;
     [SerializeField]
     private CommandAI blueAI;
+    
 
     protected override void Awake()
     {
@@ -44,7 +45,7 @@ public class ButtleManagerAgainstBots : ButtleManager
             }
             else
             {
-                if (i == 1 || i == 2)
+                if (i < planesSpawnCount)
                 {
                     technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
                     technic.GetComponent<PlaneAI>().IsRed = true;
@@ -80,8 +81,9 @@ public class ButtleManagerAgainstBots : ButtleManager
         }
         for (int i = 0; i < blueCurrentCount; i++)
         {
+            Debug.Log("Spawning " + i + "th blue technics");
             GameObject technic;
-            if (i == 0||i==1||i==2)
+            if (i< planesSpawnCount)
                 technic = Instantiate(MainManager.technicsLibrary.GetRandomBotsPlane()) as GameObject;
             else
             {

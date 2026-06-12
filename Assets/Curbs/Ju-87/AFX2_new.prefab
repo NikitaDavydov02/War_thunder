@@ -82,12 +82,13 @@ MonoBehaviour:
   source: {fileID: 7297089561520715554}
   flyingSound: {fileID: 0}
   probitie: 200
-  ProbDecendingSpeed: 0.1
+  ProbDecendingSpeed: 0.01
+  vzveden: 0
   ExplosionDistance: 0.5
   type: 1
-  explosionRadius: 3
-  directDamage: 100
-  impliciDamage: 50
+  explosionRadius: 4
+  directDamage: 300
+  impliciDamage: 300
   vzvodTime: 0.05
   characteristicDamageLength: 1
   OwnerName: 

@@ -81,13 +81,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 7297089561520715554}
   flyingSound: {fileID: 0}
-  probitie: 300
-  ProbDecendingSpeed: 0.2
-  ExplosionDistance: 0.5
+  probitie: 200
+  ProbDecendingSpeed: 0.01
+  vzveden: 0
+  ExplosionDistance: 5
   type: 1
-  explosionRadius: 3
-  directDamage: 500
-  impliciDamage: 100
+  explosionRadius: 10
+  directDamage: 400
+  impliciDamage: 400
   vzvodTime: 0.05
   characteristicDamageLength: 1
   OwnerName: 

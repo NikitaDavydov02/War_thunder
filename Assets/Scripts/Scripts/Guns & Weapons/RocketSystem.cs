@@ -5,7 +5,7 @@ using UnityEngine;
 public class RocketSystem : Gun
 {
     public float maxDistance;
-    
+    public bool redIsEnemy = true;
 
 
     // Start is called before the first frame update
@@ -18,27 +18,34 @@ public class RocketSystem : Gun
     protected override void Update()
     {
         base.Update();
-        foreach(GameObject enemy in MainManager.buttleManager.allred)
+
+        if (Input.GetKeyDown(KeyCode.T))
         {
-           
-            if ((enemy.transform.position - transform.position).magnitude <= maxDistance && enemy.GetComponent<ModuleController>().alive)
+            List<GameObject> enemies = MainManager.buttleManager.allred;
+            if (!redIsEnemy)
+                enemies = MainManager.buttleManager.allblue;
+            foreach (GameObject enemy in enemies)
             {
-                Debug.Log("RocketSystem: Rocket releaese initiated");
-                ReleaseRocket(enemy.transform);
-                
+
+                if ((enemy.transform.position - transform.position).magnitude <= maxDistance && enemy.GetComponent<ModuleController>().alive)
+                {
+                    Debug.Log("RocketSystem: Rocket releaese initiated");
+                    ReleaseRocket(enemy.transform);
+
+                }
             }
         }
+        
     }
     private void ReleaseRocket(Transform target)
     {
         Curb curb = Fire();
         if(curb!=null && curb is Rocket)
         {
-            Debug.Log("RocketSystem: Rocket releaesd");
+            Debug.Log("RocketSystem: Rocket releaesd towards: " + target.name);
             Rocket rocket = curb as Rocket;
             rocket.target = target;
-            curb.Release("playerBlue0");
-            //rocket.transform.LookAt(target);
+            rocket.transform.LookAt(target);
         }
         
 

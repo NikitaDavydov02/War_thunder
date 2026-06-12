@@ -37,14 +37,15 @@ public class Rocket : Curb
             Debug.DrawLine(transform.position, transform.position + speedVector, Color.red);
             float angle = Vector3.Angle(currentDirection, targetDirection);
             float demandedSpeed = Mathf.Abs(angle) / Time.deltaTime;
-            //if (demandedSpeed <= maxRotationalSpeed)
+            if (demandedSpeed <= maxRotationalSpeed)
                 speedVector = speedVector.magnitude * (targetDirection).normalized;
-            /*else
+            else
             {
-                Vector3 delta = (currentDirection - targetDirection) * maxRotationalSpeed / demandedSpeed;
-                speedVector += delta;
-            }*/
-            transform.LookAt(target.position+ targetVelocity*time);
+                speedVector = Vector3.RotateTowards(speedVector, targetDirection, maxRotationalSpeed*Time.deltaTime* Mathf.Deg2Rad, 0);
+                //Vector3 delta = (currentDirection - targetDirection) * maxRotationalSpeed;/// demandedSpeed;
+                //speedVector += delta;
+            }
+            transform.LookAt(target.position+ speedVector);
         }
         
 

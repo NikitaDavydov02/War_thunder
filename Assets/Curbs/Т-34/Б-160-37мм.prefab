@@ -4895,11 +4895,12 @@ MonoBehaviour:
   flyingSound: {fileID: 0}
   probitie: 40
   ProbDecendingSpeed: 5
+  vzveden: 0
   ExplosionDistance: 1
   type: 1
   explosionRadius: 2
-  directDamage: 30
-  impliciDamage: 30
+  directDamage: 300
+  impliciDamage: 300
   vzvodTime: 0.01
   characteristicDamageLength: 2
   OwnerName: 
